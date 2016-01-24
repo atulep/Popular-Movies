@@ -32,7 +32,8 @@ public class MainFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        //TODO: Need to create create an AdapterView -- GridView. Bind the MoviePosterAdapter to it.
+        //Return the resulted view.
     }
 
 }
