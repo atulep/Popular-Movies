@@ -7,5 +7,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/gridView_main"
         android:layout_gravity="center"
-        android:numColumns="2"/>
+        android:numColumns="auto_fit"/>
 </FrameLayout>

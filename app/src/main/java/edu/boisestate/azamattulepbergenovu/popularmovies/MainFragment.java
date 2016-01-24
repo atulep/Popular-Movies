@@ -22,6 +22,10 @@ public class MainFragment extends Fragment {
 
     }
 
+    /**
+     * Not sure if I need to define this method.
+     * @param savedInstanceState
+     */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
