@@ -18,16 +18,25 @@ import java.util.Arrays;
  */
 public class MainFragment extends Fragment {
 
+    // for temporary purposes in developement
+    String tempPlot = "This is ";
+    String tempDate = "01/26/2015";
+    //
+
     //Hard coded list of movies.
     Movie[] list = {
-      new Movie()
+      new Movie("Avatar", R.drawable.avatar, tempPlot + "Avatar", 5.0, tempDate),
+      new Movie("Avengers", R.drawable.avengers, tempPlot + "Avengers", 5.0, tempDate),
+      new Movie("Grey", R.drawable.grey, tempPlot + "Grey", 5.0, tempDate),
+      new Movie("Iron Man", R.drawable.iron_man, tempPlot + "Iron Man", 5.0, tempDate),
+      new Movie("Minions", R.drawable.minions, tempPlot +"Minions", 5.0, tempDate)
     };
 
+    // int posterImage, String plot, double rating, String releaseDate
     /**
      * Pubic no-argument constructor.
      */
     public MainFragment () {
-
     }
 
     /**
