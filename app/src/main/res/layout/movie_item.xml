@@ -8,6 +8,7 @@
     <ImageView
         android:layout_width="185dp"
         android:layout_height="185dp"
-        android:id ="@+id/movie_poster"/>
+        android:id ="@+id/movie_poster"
+        android:background="#ff0000" />
 
 </FrameLayout>

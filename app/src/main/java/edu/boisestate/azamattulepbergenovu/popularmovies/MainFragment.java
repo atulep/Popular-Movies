@@ -47,7 +47,7 @@ public class MainFragment extends Fragment {
         //Create an adapter to bind it a gridview.
         //Get a view from a GridView and return it.
 
-        View rootView = inflater.inflate(R.layout.activity_main, container, false);
+        View rootView = inflater.inflate(R.layout.gridfragment_main, container, false);
         MoviePosterAdapter adapter = new MoviePosterAdapter(getActivity(), Arrays.asList(list));
         GridView grid = (GridView) rootView.findViewById(R.id.gridView_main);
         grid.setAdapter(adapter);
