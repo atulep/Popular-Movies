@@ -1,6 +1,7 @@
 package edu.boisestate.azamattulepbergenovu.popularmovies;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import java.util.List;
  */
 public class MoviePosterAdapter extends ArrayAdapter<Movie> {
 
+    private String LOG_TAG = MoviePosterAdapter.class.getSimpleName();
+
     /**
      * Constructor.
      * @param context
@@ -21,6 +24,7 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
      */
     public MoviePosterAdapter(Context context, List<Movie> movieList) {
         super(context, 0, movieList);
+
     }
 
     /**
@@ -44,8 +48,10 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
         }
         // Programmatically maps posterView to the layout I defined.
         // Sets the image resource to this ImageView.
+
         ImageView posterView = (ImageView) convertView.findViewById(R.id.movie_poster);
-        posterView.setImageResource(R.drawable.avatar);
+        Log.v(LOG_TAG, "*******MOVIE_POSTER " + movie.posterImage);
+        posterView.setImageResource(movie.posterImage);
 
         return convertView;
 

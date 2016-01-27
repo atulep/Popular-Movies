@@ -28,8 +28,8 @@ public class MainFragment extends Fragment {
       new Movie("Avatar", R.drawable.avatar, tempPlot + "Avatar", 5.0, tempDate),
       new Movie("Avengers", R.drawable.avengers, tempPlot + "Avengers", 5.0, tempDate),
       new Movie("Grey", R.drawable.grey, tempPlot + "Grey", 5.0, tempDate),
-      new Movie("Iron Man", R.drawable.iron_man, tempPlot + "Iron Man", 5.0, tempDate),
-      new Movie("Minions", R.drawable.minions, tempPlot +"Minions", 5.0, tempDate)
+   //   new Movie("Iron Man", R.drawable.iron_man, tempPlot + "Iron Man", 5.0, tempDate),
+   //   new Movie("Minions", R.drawable.minions, tempPlot +"Minions", 5.0, tempDate)
     };
 
     // int posterImage, String plot, double rating, String releaseDate
@@ -60,6 +60,7 @@ public class MainFragment extends Fragment {
         MoviePosterAdapter adapter = new MoviePosterAdapter(getActivity(), Arrays.asList(list));
         GridView grid = (GridView) rootView.findViewById(R.id.gridView_main);
         grid.setAdapter(adapter);
+
         return rootView;
     }
 
