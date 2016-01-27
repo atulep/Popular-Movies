@@ -45,7 +45,7 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
         // Programmatically maps posterView to the layout I defined.
         // Sets the image resource to this ImageView.
         ImageView posterView = (ImageView) convertView.findViewById(R.id.movie_poster);
-        posterView.setImageResource(movie.posterImage);
+        posterView.setImageResource(R.drawable.avatar);
 
         return convertView;
 
