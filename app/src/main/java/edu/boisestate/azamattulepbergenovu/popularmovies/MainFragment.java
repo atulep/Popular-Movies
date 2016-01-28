@@ -82,8 +82,7 @@ public class MainFragment extends Fragment {
             BufferedReader reader = null;
             String typeOfSort = params[0];// which sort to perform
             // Will contain the raw JSON response as a string.
-            String forecastJsonStr = null;
-            String[] simplifiedForecast = null;
+            String movieJsonStr = null;
 
             try {
                 // Construct the URL for the OpenWeatherMap query
@@ -92,12 +91,12 @@ public class MainFragment extends Fragment {
                 // Construct the URL for the OpenWeatherMap query
                 // Possible parameters are avaiable at OWM's forecast API page, at
                 // http://openweathermap.org/API#forecast
-                final String FORECAST_BASE_URL =
+                final String MOVIE_BASE_URL =
                         "http://api.themoviedb.org/3/discover/movie?";
                 final String QUERY_PARAM = "sort_by=";
                 final String APPID_PARAM = "APPID";
 
-                Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
+                Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
                         .appendQueryParameter(QUERY_PARAM, typeOfSort)
                         .appendQueryParameter(APPID_PARAM, BuildConfig.MOVIE_DB_API_KEY)
                         .build();
@@ -125,11 +124,11 @@ public class MainFragment extends Fragment {
                     // Stream was empty.  No point in parsing.
                     return null;
                 }
-                forecastJsonStr = buffer.toString();
-                Log.v(LOG_TAG, "JSON Parsed String:" + forecastJsonStr);
+                movieJsonStr = buffer.toString();
+                Log.v(LOG_TAG, "JSON Parsed String:" + movieJsonStr);
 
                 try {
-                    simplifiedForecast = getWeatherDataFromJson(forecastJsonStr, 7);
+                    simplifiedForecast = getWeatherDataFromJson(movieJsonStr, 7);
                 } catch (org.json.JSONException e) {
                     Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
                     System.exit(1);
@@ -139,7 +138,7 @@ public class MainFragment extends Fragment {
                 Log.e(LOG_TAG, "Error ", e);
                 // If the code didn't successfully get the weather data, there's no point in attempting
                 // to parse it.
-                forecastJsonStr = null;
+                movieJsonStr = null;
             } finally {
                 if (urlConnection != null) {
                     urlConnection.disconnect();
@@ -157,4 +156,5 @@ public class MainFragment extends Fragment {
 
         }
     }
+
 }
