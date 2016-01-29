@@ -126,7 +126,11 @@ public class MainFragment extends Fragment {
                 }
                 movieJsonStr = buffer.toString();
                 Log.v(LOG_TAG, "JSON Parsed String:" + movieJsonStr);
-
+                //TODO: Insert the rest of code regarding JSON parsing.
+                //TODO: After that I can simply fetch JSON objects and create views with images.
+                //TODO: Then I can create a details activity.
+                //TODO: Then I can add preferences to sort movies.
+                //TODO: Implement parcelable too!
                 try {
                     simplifiedForecast = getWeatherDataFromJson(movieJsonStr, 7);
                 } catch (org.json.JSONException e) {
