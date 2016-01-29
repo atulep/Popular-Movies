@@ -5,7 +5,7 @@ package edu.boisestate.azamattulepbergenovu.popularmovies;
  */
 public class Movie {
     String title;
-    int posterImage;
+    String posterImage;
     String plot;
     double rating;
     String releaseDate;
@@ -22,11 +22,15 @@ public class Movie {
      * @param rating
      * @param releaseDate
      */
-    public Movie(String title, int posterImage, String plot, double rating, String releaseDate) {
+    public Movie(String title, String posterImage, String plot, double rating, String releaseDate) {
         this.title = title;
         this.posterImage = posterImage;
         this.plot = plot;
         this.rating = rating;
         this.releaseDate = releaseDate;
+    }
+
+    public String toString() {
+        return "Movie: " + title;
     }
 }
