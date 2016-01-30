@@ -8,7 +8,6 @@ import android.app.Fragment;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.BuildConfig;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +25,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by atulep on 1/23/2016.
@@ -34,6 +32,7 @@ import java.util.Arrays;
 public class MainFragment extends Fragment {
 
     MoviePosterAdapter adapter;
+    String defaultSort = "popularity.desc";
     // for temporary purposes in developement
 
     ArrayList<Movie> movieList = new ArrayList<Movie>();
@@ -65,6 +64,8 @@ public class MainFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.gridfragment_main, container, false);
         //adapter = new MoviePosterAdapter(getActivity(), Arrays.asList(list));
         GridView grid = (GridView) rootView.findViewById(R.id.gridView_main);
+        FetchMovieDataTask task = new FetchMovieDataTask();
+        task.execute(defaultSort);
         grid.setAdapter(adapter);
         return rootView;
     }
@@ -79,7 +80,7 @@ public class MainFragment extends Fragment {
             BufferedReader reader = null;
             String typeOfSort = params[0];// which sort to perform
             // Will contain the raw JSON response as a string.
-            String movieJsonStr = null;
+            String movieJsonStr;
 
             try {
                 // Construct the URL for the OpenWeatherMap query
@@ -93,12 +94,18 @@ public class MainFragment extends Fragment {
                 final String QUERY_PARAM = "sort_by=";
                 final String APPID_PARAM = "APPID";
 
+                Uri.Builder builtUrl = new Uri.Builder();
+
                 Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
                         .appendQueryParameter(QUERY_PARAM, typeOfSort)
-                        .appendQueryParameter(APPID_PARAM, BuildConfig.)
+                        .appendQueryParameter(APPID_PARAM, edu.boisestate.azamattulepbergenovu.popularmovies.BuildConfig.MOVIE_DB_API_KEY)
                         .build();
 
                 URL url = new URL(builtUri.toString());
+
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
 
                 // Read the input stream into a String
                 InputStream inputStream = urlConnection.getInputStream();
@@ -130,7 +137,7 @@ public class MainFragment extends Fragment {
                 //TODO: Implement parcelable too!
                 try {
                     // This one :-) here
-                    getWeatherDataFromJson(movieJsonStr, 7);
+                    getWeatherDataFromJson(movieJsonStr);
                 } catch (org.json.JSONException e) {
                     Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
                     System.exit(1);
@@ -163,7 +170,7 @@ public class MainFragment extends Fragment {
          * Fortunately parsing is easy:  constructor takes the JSON string and converts it
          * into an Object hierarchy for us.
          */
-        private void getWeatherDataFromJson(String movieJsonStr, int numDays)
+        private void getWeatherDataFromJson(String movieJsonStr)
                 throws JSONException {
 
             // These are the names of the JSON objects that need to be extracted.

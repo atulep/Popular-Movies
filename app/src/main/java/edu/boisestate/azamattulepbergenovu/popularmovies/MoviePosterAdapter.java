@@ -1,6 +1,7 @@
 package edu.boisestate.azamattulepbergenovu.popularmovies;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,6 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
     public View getView(int position, View convertView, ViewGroup parent) {
         // Gets the AndroidFlavor object from the ArrayAdapter at the appropriate position
         Movie movie = getItem(position);
-
         // Adapters recycle views to AdapterViews.
         // If this is a new View object we're getting, then inflate the layout.
         // If not, this view already has the layout inflated from a previous call to getView,
@@ -52,13 +52,8 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
 
         ImageView posterView = (ImageView) convertView.findViewById(R.id.movie_poster);
         Picasso.with(this.getContext()).load(" http://image.tmdb.org/t/p/w185" + movie.posterImage).into(posterView);
-
 //
-//        Log.v(LOG_TAG, "*******MOVIE_POSTER " + movie.posterImage);
-        //posterView.setImageResource(movie.posterImage);
-
+        Log.v(LOG_TAG, "*******MOVIE_POSTER " + movie.posterImage);
         return convertView;
-
     }
-
 }
