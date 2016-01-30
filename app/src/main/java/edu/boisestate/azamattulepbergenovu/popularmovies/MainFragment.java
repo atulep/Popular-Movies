@@ -62,7 +62,7 @@ public class MainFragment extends Fragment {
         //Get a view from a GridView and return it.
 
         View rootView = inflater.inflate(R.layout.gridfragment_main, container, false);
-        //adapter = new MoviePosterAdapter(getActivity(), Arrays.asList(list));
+        adapter = new MoviePosterAdapter(getActivity(), movieList);
         GridView grid = (GridView) rootView.findViewById(R.id.gridView_main);
         FetchMovieDataTask task = new FetchMovieDataTask();
         task.execute(defaultSort);
@@ -92,7 +92,7 @@ public class MainFragment extends Fragment {
                 final String MOVIE_BASE_URL =
                         "http://api.themoviedb.org/3/discover/movie?";
                 final String QUERY_PARAM = "sort_by=";
-                final String APPID_PARAM = "APPID";
+                final String APPID_PARAM = "api_key";
 
                 Uri.Builder builtUrl = new Uri.Builder();
 
