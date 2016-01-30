@@ -1,12 +1,13 @@
 package edu.boisestate.azamattulepbergenovu.popularmovies;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -50,8 +51,11 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
         // Sets the image resource to this ImageView.
 
         ImageView posterView = (ImageView) convertView.findViewById(R.id.movie_poster);
-        Log.v(LOG_TAG, "*******MOVIE_POSTER " + movie.posterImage);
-        posterView.setImageResource(movie.posterImage);
+        Picasso.with(this.getContext()).load(" http://image.tmdb.org/t/p/w185" + movie.posterImage).into(posterView);
+
+//
+//        Log.v(LOG_TAG, "*******MOVIE_POSTER " + movie.posterImage);
+        //posterView.setImageResource(movie.posterImage);
 
         return convertView;
 

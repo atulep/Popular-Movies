@@ -42,3 +42,5 @@ project.properties
 .gradle
 build/
 
+## Drawable folder that I used in debugging
+app/src/main/res/drawable/

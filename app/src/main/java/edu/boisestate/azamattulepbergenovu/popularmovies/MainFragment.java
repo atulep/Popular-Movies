@@ -8,6 +8,7 @@ import android.app.Fragment;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.BuildConfig;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,40 +25,28 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by atulep on 1/23/2016.
  */
 public class MainFragment extends Fragment {
 
+    MoviePosterAdapter adapter;
     // for temporary purposes in developement
-    String tempPlot = "This is ";
-    String tempDate = "01/26/2015";
-    //
 
     ArrayList<Movie> movieList = new ArrayList<Movie>();
-    //Hard coded list of movies.
-    Movie[] list = {
-      new Movie("Avatar", R.drawable.avatar, tempPlot + "Avatar", 5.0, tempDate),
-      new Movie("Avengers", R.drawable.avengers, tempPlot + "Avengers", 5.0, tempDate),
-      new Movie("Grey", R.drawable.grey, tempPlot + "Grey", 5.0, tempDate),
-      //new Movie("Iron Man", R.drawable.iron_man, tempPlot + "Iron Man", 5.0, tempDate),
-      //new Movie("Minions", R.drawable.minions, tempPlot +"Minions", 5.0, tempDate)
-    };
 
-    // int posterImage, String plot, double rating, String releaseDate
     /**
      * Pubic no-argument constructor.
      */
-    public MainFragment () {
+    public MainFragment() {
     }
 
     /**
      * Not sure if I need to define this method.
+     *
      * @param savedInstanceState
      */
     public void onCreate(Bundle savedInstanceState) {
@@ -74,16 +63,16 @@ public class MainFragment extends Fragment {
         //Get a view from a GridView and return it.
 
         View rootView = inflater.inflate(R.layout.gridfragment_main, container, false);
-        MoviePosterAdapter adapter = new MoviePosterAdapter(getActivity(), Arrays.asList(list));
+        //adapter = new MoviePosterAdapter(getActivity(), Arrays.asList(list));
         GridView grid = (GridView) rootView.findViewById(R.id.gridView_main);
         grid.setAdapter(adapter);
         return rootView;
     }
 
-    public class FetchMovieDataTask extends AsyncTask<Void, Void, Void> {
+    public class FetchMovieDataTask extends AsyncTask<String, Void, Void> {
         private String LOG_TAG = this.getClass().getSimpleName();
 
-        public Void doInBackground(Void ... params) {
+        public Void doInBackground(String... params) {
             // These two need to be declared outside the try/catch
             // so that they can be closed in the finally block.
             HttpURLConnection urlConnection = null;
@@ -106,7 +95,7 @@ public class MainFragment extends Fragment {
 
                 Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
                         .appendQueryParameter(QUERY_PARAM, typeOfSort)
-                        .appendQueryParameter(APPID_PARAM, BuildConfig.MOVIE_DB_API_KEY)
+                        .appendQueryParameter(APPID_PARAM, BuildConfig.)
                         .build();
 
                 URL url = new URL(builtUri.toString());
@@ -141,7 +130,7 @@ public class MainFragment extends Fragment {
                 //TODO: Implement parcelable too!
                 try {
                     // This one :-) here
-                    simplifiedForecast = getWeatherDataFromJson(movieJsonStr, 7);
+                    getWeatherDataFromJson(movieJsonStr, 7);
                 } catch (org.json.JSONException e) {
                     Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
                     System.exit(1);
@@ -164,13 +153,13 @@ public class MainFragment extends Fragment {
                     }
                 }
             }
-            return simplifiedForecast;
+            return null;
         }
-        
+
         /**
          * Take the String representing the complete forecast in JSON Format and
          * pull out the data we need to construct the Strings needed for the wireframes.
-         *
+         * <p/>
          * Fortunately parsing is easy:  constructor takes the JSON string and converts it
          * into an Object hierarchy for us.
          */
@@ -178,8 +167,8 @@ public class MainFragment extends Fragment {
                 throws JSONException {
 
             // These are the names of the JSON objects that need to be extracted.
-            final String OMD_TITLE= "original_title";
-            final String OMD_POSTER= "poster_path";
+            final String OMD_TITLE = "original_title";
+            final String OMD_POSTER = "poster_path";
             final String OMD_PLOT = "overview";
             final String OMD_RATING = "vote_average";
             final String OMD_RELEASE = "release_date";
@@ -188,21 +177,24 @@ public class MainFragment extends Fragment {
             JSONObject forecastJson = new JSONObject(movieJsonStr);
             JSONArray movieArray = forecastJson.getJSONArray(OMD_RESULTS);
 
-            for(int i = 0; i < movieArray.length(); i++) {
+            for (int i = 0; i < movieArray.length(); i++) {
                 // Get the JSON object representing the day
                 JSONObject movie = movieArray.getJSONObject(i);
                 movieList.add(new Movie(movie.getString(OMD_TITLE), movie.getString(OMD_POSTER), movie.getString(OMD_PLOT)
-                , movie.getDouble(OMD_RATING), movie.getString(OMD_RELEASE)));
+                        , movie.getDouble(OMD_RATING), movie.getString(OMD_RELEASE)));
             }
 
-
-            for (int i = 0; i < movieList.size(); i ++) {
+            for (int i = 0; i < movieList.size(); i++) {
                 Log.v(LOG_TAG, "PRINTING" + movieList.get(i));
             }
         }
 
+        protected void onPostExecute(Void result) {
+            adapter.addAll(movieList);
+        }
+        // END OF ASYNC TASK
     }
-    // END OF ASYNC TASK
-    }
+}
+
 //END OF FRAGMENT
 
