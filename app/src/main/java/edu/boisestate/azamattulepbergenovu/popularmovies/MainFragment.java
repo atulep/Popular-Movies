@@ -103,6 +103,7 @@ public class MainFragment extends Fragment {
 
                 URL url = new URL(builtUri.toString());
 
+
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
