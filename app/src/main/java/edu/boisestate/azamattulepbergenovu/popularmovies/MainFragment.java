@@ -197,7 +197,7 @@ public class MainFragment extends Fragment {
         }
 
         protected void onPostExecute(Void result) {
-            adapter.addAll(movieList);
+            //adapter.addAll(movieList);
         }
         // END OF ASYNC TASK
     }
