@@ -6,9 +6,11 @@
     of 185dp. This is a suggested number for most phones listed in Implementation Guide.
     However, what about tablets?-->
     <ImageView
-        android:layout_width="185dp"
-        android:layout_height="185dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id ="@+id/movie_poster"
-        android:background="#ff0000" />
-
+        android:background="#ff0000"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        />
 </FrameLayout>

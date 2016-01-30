@@ -49,10 +49,8 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
         }
         // Programmatically maps posterView to the layout I defined.
         // Sets the image resource to this ImageView.
-
         ImageView posterView = (ImageView) convertView.findViewById(R.id.movie_poster);
         Picasso.with(this.getContext()).load("http://image.tmdb.org/t/p/w185" + movie.posterImage).into(posterView);
-//
         Log.v(LOG_TAG, "*******MOVIE_POSTER " + "http://image.tmdb.org/t/p/w185" + movie.posterImage);
         return convertView;
     }
