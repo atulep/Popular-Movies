@@ -27,6 +27,7 @@ public class SettingsActivity extends PreferenceFragment
         // For all preferences, attach an OnPreferenceChangeListener so the UI summary can be
         // updated when the preference changes.
         // TODO: Add preferences
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.settings_default_key)));
     }
 
     /**
