@@ -1,6 +1,18 @@
 <resources>
-
     <string name="app_name">Pop Movies</string>
-    <string name="settings_sort">Sort</string>
+
+    <!-- Settings -->
+    <string name="settings_sort">Sort by</string>
+    <string name="settings_default_key">sort</string>
+    <string name="settings_default_value">Popularity</string>
+
+    <!-- Available sorting labels-->
+    <string name="settings_sort_label_popularity">Popularity</string>
+    <string name="settings_sort_label_rating">Rating</string>
+
+    <!-- Available sorting options-->
+    <string name="settings_sort_option_popularity">popularity.desc</string>
+    <string name="settings_sort_option_rating">vote_average.desc</string>
+
 </resources>
 

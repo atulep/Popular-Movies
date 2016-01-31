@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:title="@string/settings_sort"
+        android:key="@string/settings_default_key"
+        android:defaultValue="@string/settings_default_value"
+        android:entries="@array/unit_types"
+        android:dialogTitle="Temperature Units"
+        android:entryValues="@array/unit_types_values"
+        android:summary="@string/temp_units_default"
+        />
+</PreferenceScreen>
