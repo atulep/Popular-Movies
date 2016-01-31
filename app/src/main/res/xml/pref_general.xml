@@ -3,10 +3,10 @@
     <ListPreference
         android:title="@string/settings_sort"
         android:key="@string/settings_default_key"
-        android:defaultValue="@string/settings_default_value"
-        android:entries="@array/unit_types"
-        android:dialogTitle="Temperature Units"
-        android:entryValues="@array/unit_types_values"
-        android:summary="@string/temp_units_default"
+        android:defaultValue="@string/settings_sort_option_popularity"
+        android:entries="@array/settings_sort_labels"
+        android:dialogTitle="Sort By"
+        android:entryValues="@array/settings_sort_options"
+        android:summary="@string/settings_default_value"
         />
 </PreferenceScreen>
