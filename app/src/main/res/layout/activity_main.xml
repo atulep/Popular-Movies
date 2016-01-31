@@ -6,13 +6,9 @@
  I ended up not having a layoug at all and just having a single fragment.
  I am not sure if there is a recommended way?
  -->
-
-<fragment
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id ="@+id/activity_fragment"
-    android:name="edu.boisestate.azamattulepbergenovu.popularmovies.MainFragment"
-    tools:layout="@layout/gridfragment_main">
-</fragment>
+    android:id="@+id/main_container"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    tools:context=".MainActivity" tools:ignore="MergeRootFrame">
+</FrameLayout>
