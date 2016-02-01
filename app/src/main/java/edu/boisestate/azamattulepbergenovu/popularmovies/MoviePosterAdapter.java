@@ -25,7 +25,6 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
      */
     public MoviePosterAdapter(Context context, List<Movie> movieList) {
         super(context, 0, movieList);
-
     }
 
     /**
@@ -36,7 +35,6 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
      * @return
      */
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Gets the AndroidFlavor object from the ArrayAdapter at the appropriate position
         Movie movie = getItem(position);
         // Adapters recycle views to AdapterViews.
         // If this is a new View object we're getting, then inflate the layout.
@@ -50,7 +48,6 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
         // Sets the image resource to this ImageView.
         ImageView posterView = (ImageView) convertView.findViewById(R.id.movie_poster);
         Picasso.with(this.getContext()).load("http://image.tmdb.org/t/p/w185" + movie.posterImage).into(posterView);
-        //Log.v(LOG_TAG, "*******MOVIE_POSTER " + "http://image.tmdb.org/t/p/w185" + movie.posterImage);
         return convertView;
     }
 }

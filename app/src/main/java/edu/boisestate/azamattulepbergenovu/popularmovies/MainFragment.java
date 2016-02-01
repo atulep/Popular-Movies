@@ -36,10 +36,7 @@ public class MainFragment extends Fragment {
 
     String LOG_TAG = getClass().getSimpleName();
     MoviePosterAdapter adapter;
-    //String defaultSort = "popularity.desc";
-    // for temporary purposes in developement
 
-   // ArrayList<Movie> movieList = new ArrayList<Movie>();
     /**
      * Pubic no-argument constructor.
      */
@@ -57,17 +54,10 @@ public class MainFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //TODO: Need to create create an AdapterView -- GridView. Bind the MoviePosterAdapter to it.
-        //Return the resulted view.
-        //Need to check if savedInstanceState exists, if so then inflate it.
-        //Otherwise, need to modify container to be a GridView.
-        //Create an adapter to bind it a gridview.
-        //Get a view from a GridView and return it.
 
         View rootView = inflater.inflate(R.layout.gridfragment_main, container, false);
         adapter = new MoviePosterAdapter(getActivity(), new ArrayList<Movie>());
         GridView grid = (GridView) rootView.findViewById(R.id.gridView_main);
-        //updateMovies();
         grid.setAdapter(adapter);
         return rootView;
     }
@@ -80,7 +70,6 @@ public class MainFragment extends Fragment {
     public void updateMovies() {
         FetchMovieDataTask task = new FetchMovieDataTask();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        Log.v(LOG_TAG, "SETTINGS KEY **** " +prefs.getString(getString(R.string.settings_key), getString(R.string.settings_default_value)));
         task.execute(prefs.getString(getString(R.string.settings_key), getString(R.string.settings_default_value)));
     }
 
@@ -88,28 +77,18 @@ public class MainFragment extends Fragment {
         private String LOG_TAG = this.getClass().getSimpleName();
 
         public List<Movie> doInBackground(String... params) {
-            // These two need to be declared outside the try/catch
-            // so that they can be closed in the finally block.
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
             String typeOfSort = params[0];// which sort to perform
-            // Will contain the raw JSON response as a string.
             String movieJsonStr;
             List<Movie> movieList = null;
 
             try {
-                // Construct the URL for the OpenWeatherMap query
-                // Possible parameters are available at OWM's forecast API page, at
-                // http://openweathermap.org/API#forecast
-                // Construct the URL for the OpenWeatherMap query
-                // Possible parameters are avaiable at OWM's forecast API page, at
-                // http://openweathermap.org/API#forecast
+
                 final String MOVIE_BASE_URL =
                         "http://api.themoviedb.org/3/discover/movie?";
                 final String QUERY_PARAM = "sort_by";
                 final String APPID_PARAM = "api_key";
-
-                Uri.Builder builtUrl = new Uri.Builder();
 
                 Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
                         .appendQueryParameter(QUERY_PARAM, typeOfSort)
@@ -118,7 +97,6 @@ public class MainFragment extends Fragment {
 
                 URL url = new URL(builtUri.toString());
 
-                Log.v(LOG_TAG, "URL " + url);
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
@@ -126,33 +104,26 @@ public class MainFragment extends Fragment {
                 // Read the input stream into a String
                 InputStream inputStream = urlConnection.getInputStream();
                 StringBuffer buffer = new StringBuffer();
+
                 if (inputStream == null) {
                     // Nothing to do.
                     return null;
                 }
+
                 reader = new BufferedReader(new InputStreamReader(inputStream));
 
                 String line;
+
                 while ((line = reader.readLine()) != null) {
-                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                    // But it does make debugging a *lot* easier if you print out the completed
-                    // buffer for debugging.
                     buffer.append(line + "\n");
                 }
 
                 if (buffer.length() == 0) {
-                    // Stream was empty.  No point in parsing.
                     return null;
                 }
                 movieJsonStr = buffer.toString();
-                Log.v(LOG_TAG, "JSON Parsed String:" + movieJsonStr);
-                //TODO: Insert the rest of code regarding JSON parsing.
-                //TODO: After that I can simply fetch JSON objects and create views with images.
-                //TODO: Then I can create a details activity.
-                //TODO: Then I can add preferences to sort movies.
-                //TODO: Implement parcelable too!
+
                 try {
-                    // This one :-) here
                     movieList = getWeatherDataFromJson(movieJsonStr);
                 } catch (org.json.JSONException e) {
                     Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
@@ -161,8 +132,6 @@ public class MainFragment extends Fragment {
 
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attempting
-                // to parse it.
                 movieJsonStr = null;
             } finally {
                 if (urlConnection != null) {
@@ -216,9 +185,7 @@ public class MainFragment extends Fragment {
             adapter.addAll(list);
 
         }
-        // END OF ASYNC TASK
     }
 }
 
-//END OF FRAGMENT
 
