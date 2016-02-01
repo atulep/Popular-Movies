@@ -27,18 +27,19 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by atulep on 1/23/2016.
  */
 public class MainFragment extends Fragment {
 
+    String LOG_TAG = getClass().getSimpleName();
     MoviePosterAdapter adapter;
     //String defaultSort = "popularity.desc";
     // for temporary purposes in developement
 
-    ArrayList<Movie> movieList = new ArrayList<Movie>();
-
+   // ArrayList<Movie> movieList = new ArrayList<Movie>();
     /**
      * Pubic no-argument constructor.
      */
@@ -64,7 +65,7 @@ public class MainFragment extends Fragment {
         //Get a view from a GridView and return it.
 
         View rootView = inflater.inflate(R.layout.gridfragment_main, container, false);
-        adapter = new MoviePosterAdapter(getActivity(), movieList);
+        adapter = new MoviePosterAdapter(getActivity(), new ArrayList<Movie>());
         GridView grid = (GridView) rootView.findViewById(R.id.gridView_main);
         //updateMovies();
         grid.setAdapter(adapter);
@@ -79,13 +80,14 @@ public class MainFragment extends Fragment {
     public void updateMovies() {
         FetchMovieDataTask task = new FetchMovieDataTask();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        Log.v(LOG_TAG, "SETTINGS KEY **** " +prefs.getString(getString(R.string.settings_key), getString(R.string.settings_default_value)));
         task.execute(prefs.getString(getString(R.string.settings_key), getString(R.string.settings_default_value)));
     }
 
-    public class FetchMovieDataTask extends AsyncTask<String, Void, Void> {
+    public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
         private String LOG_TAG = this.getClass().getSimpleName();
 
-        public Void doInBackground(String... params) {
+        public List<Movie> doInBackground(String... params) {
             // These two need to be declared outside the try/catch
             // so that they can be closed in the finally block.
             HttpURLConnection urlConnection = null;
@@ -93,6 +95,7 @@ public class MainFragment extends Fragment {
             String typeOfSort = params[0];// which sort to perform
             // Will contain the raw JSON response as a string.
             String movieJsonStr;
+            List<Movie> movieList = null;
 
             try {
                 // Construct the URL for the OpenWeatherMap query
@@ -103,7 +106,7 @@ public class MainFragment extends Fragment {
                 // http://openweathermap.org/API#forecast
                 final String MOVIE_BASE_URL =
                         "http://api.themoviedb.org/3/discover/movie?";
-                final String QUERY_PARAM = "sort_by=";
+                final String QUERY_PARAM = "sort_by";
                 final String APPID_PARAM = "api_key";
 
                 Uri.Builder builtUrl = new Uri.Builder();
@@ -150,7 +153,7 @@ public class MainFragment extends Fragment {
                 //TODO: Implement parcelable too!
                 try {
                     // This one :-) here
-                    getWeatherDataFromJson(movieJsonStr);
+                    movieList = getWeatherDataFromJson(movieJsonStr);
                 } catch (org.json.JSONException e) {
                     Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
                     System.exit(1);
@@ -173,7 +176,7 @@ public class MainFragment extends Fragment {
                     }
                 }
             }
-            return null;
+            return movieList;
         }
 
         /**
@@ -183,7 +186,7 @@ public class MainFragment extends Fragment {
          * Fortunately parsing is easy:  constructor takes the JSON string and converts it
          * into an Object hierarchy for us.
          */
-        private void getWeatherDataFromJson(String movieJsonStr)
+        private List<Movie> getWeatherDataFromJson(String movieJsonStr)
                 throws JSONException {
 
             // These are the names of the JSON objects that need to be extracted.
@@ -194,6 +197,7 @@ public class MainFragment extends Fragment {
             final String OMD_RELEASE = "release_date";
             final String OMD_RESULTS = "results";
 
+            List<Movie> movieList = new ArrayList<>();
             JSONObject forecastJson = new JSONObject(movieJsonStr);
             JSONArray movieArray = forecastJson.getJSONArray(OMD_RESULTS);
 
@@ -204,14 +208,13 @@ public class MainFragment extends Fragment {
                         , movie.getDouble(OMD_RATING), movie.getString(OMD_RELEASE)));
             }
 
-            for (int i = 0; i < movieList.size(); i++) {
-                Log.v(LOG_TAG, "PRINTING" + movieList.get(i));
-            }
+            return movieList;
         }
 
-        protected void onPostExecute(Void result) {
-            //adapter.addAll(movieList);
-            
+        protected void onPostExecute(List<Movie> list) {
+            adapter.clear();
+            adapter.addAll(list);
+
         }
         // END OF ASYNC TASK
     }
