@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <ListPreference
         android:title="@string/settings_sort"
-        android:key="@string/settings_default_key"
+        android:key="@string/settings_key"
         android:defaultValue="@string/settings_sort_option_popularity"
         android:entries="@array/settings_sort_labels"
         android:dialogTitle="Sort By"

@@ -5,9 +5,11 @@ android.app.Fragment instead android.support.v4.fragment.
  */
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +34,7 @@ import java.util.ArrayList;
 public class MainFragment extends Fragment {
 
     MoviePosterAdapter adapter;
-    String defaultSort = "popularity.desc";
+    //String defaultSort = "popularity.desc";
     // for temporary purposes in developement
 
     ArrayList<Movie> movieList = new ArrayList<Movie>();
@@ -64,10 +66,20 @@ public class MainFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.gridfragment_main, container, false);
         adapter = new MoviePosterAdapter(getActivity(), movieList);
         GridView grid = (GridView) rootView.findViewById(R.id.gridView_main);
-        FetchMovieDataTask task = new FetchMovieDataTask();
-        task.execute(defaultSort);
+        //updateMovies();
         grid.setAdapter(adapter);
         return rootView;
+    }
+
+    public void onStart() {
+        updateMovies();
+        super.onStart();
+    }
+
+    public void updateMovies() {
+        FetchMovieDataTask task = new FetchMovieDataTask();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        task.execute(prefs.getString(getString(R.string.settings_key), getString(R.string.settings_default_value)));
     }
 
     public class FetchMovieDataTask extends AsyncTask<String, Void, Void> {
@@ -103,7 +115,7 @@ public class MainFragment extends Fragment {
 
                 URL url = new URL(builtUri.toString());
 
-
+                Log.v(LOG_TAG, "URL " + url);
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
@@ -199,6 +211,7 @@ public class MainFragment extends Fragment {
 
         protected void onPostExecute(Void result) {
             //adapter.addAll(movieList);
+            
         }
         // END OF ASYNC TASK
     }

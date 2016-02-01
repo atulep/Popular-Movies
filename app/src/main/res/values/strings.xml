@@ -3,7 +3,7 @@
 
     <!-- Settings -->
     <string name="settings_sort">Sort by</string>
-    <string name="settings_default_key">sort</string>
+    <string name="settings_key">sort</string>
     <string name="settings_default_value">Popularity</string>
 
     <!-- Available sorting labels-->
