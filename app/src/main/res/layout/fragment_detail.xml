@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:weightSum="1"
+    android:orientation="vertical"
+    android:background="#100101">
+
+    <ImageView
+        android:layout_width="179dp"
+        android:layout_height="162dp"
+        android:id="@+id/imageView"
+        android:layout_gravity="center_horizontal"
+        android:background="#ffffff"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:layout_width="172dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/textView"
+        android:layout_weight="0.10"
+        android:layout_marginTop="30dp"
+        android:background="#ffffff"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="168dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/textView2"
+        android:layout_weight="0.10"
+        android:layout_marginTop="30dp"
+        android:background="#ffffff"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="165dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/textView3"
+        android:layout_weight="0.10"
+        android:layout_marginTop="30dp"
+        android:background="#ffffff"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="360dp"
+        android:layout_height="53dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="&quot;In the 1820s, a frontiersman, Hugh Glass, sets out on a path of vengeance against those who left him for dead after a bear mauling."
+        android:id="@+id/textView4"
+        android:layout_marginTop="20dp"
+        android:background="#ffffff"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>
