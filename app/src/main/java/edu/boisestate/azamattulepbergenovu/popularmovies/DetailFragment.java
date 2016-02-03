@@ -22,6 +22,11 @@ public class DetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState,) {
        // super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+        //TODO: May want to rewatch podcast on Parcelable and implement my movie object as parcelable to send it to DetailActivity.
+        //TODO: Then I can extract all information from the Parcelable object.
+
+        //TODO: However, probably the first step would be to simply use serializable just to test that my details layout
+        //TODO: works properly. 
         return rootView;
     }
 
