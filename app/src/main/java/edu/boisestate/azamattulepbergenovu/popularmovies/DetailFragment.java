@@ -26,7 +26,7 @@ public class DetailFragment extends Fragment {
         //TODO: Then I can extract all information from the Parcelable object.
 
         //TODO: However, probably the first step would be to simply use serializable just to test that my details layout
-        //TODO: works properly. 
+        //TODO: works properly.
         return rootView;
     }
 
