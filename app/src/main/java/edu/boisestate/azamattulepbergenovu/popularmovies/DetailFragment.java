@@ -19,7 +19,7 @@ public class DetailFragment extends Fragment {
         super.onCreate(savedInstanceBundle);
     }
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState,) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
        // super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         //TODO: May want to rewatch podcast on Parcelable and implement my movie object as parcelable to send it to DetailActivity.
@@ -29,6 +29,5 @@ public class DetailFragment extends Fragment {
         //TODO: works properly.
         return rootView;
     }
-
 
 }

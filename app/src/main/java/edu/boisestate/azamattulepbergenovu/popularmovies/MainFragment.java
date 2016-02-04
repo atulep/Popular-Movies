@@ -5,6 +5,7 @@ android.app.Fragment instead android.support.v4.fragment.
  */
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import org.json.JSONArray;
@@ -59,6 +61,15 @@ public class MainFragment extends Fragment {
         adapter = new MoviePosterAdapter(getActivity(), new ArrayList<Movie>());
         GridView grid = (GridView) rootView.findViewById(R.id.gridView_main);
         grid.setAdapter(adapter);
+
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent newActivityIntent = new Intent(getActivity(), DetailActivity.class);
+                startActivity(newActivityIntent);
+            }
+
+        });
         return rootView;
     }
 
