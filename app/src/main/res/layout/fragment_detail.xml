@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#a5a5a5"
+    android:background="#F2922C"
     android:id="@+id/details_outerLayout">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/details_imageView"
-        android:background="#ffffff"
+        android:background="#F2922C"
         android:layout_weight="1"
         android:scaleType="fitCenter"
         android:layout_gravity="center_horizontal" />
@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
+        android:background="#2C39F2"
         android:textAlignment="center">
 
         <TextView
