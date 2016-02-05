@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="#a5a5a5"
-    android:id="@+id/details_outerLayout">
+    android:id="@+id/details_outerLayout"
+    android:weightSum="1">
+
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/details_imageView"
-        android:layout_gravity="center_horizontal"
         android:background="#ffffff"
-        android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
-       />
+        />
 
 <LinearLayout
-    android:layout_height = "wrap_content"
+    android:layout_height = "match_parent"
     android:layout_width="match_parent"
     android:orientation="horizontal"
     android:background="#ff0000"
@@ -23,13 +23,13 @@
     >
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:id="@+id/details_middleInnerLayout">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
             android:id="@+id/details_originalTitle"
@@ -37,8 +37,8 @@
            />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
             android:id="@+id/details_releaseDate"
@@ -48,7 +48,7 @@
     </LinearLayout>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"

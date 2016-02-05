@@ -2,10 +2,12 @@ package edu.boisestate.azamattulepbergenovu.popularmovies;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by atulep on 2/3/2016.
@@ -28,8 +30,15 @@ public class DetailFragment extends Fragment {
         //TODO: However, probably the first step would be to simply use serializable just to test that my details layout
         //TODO: works properly.
         Movie obj = (Movie) getActivity().getIntent().getSerializableExtra("Movie");
-        Log.v(LOG_TAG, obj.toString());
+        updateMovieDetails(rootView, obj);
         return rootView;
     }
+
+    public void updateMovieDetails(View view, Movie movie){
+        ImageView poster = (ImageView) view.findViewById(R.id.details_imageView);
+        Picasso.with(this.getActivity()).load("http://image.tmdb.org/t/p/w154" + movie.posterImage).into(poster);
+    }
+
+
 
 }
