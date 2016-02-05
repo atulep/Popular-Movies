@@ -1,9 +1,11 @@
 package edu.boisestate.azamattulepbergenovu.popularmovies;
 
+import java.io.Serializable;
+
 /**
  * Created by atulep on 1/24/2016.
  */
-public class Movie {
+public class Movie implements Serializable {
     String title;
     String posterImage;
     String plot;

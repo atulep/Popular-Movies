@@ -66,6 +66,7 @@ public class MainFragment extends Fragment {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent newActivityIntent = new Intent(getActivity(), DetailActivity.class);
+                newActivityIntent.putExtra("Movie", (Movie) parent.getItemAtPosition(position));
                 startActivity(newActivityIntent);
             }
 
