@@ -3,19 +3,18 @@
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="#a5a5a5"
-    android:id="@+id/details_outerLayout"
-    android:weightSum="1">
+    android:id="@+id/details_outerLayout">
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/details_imageView"
         android:background="#ffffff"
         android:adjustViewBounds="true"
-        />
+        android:scaleType="centerCrop" />
 
 <LinearLayout
-    android:layout_height = "match_parent"
+    android:layout_height = "wrap_content"
     android:layout_width="match_parent"
     android:orientation="horizontal"
     android:background="#ff0000"
@@ -23,33 +22,34 @@
     >
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/details_middleInnerLayout">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/details_originalTitle"
-            android:background="#ffffff"
-           />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
             android:id="@+id/details_releaseDate"
             android:background="#ffffff"
             />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/details_originalTitle"
+            android:background="#ffffff"
+           />
+
     </LinearLayout>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/details_rating"
@@ -59,7 +59,7 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:text="&quot;In the 1820s, a frontiersman, Hugh Glass, sets out on a path of vengeance against those who left him for dead after a bear mauling."
