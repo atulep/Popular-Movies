@@ -1,7 +1,7 @@
 package edu.boisestate.azamattulepbergenovu.popularmovies;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -15,4 +15,5 @@ public class DetailActivity extends AppCompatActivity {
                     .commit();
         }
     }
+
 }
