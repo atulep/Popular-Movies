@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -38,8 +39,17 @@ public class DetailFragment extends Fragment {
         ImageView poster = (ImageView) view.findViewById(R.id.details_imageView);
         Picasso.with(this.getActivity()).load("http://image.tmdb.org/t/p/w154" + movie.posterImage).into(poster);
 
-        
+        TextView title = (TextView) view.findViewById(R.id.details_title);
+        title.setText(movie.title);
 
+        TextView release = (TextView) view.findViewById(R.id.details_release);
+        release.setText(movie.releaseDate);
+
+        TextView rating = (TextView) view.findViewById(R.id.details_rating);
+        rating.setText(new Double(movie.rating).toString());
+
+        TextView plot = (TextView) view.findViewById(R.id.details_plot);
+        plot.setText(movie.plot);
     }
 
 
