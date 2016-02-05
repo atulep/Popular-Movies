@@ -12,61 +12,40 @@
         android:id="@+id/details_imageView"
         android:adjustViewBounds="true"
         android:background="#ffffff"
-        android:layout_weight="1" />
-
-<LinearLayout
-    android:layout_height = "wrap_content"
-    android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:background="#ff0000"
-    android:layout_weight="1"
-    android:id="@+id/details_middleLayout"
-    android:baselineAligned="false"
-    android:weightSum="3">
+        android:layout_weight="1"
+        android:layout_gravity="center_horizontal" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:id="@+id/details_middleInnerLayout">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/details_releaseDate"
-            android:background="#ffffff"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/details_originalTitle"
-            android:background="#ffffff"
-           />
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/details_rating"
-        android:background="#ffffff" />
-
-</LinearLayout>
-
-    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="&quot;In the 1820s, a frontiersman, Hugh Glass, sets out on a path of vengeance against those who left him for dead after a bear mauling."
-        android:id="@+id/textView4"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
         android:layout_weight="1"
-        android:background="#ffffff" />
+        android:gravity="center_vertical|center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/details_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/details_release" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/details_rating" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/details_plot" />
+    </LinearLayout>
 
 </LinearLayout>
