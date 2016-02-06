@@ -37,7 +37,7 @@ public class DetailFragment extends Fragment {
 
     public void updateMovieDetails(View view, Movie movie){
         ImageView poster = (ImageView) view.findViewById(R.id.details_imageView);
-        Picasso.with(this.getActivity()).load("http://image.tmdb.org/t/p/w154" + movie.posterImage).into(poster);
+        Picasso.with(this.getActivity()).load("http://image.tmdb.org/t/p/w185" + movie.posterImage).into(poster);
 
         TextView title = (TextView) view.findViewById(R.id.details_title);
         title.setText(movie.title);
