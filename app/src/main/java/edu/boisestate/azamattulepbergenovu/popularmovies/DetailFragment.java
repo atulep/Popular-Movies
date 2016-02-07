@@ -30,7 +30,7 @@ public class DetailFragment extends Fragment {
 
         //TODO: However, probably the first step would be to simply use serializable just to test that my details layout
         //TODO: works properly.
-        Movie obj = (Movie) getActivity().getIntent().getSerializableExtra("Movie");
+        Movie obj = (Movie) getActivity().getIntent().getParcelableExtra("Movie");
         updateMovieDetails(rootView, obj);
         return rootView;
     }

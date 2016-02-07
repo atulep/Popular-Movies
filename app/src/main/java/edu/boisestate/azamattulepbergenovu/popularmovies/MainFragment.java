@@ -38,6 +38,7 @@ public class MainFragment extends Fragment {
 
     String LOG_TAG = getClass().getSimpleName();
     MoviePosterAdapter adapter;
+    ArrayList<Movie> movieList;
 
     /**
      * Pubic no-argument constructor.
@@ -52,6 +53,12 @@ public class MainFragment extends Fragment {
      */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState == null || !savedInstanceState.containsKey("movies")) {
+            movieList = new ArrayList<Movie>();
+        }
+        else {
+            movieList = savedInstanceState.getParcelableArrayList("movies");
+        }
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,6 +84,12 @@ public class MainFragment extends Fragment {
     public void onStart() {
         updateMovies();
         super.onStart();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList("movies", movieList);
+        super.onSaveInstanceState(outState);
     }
 
     public void updateMovies() {
@@ -178,7 +191,10 @@ public class MainFragment extends Fragment {
             final String OMD_RELEASE = "release_date";
             final String OMD_RESULTS = "results";
 
-            List<Movie> movieList = new ArrayList<>();
+            if (!movieList.isEmpty()) {
+                movieList.clear();
+            }
+
             JSONObject forecastJson = new JSONObject(movieJsonStr);
             JSONArray movieArray = forecastJson.getJSONArray(OMD_RESULTS);
 
