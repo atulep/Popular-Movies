@@ -6,6 +6,9 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings.
@@ -29,6 +32,16 @@ public class SettingsActivity extends PreferenceFragment
         // TODO: Add preferences
         bindPreferenceSummaryToValue(findPreference(getString(R.string.settings_key)));
     }
+
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        view.setBackgroundColor(getResources().getColor(R.color.colorImageView));
+        return view;
+    }
+
+
 
     /**
      * Attaches a listener so the summary is always updated with the preference value.
