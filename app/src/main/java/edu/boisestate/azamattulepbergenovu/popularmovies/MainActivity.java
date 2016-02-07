@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_sort) {
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.main_container, new SettingsActivity());
+            fragmentTransaction.replace(R.id.main_container, new SettingsFragment());
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             return true;
