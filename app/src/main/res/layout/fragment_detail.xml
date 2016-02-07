@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/details_imageView"
-        android:background="#F2922C"
+        android:background="@color/colorImageView"
         android:layout_weight="1"
         android:scaleType="fitCenter"
         android:layout_gravity="center_horizontal" />
@@ -18,7 +18,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#2C39F2"
+        android:background="@color/colorPrimaryDark"
         android:textAlignment="center">
 
         <TextView
