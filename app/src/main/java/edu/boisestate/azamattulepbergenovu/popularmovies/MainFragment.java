@@ -46,11 +46,6 @@ public class MainFragment extends Fragment {
     public MainFragment() {
     }
 
-    /**
-     * Not sure if I need to define this method.
-     *
-     * @param savedInstanceState
-     */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(savedInstanceState == null || !savedInstanceState.containsKey("movies")) {
