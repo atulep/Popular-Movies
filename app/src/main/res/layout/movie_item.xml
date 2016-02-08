@@ -2,14 +2,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <!--Created an image poster with a "hard-coded" layout width and height
-    of 185dp. This is a suggested number for most phones listed in Implementation Guide.
-    However, what about tablets?-->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id ="@+id/movie_poster"
-        android:background="#ff0000"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         />

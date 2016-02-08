@@ -1,5 +1,19 @@
 <resources>
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!--Vertical margin I used in detailFragment-->
+    <dimen name="detailFragment_vertical_margin">20dp</dimen>
+
+    <!-- Text size of the movie title in detail fragment.-->
+    <dimen name="detailFragment_movieTitle_fontSize">20sp</dimen>
+
+    <!-- Medium text size for the details of the movie. -->
+    <dimen name="detailFragment_mediumFontSize">15sp</dimen>
+
+    <!-- Small text size for the details of the movie. -->
+    <dimen name="detailFragment_smallFontSize">13sp</dimen>
+
 </resources>

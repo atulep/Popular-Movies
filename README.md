@@ -2,7 +2,7 @@
 An Android app that allows to scroll through selection of latest movies and get details about certain movies. 
 
 ## How to use
-Download the source code. You will need to use your own API key for [database](https://www.themoviedb.org #link). 
+Download the source code. You will need to use your own API key for [database](https://www.themoviedb.org). 
 
 Next,
 

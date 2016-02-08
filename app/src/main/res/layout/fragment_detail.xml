@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F2922C"
     android:id="@+id/details_outerLayout">
 
     <ImageView
@@ -22,33 +21,32 @@
         android:textAlignment="center">
 
         <TextView
-            android:paddingTop="20dp"
+            android:paddingTop="@dimen/detailFragment_vertical_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Text"
-            android:textSize="20sp"
+            android:textSize="@dimen/detailFragment_movieTitle_fontSize"
             android:id="@+id/details_title" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Text"
-            android:textSize="15sp"
+            android:textSize="@dimen/detailFragment_mediumFontSize"
             android:id="@+id/details_release" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Text"
-            android:textSize="15sp"
+            android:textSize="@dimen/detailFragment_mediumFontSize"
             android:id="@+id/details_rating" />
 
         <TextView
-            android:paddingTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Text"
-            android:textSize="13sp"
+            android:textSize="@dimen/detailFragment_smallFontSize"
             android:id="@+id/details_plot" />
     </LinearLayout>
 
