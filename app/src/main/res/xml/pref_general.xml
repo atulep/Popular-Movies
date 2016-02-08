@@ -5,7 +5,7 @@
         android:key="@string/settings_key"
         android:defaultValue="@string/settings_sort_option_popularity"
         android:entries="@array/settings_sort_labels"
-        android:dialogTitle="Sort By"
+        android:dialogTitle="@string/settings_sort"
         android:entryValues="@array/settings_sort_options"
         android:summary="@string/settings_default_value"
         />

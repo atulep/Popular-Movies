@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Fragment containing main UI when app is launched.
+ *
  * Created by atulep on 1/23/2016.
  */
 public class MainFragment extends Fragment {
@@ -40,19 +42,16 @@ public class MainFragment extends Fragment {
     MoviePosterAdapter adapter;
     ArrayList<Movie> movieList;
 
-    /**
-     * Pubic no-argument constructor.
-     */
     public MainFragment() {
     }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState == null || !savedInstanceState.containsKey("movies")) {
+        if(savedInstanceState == null || !savedInstanceState.containsKey(getResources().getString(R.string.parcelable_movieList_key))) {
             movieList = new ArrayList<Movie>();
         }
         else {
-            movieList = savedInstanceState.getParcelableArrayList("movies");
+            movieList = savedInstanceState.getParcelableArrayList(getResources().getString(R.string.parcelable_movieList_key));
         }
     }
 
@@ -68,7 +67,7 @@ public class MainFragment extends Fragment {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent newActivityIntent = new Intent(getActivity(), DetailActivity.class);
-                newActivityIntent.putExtra("Movie", (Movie) parent.getItemAtPosition(position));
+                newActivityIntent.putExtra(getResources().getString(R.string.parcelable_movie_key), (Movie) parent.getItemAtPosition(position));
                 startActivity(newActivityIntent);
             }
 
@@ -83,17 +82,23 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArrayList("movies", movieList);
+        outState.putParcelableArrayList(getResources().getString(R.string.parcelable_movieList_key), movieList);
         super.onSaveInstanceState(outState);
     }
 
+    /**
+     * Spins of back thread to fetch data from network.
+     */
     public void updateMovies() {
         FetchMovieDataTask task = new FetchMovieDataTask();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         task.execute(prefs.getString(getString(R.string.settings_key), getString(R.string.settings_default_value)));
     }
 
-    public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
+    /**
+     * Service class to perform data fetching on back thread.
+     */
+    private class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
         private String LOG_TAG = this.getClass().getSimpleName();
 
         public List<Movie> doInBackground(String... params) {
@@ -144,7 +149,7 @@ public class MainFragment extends Fragment {
                 movieJsonStr = buffer.toString();
 
                 try {
-                    movieList = getWeatherDataFromJson(movieJsonStr);
+                    movieList = getMovieDataFromJson(movieJsonStr);
                 } catch (org.json.JSONException e) {
                     Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
                     System.exit(1);
@@ -168,14 +173,7 @@ public class MainFragment extends Fragment {
             return movieList;
         }
 
-        /**
-         * Take the String representing the complete forecast in JSON Format and
-         * pull out the data we need to construct the Strings needed for the wireframes.
-         * <p/>
-         * Fortunately parsing is easy:  constructor takes the JSON string and converts it
-         * into an Object hierarchy for us.
-         */
-        private List<Movie> getWeatherDataFromJson(String movieJsonStr)
+        private List<Movie> getMovieDataFromJson(String movieJsonStr)
                 throws JSONException {
 
             // These are the names of the JSON objects that need to be extracted.
@@ -206,7 +204,6 @@ public class MainFragment extends Fragment {
         protected void onPostExecute(List<Movie> list) {
             adapter.clear();
             adapter.addAll(list);
-
         }
     }
 }

@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--I am using FrameLayout because I will only have one component
- within it, which is GridView-->
-<!--I was debating whether to have a FrameLayout containing nothing, like
- in Sunshine.
- I ended up not having a layoug at all and just having a single fragment.
- I am not sure if there is a recommended way?
- -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_container"

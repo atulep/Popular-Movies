@@ -12,6 +12,8 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 /**
+ * Custom ArrayAdapter to handle data processing on the main UI.
+ *
  * Created by atulep on 1/24/2016.
  */
 public class MoviePosterAdapter extends ArrayAdapter<Movie> {
@@ -36,16 +38,10 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
      */
     public View getView(int position, View convertView, ViewGroup parent) {
         Movie movie = getItem(position);
-        // Adapters recycle views to AdapterViews.
-        // If this is a new View object we're getting, then inflate the layout.
-        // If not, this view already has the layout inflated from a previous call to getView,
-        // and we modify the View widgets as usual.
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(
                     R.layout.movie_item, parent, false);
         }
-        // Programmatically maps posterView to the layout I defined.
-        // Sets the image resource to this ImageView.
         ImageView posterView = (ImageView) convertView.findViewById(R.id.movie_poster);
         Picasso.with(this.getContext()).load("http://image.tmdb.org/t/p/w185" + movie.posterImage).into(posterView);
         return convertView;
