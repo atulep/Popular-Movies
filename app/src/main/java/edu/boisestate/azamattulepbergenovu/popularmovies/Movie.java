@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
+ * Represents movie.
  * Created by atulep on 1/24/2016.
  */
 public class Movie implements Parcelable {
@@ -25,14 +26,6 @@ public class Movie implements Parcelable {
         releaseDate = in.readString();
     }
 
-    /**
-     * Constructor.
-     * @param title
-     * @param posterImage
-     * @param plot
-     * @param rating
-     * @param releaseDate
-     */
     public Movie(String title, String posterImage, String plot, double rating, String releaseDate) {
         this.title = title;
         this.posterImage = posterImage;
@@ -67,6 +60,5 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
-
 
 }

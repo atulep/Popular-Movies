@@ -11,13 +11,11 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 /**
+ * Displays details of the movie.
  * Created by atulep on 2/3/2016.
  */
 public class DetailFragment extends Fragment {
     private String LOG_TAG = getClass().getSimpleName();
-    public DetailFragment() {
-
-    }
 
     public void onCreate(Bundle savedInstanceBundle) {
         super.onCreate(savedInstanceBundle);
@@ -25,12 +23,7 @@ public class DetailFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-        //TODO: May want to rewatch podcast on Parcelable and implement my movie object as parcelable to send it to DetailActivity.
-        //TODO: Then I can extract all information from the Parcelable object.
-
-        //TODO: However, probably the first step would be to simply use serializable just to test that my details layout
-        //TODO: works properly.
-        Movie obj = (Movie) getActivity().getIntent().getParcelableExtra("Movie");
+        Movie obj = (Movie) getActivity().getIntent().getParcelableExtra(getResources().getString(R.string.parcelable_movie_key));
         updateMovieDetails(rootView, obj);
         return rootView;
     }
@@ -46,12 +39,9 @@ public class DetailFragment extends Fragment {
         release.setText(movie.releaseDate);
 
         TextView rating = (TextView) view.findViewById(R.id.details_rating);
-        rating.setText(new Double(movie.rating).toString());
+        rating.setText(Double.valueOf(movie.rating).toString());
 
         TextView plot = (TextView) view.findViewById(R.id.details_plot);
         plot.setText(movie.plot);
     }
-
-
-
 }

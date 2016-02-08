@@ -3,7 +3,6 @@ package edu.boisestate.azamattulepbergenovu.popularmovies;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -11,12 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * A {@link PreferenceActivity} that presents a set of application settings.
- * <p>
- * See <a href="http://developer.android.com/design/patterns/settings.html">
- * Android Design: Settings</a> for design guidelines and the <a
- * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
- * API Guide</a> for more information on developing a Settings UI.
+  Most of the code I copied over from Sunshine example.
+  I tried to create my Settings Activity from the Android Studio Wizard, but
+ it produced a lot of extra stuff, that I didn't understand.
  */
 public class SettingsFragment extends PreferenceFragment
         implements Preference.OnPreferenceChangeListener {
@@ -24,15 +20,9 @@ public class SettingsFragment extends PreferenceFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Add 'general' preferences, defined in the XML file
-        // TODO: Add preferences from XML
         addPreferencesFromResource(R.xml.pref_general);
-        // For all preferences, attach an OnPreferenceChangeListener so the UI summary can be
-        // updated when the preference changes.
-        // TODO: Add preferences
         bindPreferenceSummaryToValue(findPreference(getString(R.string.settings_key)));
     }
-
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,8 +30,6 @@ public class SettingsFragment extends PreferenceFragment
         view.setBackgroundColor(getResources().getColor(R.color.colorImageView));
         return view;
     }
-
-
 
     /**
      * Attaches a listener so the summary is always updated with the preference value.
@@ -51,7 +39,6 @@ public class SettingsFragment extends PreferenceFragment
     private void bindPreferenceSummaryToValue(Preference preference) {
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(this);
-
         // Trigger the listener immediately with the preference's
         // current value.
         onPreferenceChange(preference,
@@ -78,5 +65,4 @@ public class SettingsFragment extends PreferenceFragment
         }
         return true;
     }
-
 }

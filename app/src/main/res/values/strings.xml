@@ -6,13 +6,15 @@
     <string name="settings_key">sort</string>
     <string name="settings_default_value">Popularity</string>
 
-    <!-- Available sorting labels-->
+    <!-- Available sorting labels to show on UI-->
     <string name="settings_sort_label_popularity">Popularity</string>
     <string name="settings_sort_label_rating">Rating</string>
 
-    <!-- Available sorting options-->
+    <!-- Available sorting options to serve as query parameters-->
     <string name="settings_sort_option_popularity">popularity.desc</string>
     <string name="settings_sort_option_rating">vote_average.desc</string>
 
+    <string name="parcelable_movieList_key">movieList</string>
+    <string name="parcelable_movie_key">movie</string>
 </resources>
 
