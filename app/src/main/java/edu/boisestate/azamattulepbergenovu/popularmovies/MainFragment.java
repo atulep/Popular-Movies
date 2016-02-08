@@ -41,6 +41,8 @@ public class MainFragment extends Fragment {
     String LOG_TAG = getClass().getSimpleName();
     MoviePosterAdapter adapter;
     ArrayList<Movie> movieList;
+    GridView grid;
+    int position;
 
     public MainFragment() {
     }
@@ -49,9 +51,13 @@ public class MainFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if(savedInstanceState == null || !savedInstanceState.containsKey(getResources().getString(R.string.parcelable_movieList_key))) {
             movieList = new ArrayList<Movie>();
+            position = 0;
         }
         else {
             movieList = savedInstanceState.getParcelableArrayList(getResources().getString(R.string.parcelable_movieList_key));
+            // hard-coded position string just because it is still in development.
+            position = savedInstanceState.getInt("position");
+            Log.v(LOG_TAG, "Position in onCreate after rotating: " + position);
         }
     }
 
@@ -60,7 +66,7 @@ public class MainFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.gridfragment_main, container, false);
         adapter = new MoviePosterAdapter(getActivity(), new ArrayList<Movie>());
-        GridView grid = (GridView) rootView.findViewById(R.id.gridView_main);
+        grid = (GridView) rootView.findViewById(R.id.gridView_main);
         grid.setAdapter(adapter);
 
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -72,17 +78,27 @@ public class MainFragment extends Fragment {
             }
 
         });
+        Log.v(LOG_TAG, "Position in onCreateView: " + position);
+        grid.setSelection(position);
+        grid.smoothScrollToPosition(position);
         return rootView;
     }
 
     public void onStart() {
         updateMovies();
+        // I thought the UI gets overwritten after updateMovies is called, so I added
+        // this piece of code here too.
+        Log.v(LOG_TAG, "Position in onStart: " + position);
+        grid.setSelection(position);
+        grid.smoothScrollToPosition(position);
         super.onStart();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList(getResources().getString(R.string.parcelable_movieList_key), movieList);
+        outState.putInt("position", grid.getFirstVisiblePosition());
+        Log.v(LOG_TAG, "Position in onSavedInstanceState before rotating: " + grid.getFirstVisiblePosition());
         super.onSaveInstanceState(outState);
     }
 
