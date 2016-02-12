@@ -5,8 +5,11 @@ android.app.Fragment instead android.support.v4.fragment.
  */
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +45,7 @@ public class MainFragment extends Fragment {
     String LOG_TAG = getClass().getSimpleName();
     MoviePosterAdapter adapter;
     ArrayList<Movie> movieList;
+    private final String NO_INET_CONNECTION = "Oops... Looks like you are not connected to Internet.";
 
     public MainFragment() {
     }
@@ -90,9 +95,29 @@ public class MainFragment extends Fragment {
      * Spins of back thread to fetch data from network.
      */
     public void updateMovies() {
-        FetchMovieDataTask task = new FetchMovieDataTask();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        task.execute(prefs.getString(getString(R.string.settings_key), getString(R.string.settings_default_value)));
+        ConnectivityManager cm =
+                (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        if (isConnected) {
+            FetchMovieDataTask task = new FetchMovieDataTask();
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+            task.execute(prefs.getString(getString(R.string.settings_key), getString(R.string.settings_default_value)));
+        } else {
+            displayMessage(NO_INET_CONNECTION);
+        }
+    }
+
+    /**
+     * Displays a message to user as a toast
+     * @param message
+     */
+    private void displayMessage(String message) {
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(getActivity(), message, duration);
+        toast.show();
     }
 
     /**
