@@ -15,6 +15,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,13 +96,7 @@ public class MainFragment extends Fragment {
      * Spins of back thread to fetch data from network.
      */
     public void updateMovies() {
-        ConnectivityManager cm =
-                (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
-        if (isConnected) {
+        if (isConnected()) {
             FetchMovieDataTask task = new FetchMovieDataTask();
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
             task.execute(prefs.getString(getString(R.string.settings_key), getString(R.string.settings_default_value)));
@@ -111,12 +106,25 @@ public class MainFragment extends Fragment {
     }
 
     /**
+     * Checks network connection.
+     * @return true if connected
+     */
+    private boolean isConnected() {
+        ConnectivityManager cm =
+                (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+    }
+
+    /**
      * Displays a message to user as a toast
      * @param message
      */
     private void displayMessage(String message) {
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(getActivity(), message, duration);
+        toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 
