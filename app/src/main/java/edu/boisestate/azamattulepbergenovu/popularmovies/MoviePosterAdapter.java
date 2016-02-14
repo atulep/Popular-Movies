@@ -17,9 +17,8 @@ import java.util.List;
  * Created by atulep on 1/24/2016.
  */
 public class MoviePosterAdapter extends ArrayAdapter<Movie> {
-
     private String LOG_TAG = MoviePosterAdapter.class.getSimpleName();
-
+    ViewHolder holder;
     /**
      * Constructor.
      * @param context
@@ -28,6 +27,11 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
     public MoviePosterAdapter(Context context, List<Movie> movieList) {
         super(context, 0, movieList);
     }
+
+    static class ViewHolder {
+        ImageView posterView;
+    }
+
 
     /**
      * According to Android documentation, I need to override this method in order to return my customized view.
@@ -41,9 +45,13 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(
                     R.layout.movie_item, parent, false);
+            holder = new ViewHolder();
+            holder.posterView = (ImageView) convertView.findViewById(R.id.movie_poster);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
-        ImageView posterView = (ImageView) convertView.findViewById(R.id.movie_poster);
-        Picasso.with(this.getContext()).load("http://image.tmdb.org/t/p/w185" + movie.posterImage).into(posterView);
+        Picasso.with(this.getContext()).load("http://image.tmdb.org/t/p/w185" + movie.posterImage).into(holder.posterView);
         return convertView;
     }
 }
