@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class MoviePosterAdapter extends ArrayAdapter<Movie> {
     private String LOG_TAG = MoviePosterAdapter.class.getSimpleName();
-    ViewHolder holder;
+
     /**
      * Constructor.
      * @param context
@@ -41,6 +41,10 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
      * @return
      */
     public View getView(int position, View convertView, ViewGroup parent) {
+        // I am using ViewHolder pattern here, I looked at this SO post for some help.
+        // Link - http://stackoverflow.com/questions/3832254/how-can-i-make-my-arrayadapter-follow-the-viewholder-pattern
+        
+        ViewHolder holder = null;
         Movie movie = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(
