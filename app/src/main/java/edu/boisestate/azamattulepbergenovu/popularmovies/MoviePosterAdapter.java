@@ -43,7 +43,7 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
     public View getView(int position, View convertView, ViewGroup parent) {
         // I am using ViewHolder pattern here, I looked at this SO post for some help.
         // Link - http://stackoverflow.com/questions/3832254/how-can-i-make-my-arrayadapter-follow-the-viewholder-pattern
-        
+
         ViewHolder holder = null;
         Movie movie = getItem(position);
         if (convertView == null) {
