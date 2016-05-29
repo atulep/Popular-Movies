@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,15 +22,19 @@ import butterknife.ButterKnife;
  */
 public class DetailFragment extends Fragment {
     private String LOG_TAG = getClass().getSimpleName();
+    private ArrayAdapter trailerAdapter;
+    private ArrayAdapter reviewAdapter;
     @Bind(R.id.details_imageView) ImageView poster;
     @Bind(R.id.details_title) TextView title;
     @Bind(R.id.details_release) TextView release;
     @Bind(R.id.details_rating) TextView rating;
     @Bind(R.id.details_plot) TextView plot;
+    @Bind(R.id.details_trailer_label) TextView trailer_label;
 
 
     public void onCreate(Bundle savedInstanceBundle) {
         super.onCreate(savedInstanceBundle);
+
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,6 +42,21 @@ public class DetailFragment extends Fragment {
         ButterKnife.bind(this, rootView);
         Movie obj = (Movie) getActivity().getIntent().getParcelableExtra(getResources().getString(R.string.parcelable_movie_key));
         updateMovieDetails(rootView, obj);
+
+        trailerAdapter =
+                new ArrayAdapter<String>(
+                        getActivity(), // The current context (this activity)
+                        R.layout.detail_bottom, // The name of the layout ID.
+                        R.id.details_trailer_label, // The ID of the textview to populate.
+                        new ArrayList<String>());
+
+        reviewAdapter =
+                new ArrayAdapter<String>(
+                        getActivity(),
+                        R.layout.detail_bottom,
+                        R.id.details_review,
+                        new ArrayList<String>());
+
         return rootView;
     }
 
@@ -44,5 +66,13 @@ public class DetailFragment extends Fragment {
         release.setText(movie.releaseDate);
         rating.setText(Double.valueOf(movie.rating).toString());
         plot.setText(movie.plot);
+
+        for (int i=0;i<movie.trailers.length();i++){
+            trailerAdapter.add("Trailer " +(i+1));
+        }
+
+        for (String review:movie.reviews) {
+            reviewAdapter.add(review);
+        }
     }
 }

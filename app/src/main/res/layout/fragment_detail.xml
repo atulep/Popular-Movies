@@ -55,26 +55,10 @@
                 android:textSize="@dimen/detailFragment_mediumFontSize"
                 android:id="@+id/details_rating" />
 
-
         </LinearLayout>
 
-        <!-- Start of the plot synopsis and trailers and reviews-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/listView_trailers">
-            </ListView>
+        <include layout="@layout/detail_bottom"></include>
 
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/listView_reviews">
-            </ListView>
-
-        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
