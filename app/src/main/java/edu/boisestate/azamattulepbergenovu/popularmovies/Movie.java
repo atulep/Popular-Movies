@@ -13,6 +13,8 @@ public class Movie implements Parcelable {
     String plot;
     double rating;
     String releaseDate;
+    String[] trailers;
+    String[] reviews;
 
     // This is one is a temp constructor, just in order to accept no arguments.
     public Movie() {
@@ -24,14 +26,18 @@ public class Movie implements Parcelable {
         plot = in.readString();
         rating = in.readDouble();
         releaseDate = in.readString();
+        in.readStringArray(trailers); //TODO: Hopefully this is one is not null??!?
+        in.readStringArray(reviews);
     }
 
-    public Movie(String title, String posterImage, String plot, double rating, String releaseDate) {
+    public Movie(String title, String posterImage, String plot, double rating, String releaseDate, String[] trailers, String[] reviews) {
         this.title = title;
         this.posterImage = posterImage;
         this.plot = plot;
         this.rating = rating;
         this.releaseDate = releaseDate;
+        this.trailers=trailers;
+        this.reviews=reviews;
     }
 
     public void writeToParcel(Parcel out, int flags) {
@@ -40,6 +46,8 @@ public class Movie implements Parcelable {
         out.writeString(plot);
         out.writeDouble(rating);
         out.writeString(releaseDate);
+        out.writeStringArray(trailers);
+        out.writeStringArray(reviews);
     }
 
     public int describeContents() {
