@@ -58,12 +58,28 @@ public class MainFragment extends Fragment {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent newActivityIntent = new Intent(getActivity(), DetailActivity.class);
+                updateTrailerAndReview(parent, position);
+                // the API calls should be completed here
                 newActivityIntent.putExtra(getResources().getString(R.string.parcelable_movie_key), (Movie) parent.getItemAtPosition(position));
                 startActivity(newActivityIntent);
             }
 
         });
         return rootView;
+    }
+
+    /**
+     * Not sure if this is elegant?
+     * @param parent
+     * @param position
+     */
+    public void updateTrailerAndReview(AdapterView<?> parent, int position) {
+        if (isConnected()) {
+            FetchTrailerDataTask trailerTask = new FetchTrailerDataTask(adapter, movieList, (Movie) parent.getItemAtPosition(position));
+            trailerTask.execute();
+            FetchReviewDataTask reviewTask = new FetchReviewDataTask(adapter, movieList, (Movie) parent.getItemAtPosition(position));
+            trailerTask.execute();
+        }
     }
 
     public void onStart() {
