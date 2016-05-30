@@ -72,7 +72,7 @@ public class DetailFragment extends Fragment {
         release.setText(movie.releaseDate);
         rating.setText(Double.valueOf(movie.rating).toString());
         plot.setText(movie.plot);
-        
+
         Log.v(LOG_TAG, "SIZE===== " + movie.trailers.size());
         for (int i=0;i<movie.trailers.size();i++){
             trailerAdapter.add("Trailer " +(i+1));

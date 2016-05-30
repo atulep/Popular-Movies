@@ -5,19 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
   >
+    <!--Plot synopsis -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/details_plot"/>
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView_trailers">
-    </ListView>
 
-    <ListView
+    <!-- Trailers -->
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:id="@+id/trailers_layout"
+       android:orientation="vertical">
+
+   </LinearLayout>
+
+    <!--Reviews-->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/listView_reviews">
-    </ListView>
+        android:id="@+id/reviews_layout"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
 </LinearLayout>
