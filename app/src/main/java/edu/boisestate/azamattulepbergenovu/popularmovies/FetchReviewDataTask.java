@@ -41,7 +41,6 @@ public class FetchReviewDataTask extends AsyncTask<Void, Void, List<Movie>> {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         String movieJsonStr;
-        List<Movie> movieList = null;
         Long movieId = movie.getId();
         try {
 
@@ -134,5 +133,9 @@ public class FetchReviewDataTask extends AsyncTask<Void, Void, List<Movie>> {
         }
     }
 
+    protected void onPostExecute(List<Movie> list) {
+        adapter.clear();
+        adapter.addAll(list);
+    }
 
 }

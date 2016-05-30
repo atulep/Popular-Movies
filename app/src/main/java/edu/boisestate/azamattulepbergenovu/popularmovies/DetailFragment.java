@@ -2,6 +2,7 @@ package edu.boisestate.azamattulepbergenovu.popularmovies;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,10 +63,6 @@ public class DetailFragment extends Fragment {
         Movie obj = (Movie) getActivity().getIntent().getParcelableExtra(getResources().getString(R.string.parcelable_movie_key));
         updateMovieDetails(rootView, obj);
 
-
-
-
-
         return rootView;
     }
 
@@ -75,13 +72,16 @@ public class DetailFragment extends Fragment {
         release.setText(movie.releaseDate);
         rating.setText(Double.valueOf(movie.rating).toString());
         plot.setText(movie.plot);
-
+        
+        Log.v(LOG_TAG, "SIZE===== " + movie.trailers.size());
         for (int i=0;i<movie.trailers.size();i++){
             trailerAdapter.add("Trailer " +(i+1));
+            Log.v(LOG_TAG, "Trailer*** " + i);
         }
 
         for (String review:movie.reviews) {
             reviewAdapter.add(review);
+            Log.v(LOG_TAG, "Review***: " + review);
         }
     }
 }

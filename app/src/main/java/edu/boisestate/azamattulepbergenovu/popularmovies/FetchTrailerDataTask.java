@@ -42,7 +42,6 @@ public class FetchTrailerDataTask extends AsyncTask<Void, Void, List<Movie>> {
         BufferedReader reader = null;
         Long movieId = movie.getId();// don't neccesarily need this one, but will change it later (since I have reference to a movie).
         String movieJsonStr;
-        List<Movie> movieList = null;
 
         try {
 
@@ -84,6 +83,13 @@ public class FetchTrailerDataTask extends AsyncTask<Void, Void, List<Movie>> {
 
             try {
                 getMovieDataFromJson(movieJsonStr);
+                // for testing
+                for (Movie movie:movieList) {
+                    if (movie.trailers != null) {
+                        Log.v(LOG_TAG, "SIZE OF TRAILER IS: " + movie.trailers.size());
+                    }
+                }
+
             } catch (org.json.JSONException e) {
                 Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
                 System.exit(1);
@@ -131,8 +137,14 @@ public class FetchTrailerDataTask extends AsyncTask<Void, Void, List<Movie>> {
         for (Movie movie:movieList) {
             if (movie.equals(this.movie)) {
                 movie.setTrailers(trailerKeys);
+                Log.v(LOG_TAG, "Set trailer here!!&!&!&");
             }
         }
+    }
+
+    protected void onPostExecute(List<Movie> list) {
+        adapter.clear();
+        adapter.addAll(list);
     }
 
 }

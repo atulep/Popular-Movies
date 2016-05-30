@@ -12,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,6 +78,7 @@ public class MainFragment extends Fragment {
         if (isConnected()) {
             FetchTrailerDataTask trailerTask = new FetchTrailerDataTask(adapter, movieList, (Movie) parent.getItemAtPosition(position));
             trailerTask.execute();
+            Log.v(LOG_TAG, "Movies were updated to: " + ((Movie) parent.getItemAtPosition(position)).trailers);
             FetchReviewDataTask reviewTask = new FetchReviewDataTask(adapter, movieList, (Movie) parent.getItemAtPosition(position));
             reviewTask.execute();
         }
