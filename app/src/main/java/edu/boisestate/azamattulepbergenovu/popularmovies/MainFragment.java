@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -69,6 +71,8 @@ public class MainFragment extends Fragment {
         return rootView;
     }
 
+
+
     /**
      * Not sure if this is elegant?
      * @param parent
@@ -76,8 +80,24 @@ public class MainFragment extends Fragment {
      */
     public void updateTrailerAndReview(AdapterView<?> parent, int position) {
         if (isConnected()) {
-            FetchTrailerDataTask trailerTask = new FetchTrailerDataTask(adapter, movieList, (Movie) parent.getItemAtPosition(position));
+            Movie moi = (Movie) parent.getItemAtPosition(position); // moi = movie of interest
+            ArrayList<TextView> trailerList = new ArrayList<TextView>();
+
+            LinearLayout trailersLayout = (LinearLayout) getActivity().findViewById(R.id.trailers_layout);
+            for (int i=0; i<moi.trailers.size(); i++) {
+                LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                // not sure about this one... i haven't really created this one yet, but well we'll see
+                TextView tv=(TextView) getActivity().findViewById(R.id.details_trailer_label);
+                tv.setLayoutParams(lparams);
+                trailerList.add(tv);
+            }
+
+            
+            FetchTrailerDataTask trailerTask = new FetchTrailerDataTask(movieList, moi, trailersLayout, trailerList);
             trailerTask.execute();
+
             Log.v(LOG_TAG, "Movies were updated to: " + ((Movie) parent.getItemAtPosition(position)).trailers);
             FetchReviewDataTask reviewTask = new FetchReviewDataTask(adapter, movieList, (Movie) parent.getItemAtPosition(position));
             reviewTask.execute();

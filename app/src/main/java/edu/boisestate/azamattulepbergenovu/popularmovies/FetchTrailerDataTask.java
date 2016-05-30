@@ -3,7 +3,8 @@ package edu.boisestate.azamattulepbergenovu.popularmovies;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,7 +17,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by atulep on 2/12/2016.
@@ -25,19 +25,21 @@ import java.util.List;
 /**
  * Service class to perform data fetching on back thread.
  */
-public class FetchTrailerDataTask extends AsyncTask<Void, Void, List<Movie>> {
+public class FetchTrailerDataTask extends AsyncTask<Void, Void, Void> {
     private String LOG_TAG = this.getClass().getSimpleName();
-    private ArrayAdapter<Movie> adapter;
     private ArrayList<Movie> movieList;
     private Movie movie;
+    private LinearLayout l;
+    private ArrayList<TextView> t;
 
-    public FetchTrailerDataTask(ArrayAdapter adapter, ArrayList<Movie> movieList, Movie movie) {
-        this.adapter = adapter;
+    public FetchTrailerDataTask(ArrayList<Movie> movieList, Movie movie, LinearLayout l, ArrayList<TextView> t) {
         this.movieList = movieList; // will return movieList so the changes to movies will persist
         this.movie=movie;
+        this.l=l;
+        this.t=t;
     }
 
-    public List<Movie> doInBackground(Void... params) {
+    public Void doInBackground(Void... params) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         Long movieId = movie.getId();// don't neccesarily need this one, but will change it later (since I have reference to a movie).
@@ -110,7 +112,7 @@ public class FetchTrailerDataTask extends AsyncTask<Void, Void, List<Movie>> {
                 }
             }
         }
-        return movieList;
+        return null;
     }
 
     private void getMovieDataFromJson(String movieJsonStr)
@@ -142,9 +144,12 @@ public class FetchTrailerDataTask extends AsyncTask<Void, Void, List<Movie>> {
         }
     }
 
-    protected void onPostExecute(List<Movie> list) {
-        adapter.clear();
-        adapter.addAll(list);
+    protected void onPostExecute() {
+        // making those text views visible here to ensure that the API calling finished fetching.
+        for (int i=0; i<t.size(); i++) {
+            l.addView(t.get(i));
+            t.get(i).setText("Trailer " +i+1);
+        }
     }
 
 }
