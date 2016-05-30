@@ -12,7 +12,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +34,7 @@ public class MainFragment extends Fragment {
     String LOG_TAG = getClass().getSimpleName();
     MoviePosterAdapter adapter;
     ArrayList<Movie> movieList;
+    public boolean loadFinished = false;
     private final String NO_INET_CONNECTION = "Oops... Looks like you are not connected to Internet.";
 
     public MainFragment() {
@@ -81,25 +81,28 @@ public class MainFragment extends Fragment {
     public void updateTrailerAndReview(AdapterView<?> parent, int position) {
         if (isConnected()) {
             Movie moi = (Movie) parent.getItemAtPosition(position); // moi = movie of interest
-            ArrayList<TextView> trailerList = new ArrayList<TextView>();
+            ArrayList<TextView> trailerList = new ArrayList<>();
+            ArrayList<TextView> reviewList = new ArrayList<>();
 
             LinearLayout trailersLayout = (LinearLayout) getActivity().findViewById(R.id.trailers_layout);
+            LinearLayout reviewsLayout = (LinearLayout) getActivity().findViewById(R.id.reviews_layout);
+
             for (int i=0; i<moi.trailers.size(); i++) {
                 LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
                 // not sure about this one... i haven't really created this one yet, but well we'll see
                 TextView tv=(TextView) getActivity().findViewById(R.id.details_trailer_label);
+                TextView revTv=(TextView) getActivity().findViewById(R.id.details_review);
                 tv.setLayoutParams(lparams);
+                revTv.setLayoutParams(lparams);
                 trailerList.add(tv);
+                reviewList.add(revTv);
             }
-
-            
             FetchTrailerDataTask trailerTask = new FetchTrailerDataTask(movieList, moi, trailersLayout, trailerList);
             trailerTask.execute();
 
-            Log.v(LOG_TAG, "Movies were updated to: " + ((Movie) parent.getItemAtPosition(position)).trailers);
-            FetchReviewDataTask reviewTask = new FetchReviewDataTask(adapter, movieList, (Movie) parent.getItemAtPosition(position));
+            FetchReviewDataTask reviewTask = new FetchReviewDataTask(movieList, moi, reviewsLayout, reviewList);
             reviewTask.execute();
         }
     }
