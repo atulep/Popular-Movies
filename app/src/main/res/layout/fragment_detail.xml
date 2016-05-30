@@ -56,10 +56,9 @@
                 android:id="@+id/details_rating" />
 
         </LinearLayout>
+    </LinearLayout>
 
         <include layout="@layout/detail_bottom"></include>
-
-    </LinearLayout>
 
 </LinearLayout>
 </ScrollView>

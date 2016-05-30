@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -29,6 +30,8 @@ public class DetailFragment extends Fragment {
     @Bind(R.id.details_release) TextView release;
     @Bind(R.id.details_rating) TextView rating;
     @Bind(R.id.details_plot) TextView plot;
+    @Bind(R.id.listView_trailers) ListView trailerView;
+    @Bind(R.id.listView_reviews) ListView reviewView;
 
     public void onCreate(Bundle savedInstanceBundle) {
         super.onCreate(savedInstanceBundle);
@@ -38,8 +41,6 @@ public class DetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this, rootView);
-        Movie obj = (Movie) getActivity().getIntent().getParcelableExtra(getResources().getString(R.string.parcelable_movie_key));
-        updateMovieDetails(rootView, obj);
 
         trailerAdapter =
                 new ArrayAdapter<String>(
@@ -54,6 +55,16 @@ public class DetailFragment extends Fragment {
                         R.layout.detail_bottom,
                         R.id.details_review,
                         new ArrayList<String>());
+
+        trailerView.setAdapter(trailerAdapter);
+        reviewView.setAdapter(reviewAdapter);
+
+        Movie obj = (Movie) getActivity().getIntent().getParcelableExtra(getResources().getString(R.string.parcelable_movie_key));
+        updateMovieDetails(rootView, obj);
+
+
+
+
 
         return rootView;
     }
