@@ -67,7 +67,7 @@ public class DetailFragment extends Fragment {
         rating.setText(Double.valueOf(movie.rating).toString());
         plot.setText(movie.plot);
 
-        for (int i=0;i<movie.trailers.length();i++){
+        for (int i=0;i<movie.trailers.length;i++){
             trailerAdapter.add("Trailer " +(i+1));
         }
 

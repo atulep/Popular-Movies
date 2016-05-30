@@ -1,9 +1,5 @@
 package edu.boisestate.azamattulepbergenovu.popularmovies;
 
-/**
- * Created by atulep on 2/12/2016.
- */
-
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -23,34 +19,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Created by atulep on 2/12/2016.
+ */
+
+/**
  * Service class to perform data fetching on back thread.
  */
-public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
+public class FetchTrailerDataTask extends AsyncTask<String, Void, List<Movie>> {
     private String LOG_TAG = this.getClass().getSimpleName();
     private ArrayAdapter<Movie> adapter;
     private ArrayList<Movie> movieList;
+    private Movie movie;
 
-    public FetchMovieDataTask(ArrayAdapter adapter, ArrayList<Movie> movieList) {
+    public FetchTrailerDataTask(ArrayAdapter adapter, ArrayList<Movie> movieList, Movie movie) {
         this.adapter = adapter;
-        this.movieList = movieList;
+        this.movieList = movieList; // will return movieList so the changes to movies will persist
+        this.movie=movie;
     }
 
     public List<Movie> doInBackground(String... params) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
-        String typeOfSort = params[0];// which sort to perform
+        String movieId = params[0];// don't neccesarily need this one, but will change it later (since I have reference to a movie).
         String movieJsonStr;
         List<Movie> movieList = null;
 
         try {
 
             final String MOVIE_BASE_URL =
-                    "http://api.themoviedb.org/3/discover/movie?";
-            final String QUERY_PARAM = "sort_by";
+                    "http://api.themoviedb.org/3/discover/movie/"+movieId+"/videos?";
             final String APPID_PARAM = "api_key";
 
             Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
-                    .appendQueryParameter(QUERY_PARAM, typeOfSort)
                     .appendQueryParameter(APPID_PARAM, edu.boisestate.azamattulepbergenovu.popularmovies.BuildConfig.MOVIE_DB_API_KEY)
                     .build();
 
@@ -83,7 +83,7 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
             movieJsonStr = buffer.toString();
 
             try {
-                movieList = getMovieDataFromJson(movieJsonStr);
+                getMovieDataFromJson(movieJsonStr);
             } catch (org.json.JSONException e) {
                 Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
                 System.exit(1);
@@ -107,35 +107,32 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
         return movieList;
     }
 
-    private List<Movie> getMovieDataFromJson(String movieJsonStr)
+    private void getMovieDataFromJson(String movieJsonStr)
             throws JSONException {
 
         // These are the names of the JSON objects that need to be extracted.
-        final String OMD_TITLE = "original_title";
-        final String OMD_POSTER = "poster_path";
-        final String OMD_PLOT = "overview";
-        final String OMD_RATING = "vote_average";
-        final String OMD_RELEASE = "release_date";
+        final String OMD_KEY="key";
         final String OMD_RESULTS = "results";
 
-        if (!movieList.isEmpty()) {
-            movieList.clear();
-        }
-
         JSONObject forecastJson = new JSONObject(movieJsonStr);
-        JSONArray movieArray = forecastJson.getJSONArray(OMD_RESULTS);
+        JSONArray trailerArray = forecastJson.getJSONArray(OMD_RESULTS);
+        String[] trailerKeys = new String[trailerArray.length()];
 
-        for (int i = 0; i < movieArray.length(); i++) {
+        for (int i = 0; i < trailerArray.length(); i++) {
             // Get the JSON object representing the day
-            JSONObject movie = movieArray.getJSONObject(i);
+            JSONObject trailer = trailerArray.getJSONObject(i);
             // notice I am passing null values for the review and trailer. i will populate those later down the road inside
             // of FetchTrailerTask and FetchReviewTask classes.
             // PLEASE, suggest me a more elegant way to do it.
-            movieList.add(new Movie(movie.getString(OMD_TITLE), movie.getString(OMD_POSTER), movie.getString(OMD_PLOT)
-                    , movie.getDouble(OMD_RATING), movie.getString(OMD_RELEASE), null, null));
+            trailerKeys[i] = trailer.getString(OMD_KEY);
         }
 
-        return movieList;
+        // Takes O(n). How can it be improved what do you think?
+        for (Movie movie:movieList) {
+            if (movie.equals(this.movie)) {
+                movie.setTrailers(trailerKeys);
+            }
+        }
     }
 
     protected void onPostExecute(List<Movie> list) {

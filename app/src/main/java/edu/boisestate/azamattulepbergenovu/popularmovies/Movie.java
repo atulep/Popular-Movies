@@ -50,6 +50,11 @@ public class Movie implements Parcelable {
         out.writeStringArray(reviews);
     }
 
+    public void setTrailers(String[]trailers) {
+        this.trailers=trailers;
+    }
+
+
     public int describeContents() {
         return 0;
     }
