@@ -87,23 +87,42 @@ public class MainFragment extends Fragment {
             LinearLayout trailersLayout = (LinearLayout) getActivity().findViewById(R.id.trailers_layout);
             LinearLayout reviewsLayout = (LinearLayout) getActivity().findViewById(R.id.reviews_layout);
 
+            LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            FetchTrailerDataTask trailerTask = new FetchTrailerDataTask(movieList, moi, this);
+            trailerTask.execute();
+
+            while (!loadFinished) {
+                // nop
+            }
+
+            // setting trailer buttons
             for (int i=0; i<moi.trailers.size(); i++) {
-                LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
                 // not sure about this one... i haven't really created this one yet, but well we'll see
                 TextView tv=(TextView) getActivity().findViewById(R.id.details_trailer_label);
-                TextView revTv=(TextView) getActivity().findViewById(R.id.details_review);
                 tv.setLayoutParams(lparams);
-                revTv.setLayoutParams(lparams);
-                trailerList.add(tv);
-                reviewList.add(revTv);
+                trailersLayout.addView(tv);
+                tv.setText("Trailer " + i + 1);
             }
-            FetchTrailerDataTask trailerTask = new FetchTrailerDataTask(movieList, moi, trailersLayout, trailerList);
-            trailerTask.execute();
 
-            FetchReviewDataTask reviewTask = new FetchReviewDataTask(movieList, moi, reviewsLayout, reviewList);
+            loadFinished = false;//resetting load finished to wait for reviews to get loaded
+
+            FetchReviewDataTask reviewTask = new FetchReviewDataTask(movieList, moi, this);
             reviewTask.execute();
+
+            while (!loadFinished) {
+                // nop
+            }
+
+
+
+            for (int i=0; i<moi.reviews.size(); i++) {
+                TextView revTv=(TextView) getActivity().findViewById(R.id.details_review);
+                revTv.setLayoutParams(lparams);
+                trailersLayout.addView(revTv);
+            }
         }
     }
 

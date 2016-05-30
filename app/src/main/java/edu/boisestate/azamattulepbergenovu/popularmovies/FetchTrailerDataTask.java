@@ -3,8 +3,6 @@ package edu.boisestate.azamattulepbergenovu.popularmovies;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,21 +23,20 @@ import java.util.ArrayList;
 /**
  * Service class to perform data fetching on back thread.
  */
-public class FetchTrailerDataTask extends AsyncTask<Void, Void, Void> {
+public class FetchTrailerDataTask extends AsyncTask<Void, Integer, Integer> {
     private String LOG_TAG = this.getClass().getSimpleName();
     private ArrayList<Movie> movieList;
     private Movie movie;
-    private LinearLayout l;
-    private ArrayList<TextView> t;
+    private MainFragment f;
 
-    public FetchTrailerDataTask(ArrayList<Movie> movieList, Movie movie, LinearLayout l, ArrayList<TextView> t) {
+    public FetchTrailerDataTask(ArrayList<Movie> movieList, Movie movie, MainFragment f ) {
         this.movieList = movieList; // will return movieList so the changes to movies will persist
         this.movie=movie;
-        this.l=l;
-        this.t=t;
+        this.f=f;
+
     }
 
-    public Void doInBackground(Void... params) {
+    public Integer doInBackground(Void... params) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         Long movieId = movie.getId();// don't neccesarily need this one, but will change it later (since I have reference to a movie).
@@ -85,12 +82,6 @@ public class FetchTrailerDataTask extends AsyncTask<Void, Void, Void> {
 
             try {
                 getMovieDataFromJson(movieJsonStr);
-                // for testing
-                for (Movie movie:movieList) {
-                    if (movie.trailers != null) {
-                        Log.v(LOG_TAG, "SIZE OF TRAILER IS: " + movie.trailers.size());
-                    }
-                }
 
             } catch (org.json.JSONException e) {
                 Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
@@ -112,7 +103,7 @@ public class FetchTrailerDataTask extends AsyncTask<Void, Void, Void> {
                 }
             }
         }
-        return null;
+        return 0;
     }
 
     private void getMovieDataFromJson(String movieJsonStr)
@@ -142,14 +133,14 @@ public class FetchTrailerDataTask extends AsyncTask<Void, Void, Void> {
                 Log.v(LOG_TAG, "Set trailer here!!&!&!&");
             }
         }
+
+        f.loadFinished=true;
     }
 
-    protected void onPostExecute() {
+    protected void onPostExecute(Integer i) {
         // making those text views visible here to ensure that the API calling finished fetching.
-        for (int i=0; i<t.size(); i++) {
-            l.addView(t.get(i));
-            t.get(i).setText("Trailer " +i+1);
-        }
+       f.loadFinished=true;
+        Log.v(LOG_TAG, "SET BOOLEAN TO TRUE!");
     }
 
 }

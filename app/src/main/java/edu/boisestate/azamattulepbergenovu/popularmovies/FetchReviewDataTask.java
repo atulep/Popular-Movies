@@ -3,8 +3,6 @@ package edu.boisestate.azamattulepbergenovu.popularmovies;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,21 +23,19 @@ import java.util.ArrayList;
 /**
  * Service class to perform data fetching on back thread.
  */
-public class FetchReviewDataTask extends AsyncTask<Void, Void, Void> {
+public class FetchReviewDataTask extends AsyncTask<Void, Integer, Integer> {
     private String LOG_TAG = this.getClass().getSimpleName();
     private ArrayList<Movie> movieList;
     private Movie movie;
-    private LinearLayout l; // kind of confusing naming, but this basically means layout
-    private ArrayList<TextView> t; // ^^ means textView
+    private MainFragment f;
 
-    public FetchReviewDataTask(ArrayList<Movie> movieList, Movie movie, LinearLayout l, ArrayList<TextView>t) {
-        this.l=l;
-        this.t=t;
+    public FetchReviewDataTask(ArrayList<Movie> movieList, Movie movie, MainFragment f) {
         this.movieList = movieList; // will return movieList so the changes to movies will persist
         this.movie=movie;
+        this.f=f;
     }
 
-    public Void doInBackground(Void... params) {
+    public Integer doInBackground(Void... params) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         String movieJsonStr;
@@ -104,7 +100,7 @@ public class FetchReviewDataTask extends AsyncTask<Void, Void, Void> {
                 }
             }
         }
-        return null;
+        return 0;
     }
 
     private void getMovieDataFromJson(String movieJsonStr)
@@ -135,12 +131,9 @@ public class FetchReviewDataTask extends AsyncTask<Void, Void, Void> {
         }
     }
 
-    protected void onPostExecute() {
+    protected void onPostExecute(Integer i) {
         // again adding views to layout here to ensure data fetching got completed.
-        Log.v(LOG_TAG, "**** IAM GEING CALLED IN ONPOSTEX");
-        for (int i=0; i<t.size(); i++) {
-            l.addView(t.get(i));
-        }
+        f.loadFinished=true;
     }
 
 }
