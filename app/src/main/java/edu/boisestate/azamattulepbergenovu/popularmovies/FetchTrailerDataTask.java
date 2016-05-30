@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Service class to perform data fetching on back thread.
  */
-public class FetchTrailerDataTask extends AsyncTask<String, Void, List<Movie>> {
+public class FetchTrailerDataTask extends AsyncTask<Void, Void, List<Movie>> {
     private String LOG_TAG = this.getClass().getSimpleName();
     private ArrayAdapter<Movie> adapter;
     private ArrayList<Movie> movieList;
@@ -37,17 +37,17 @@ public class FetchTrailerDataTask extends AsyncTask<String, Void, List<Movie>> {
         this.movie=movie;
     }
 
-    public List<Movie> doInBackground(String... params) {
+    public List<Movie> doInBackground(Void... params) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
-        String movieId = params[0];// don't neccesarily need this one, but will change it later (since I have reference to a movie).
+        Long movieId = movie.getId();// don't neccesarily need this one, but will change it later (since I have reference to a movie).
         String movieJsonStr;
         List<Movie> movieList = null;
 
         try {
 
             final String MOVIE_BASE_URL =
-                    "http://api.themoviedb.org/3/discover/movie/"+movieId+"/videos?";
+                    "http://api.themoviedb.org/3/movie/"+movieId+"/videos?";
             final String APPID_PARAM = "api_key";
 
             Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
@@ -116,7 +116,7 @@ public class FetchTrailerDataTask extends AsyncTask<String, Void, List<Movie>> {
 
         JSONObject forecastJson = new JSONObject(movieJsonStr);
         JSONArray trailerArray = forecastJson.getJSONArray(OMD_RESULTS);
-        String[] trailerKeys = new String[trailerArray.length()];
+        ArrayList<String> trailerKeys = new ArrayList<>();
 
         for (int i = 0; i < trailerArray.length(); i++) {
             // Get the JSON object representing the day
@@ -124,7 +124,7 @@ public class FetchTrailerDataTask extends AsyncTask<String, Void, List<Movie>> {
             // notice I am passing null values for the review and trailer. i will populate those later down the road inside
             // of FetchTrailerTask and FetchReviewTask classes.
             // PLEASE, suggest me a more elegant way to do it.
-            trailerKeys[i] = trailer.getString(OMD_KEY);
+            trailerKeys.add(trailer.getString(OMD_KEY));
         }
 
         // Takes O(n). How can it be improved what do you think?
@@ -135,8 +135,4 @@ public class FetchTrailerDataTask extends AsyncTask<String, Void, List<Movie>> {
         }
     }
 
-    protected void onPostExecute(List<Movie> list) {
-        adapter.clear();
-        adapter.addAll(list);
-    }
 }

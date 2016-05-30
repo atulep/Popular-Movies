@@ -117,7 +117,7 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
         final String OMD_RATING = "vote_average";
         final String OMD_RELEASE = "release_date";
         final String OMD_RESULTS = "results";
-
+        final String OMD_ID = "id";
         if (!movieList.isEmpty()) {
             movieList.clear();
         }
@@ -131,7 +131,7 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
             // notice I am passing null values for the review and trailer. i will populate those later down the road inside
             // of FetchTrailerTask and FetchReviewTask classes.
             // PLEASE, suggest me a more elegant way to do it.
-            movieList.add(new Movie(movie.getString(OMD_TITLE), movie.getString(OMD_POSTER), movie.getString(OMD_PLOT)
+            movieList.add(new Movie(movie.getLong(OMD_ID), movie.getString(OMD_TITLE), movie.getString(OMD_POSTER), movie.getString(OMD_PLOT)
                     , movie.getDouble(OMD_RATING), movie.getString(OMD_RELEASE), null, null));
         }
 

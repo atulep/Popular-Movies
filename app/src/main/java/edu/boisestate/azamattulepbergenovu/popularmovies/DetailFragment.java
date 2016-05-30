@@ -29,8 +29,6 @@ public class DetailFragment extends Fragment {
     @Bind(R.id.details_release) TextView release;
     @Bind(R.id.details_rating) TextView rating;
     @Bind(R.id.details_plot) TextView plot;
-    @Bind(R.id.details_trailer_label) TextView trailer_label;
-
 
     public void onCreate(Bundle savedInstanceBundle) {
         super.onCreate(savedInstanceBundle);
@@ -67,7 +65,7 @@ public class DetailFragment extends Fragment {
         rating.setText(Double.valueOf(movie.rating).toString());
         plot.setText(movie.plot);
 
-        for (int i=0;i<movie.trailers.length;i++){
+        for (int i=0;i<movie.trailers.size();i++){
             trailerAdapter.add("Trailer " +(i+1));
         }
 

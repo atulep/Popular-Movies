@@ -78,7 +78,7 @@ public class MainFragment extends Fragment {
             FetchTrailerDataTask trailerTask = new FetchTrailerDataTask(adapter, movieList, (Movie) parent.getItemAtPosition(position));
             trailerTask.execute();
             FetchReviewDataTask reviewTask = new FetchReviewDataTask(adapter, movieList, (Movie) parent.getItemAtPosition(position));
-            trailerTask.execute();
+            reviewTask.execute();
         }
     }
 
