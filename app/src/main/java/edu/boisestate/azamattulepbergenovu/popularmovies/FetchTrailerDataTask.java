@@ -133,7 +133,6 @@ public class FetchTrailerDataTask extends AsyncTask<Void, Integer, Integer> {
                 Log.v(LOG_TAG, "Set trailer here!!&!&!&");
             }
         }
-
         f.loadFinished=true;
     }
 

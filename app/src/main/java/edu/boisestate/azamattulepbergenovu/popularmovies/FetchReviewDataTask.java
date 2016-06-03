@@ -129,6 +129,7 @@ public class FetchReviewDataTask extends AsyncTask<Void, Integer, Integer> {
                 movie.setReviews(reviewKeys);
             }
         }
+        f.loadFinished=true;
     }
 
     protected void onPostExecute(Integer i) {

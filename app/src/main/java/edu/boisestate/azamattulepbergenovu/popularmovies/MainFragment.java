@@ -99,9 +99,10 @@ public class MainFragment extends Fragment {
 
             // setting trailer buttons
             for (int i=0; i<moi.trailers.size(); i++) {
-
+                View mMovieTrailerItem = LayoutInflater.from(getActivity()).inflate(
+                        R.layout.trailer_item, null);
                 // not sure about this one... i haven't really created this one yet, but well we'll see
-                TextView tv=(TextView) getActivity().findViewById(R.id.details_trailer_label);
+                TextView tv=(TextView) mMovieTrailerItem.findViewById(R.id.details_trailer_label);
                 tv.setLayoutParams(lparams);
                 trailersLayout.addView(tv);
                 tv.setText("Trailer " + i + 1);
@@ -116,12 +117,13 @@ public class MainFragment extends Fragment {
                 // nop
             }
 
-
-
             for (int i=0; i<moi.reviews.size(); i++) {
-                TextView revTv=(TextView) getActivity().findViewById(R.id.details_review);
+                View mMovieReviewItem = LayoutInflater.from(getActivity()).inflate(
+                        R.layout.review_item, null);
+                TextView revTv=(TextView) mMovieReviewItem.findViewById(R.id.details_review);
                 revTv.setLayoutParams(lparams);
-                trailersLayout.addView(revTv);
+
+                reviewsLayout.addView(revTv);
             }
         }
     }
