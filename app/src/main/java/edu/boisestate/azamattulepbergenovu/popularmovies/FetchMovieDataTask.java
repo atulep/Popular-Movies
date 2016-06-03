@@ -140,6 +140,15 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
 
     protected void onPostExecute(List<Movie> list) {
         adapter.clear();
+
+        // this makes sure that the general movie data, most notably the movie ID had already
+        // been downloaded.
+        FetchTrailerDataTask trailerTask = new FetchTrailerDataTask(movieList);
+        trailerTask.execute();
+
+        FetchReviewDataTask reviewTask = new FetchReviewDataTask(movieList);
+        reviewTask.execute();
+
         adapter.addAll(list);
     }
 }

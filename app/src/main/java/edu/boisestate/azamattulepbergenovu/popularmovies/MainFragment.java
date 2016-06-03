@@ -18,8 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -34,7 +32,6 @@ public class MainFragment extends Fragment {
     String LOG_TAG = getClass().getSimpleName();
     MoviePosterAdapter adapter;
     ArrayList<Movie> movieList;
-    public boolean loadFinished = false;
     private final String NO_INET_CONNECTION = "Oops... Looks like you are not connected to Internet.";
 
     public MainFragment() {
@@ -81,50 +78,12 @@ public class MainFragment extends Fragment {
     public void updateTrailerAndReview(AdapterView<?> parent, int position) {
         if (isConnected()) {
             Movie moi = (Movie) parent.getItemAtPosition(position); // moi = movie of interest
-            ArrayList<TextView> trailerList = new ArrayList<>();
-            ArrayList<TextView> reviewList = new ArrayList<>();
-
-            LinearLayout trailersLayout = (LinearLayout) getActivity().findViewById(R.id.trailers_layout);
-            LinearLayout reviewsLayout = (LinearLayout) getActivity().findViewById(R.id.reviews_layout);
-
-            LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
             FetchTrailerDataTask trailerTask = new FetchTrailerDataTask(movieList, moi, this);
             trailerTask.execute();
 
-            while (!loadFinished) {
-                // nop
-            }
-
-            // setting trailer buttons
-            for (int i=0; i<moi.trailers.size(); i++) {
-                View mMovieTrailerItem = LayoutInflater.from(getActivity()).inflate(
-                        R.layout.trailer_item, null);
-                // not sure about this one... i haven't really created this one yet, but well we'll see
-                TextView tv=(TextView) mMovieTrailerItem.findViewById(R.id.details_trailer_label);
-                tv.setLayoutParams(lparams);
-                trailersLayout.addView(tv);
-                tv.setText("Trailer " + i + 1);
-            }
-
-            loadFinished = false;//resetting load finished to wait for reviews to get loaded
-
             FetchReviewDataTask reviewTask = new FetchReviewDataTask(movieList, moi, this);
             reviewTask.execute();
-
-            while (!loadFinished) {
-                // nop
-            }
-
-            for (int i=0; i<moi.reviews.size(); i++) {
-                View mMovieReviewItem = LayoutInflater.from(getActivity()).inflate(
-                        R.layout.review_item, null);
-                TextView revTv=(TextView) mMovieReviewItem.findViewById(R.id.details_review);
-                revTv.setLayoutParams(lparams);
-
-                reviewsLayout.addView(revTv);
-            }
         }
     }
 

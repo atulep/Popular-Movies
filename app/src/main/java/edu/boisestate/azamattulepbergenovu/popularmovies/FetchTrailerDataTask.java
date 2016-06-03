@@ -17,96 +17,92 @@ import java.net.URL;
 import java.util.ArrayList;
 
 /**
+ * This class will update movies in a movieList to include trailers.
  * Created by atulep on 2/12/2016.
  */
 
 /**
  * Service class to perform data fetching on back thread.
  */
-public class FetchTrailerDataTask extends AsyncTask<Void, Integer, Integer> {
+public class FetchTrailerDataTask extends AsyncTask<Void, Void, Void> {
     private String LOG_TAG = this.getClass().getSimpleName();
     private ArrayList<Movie> movieList;
-    private Movie movie;
-    private MainFragment f;
 
-    public FetchTrailerDataTask(ArrayList<Movie> movieList, Movie movie, MainFragment f ) {
+    public FetchTrailerDataTask(ArrayList<Movie> movieList) {
         this.movieList = movieList; // will return movieList so the changes to movies will persist
-        this.movie=movie;
-        this.f=f;
-
     }
 
-    public Integer doInBackground(Void... params) {
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
-        Long movieId = movie.getId();// don't neccesarily need this one, but will change it later (since I have reference to a movie).
-        String movieJsonStr;
+    public Void doInBackground(Void... params) {
 
-        try {
-
-            final String MOVIE_BASE_URL =
-                    "http://api.themoviedb.org/3/movie/"+movieId+"/videos?";
-            final String APPID_PARAM = "api_key";
-
-            Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
-                    .appendQueryParameter(APPID_PARAM, edu.boisestate.azamattulepbergenovu.popularmovies.BuildConfig.MOVIE_DB_API_KEY)
-                    .build();
-
-            URL url = new URL(builtUri.toString());
-
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-
-            // Read the input stream into a String
-            InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
-
-            if (inputStream == null) {
-                // Nothing to do.
-                return null;
-            }
-
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                buffer.append(line + "\n");
-            }
-
-            if (buffer.length() == 0) {
-                return null;
-            }
-            movieJsonStr = buffer.toString();
-
+        // looping through all the movies and fetching trailer data for each of them
+        for (int i=0; i<movieList.size();i++) {
+            long movieId = movieList.get(i).getId();
+            HttpURLConnection urlConnection = null;
+            BufferedReader reader = null;
+            String movieJsonStr;
             try {
-                getMovieDataFromJson(movieJsonStr);
+                final String MOVIE_BASE_URL =
+                        "http://api.themoviedb.org/3/movie/" + movieId + "/videos?";
+                final String APPID_PARAM = "api_key";
+                Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
+                        .appendQueryParameter(APPID_PARAM, edu.boisestate.azamattulepbergenovu.popularmovies.BuildConfig.MOVIE_DB_API_KEY)
+                        .build();
+                URL url = new URL(builtUri.toString());
 
-            } catch (org.json.JSONException e) {
-                Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
-                System.exit(1);
-            }
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
 
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Error ", e);
-            movieJsonStr = null;
-        } finally {
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-            if (reader != null) {
+                // Read the input stream into a String
+                InputStream inputStream = urlConnection.getInputStream();
+                StringBuffer buffer = new StringBuffer();
+
+                if (inputStream == null) {
+                    // Nothing to do.
+                    return null;
+                }
+
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line + "\n");
+                }
+
+                if (buffer.length() == 0) {
+                    return null;
+                }
+                movieJsonStr = buffer.toString();
+
                 try {
-                    reader.close();
-                } catch (final IOException e) {
-                    Log.e(LOG_TAG, "Error closing stream", e);
+                    getMovieDataFromJson(movieJsonStr, i);
+
+                } catch (org.json.JSONException e) {
+                    Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
+                    System.exit(1);
+                }
+
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Error ", e);
+                movieJsonStr = null;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (final IOException e) {
+                        Log.e(LOG_TAG, "Error closing stream", e);
+                    }
                 }
             }
         }
-        return 0;
+            return null;
     }
 
-    private void getMovieDataFromJson(String movieJsonStr)
+    private void getMovieDataFromJson(String movieJsonStr, int index)
             throws JSONException {
 
         // These are the names of the JSON objects that need to be extracted.
@@ -125,21 +121,11 @@ public class FetchTrailerDataTask extends AsyncTask<Void, Integer, Integer> {
             // PLEASE, suggest me a more elegant way to do it.
             trailerKeys.add(trailer.getString(OMD_KEY));
         }
-
-        // Takes O(n). How can it be improved what do you think?
-        for (Movie movie:movieList) {
-            if (movie.equals(this.movie)) {
-                movie.setTrailers(trailerKeys);
-                Log.v(LOG_TAG, "Set trailer here!!&!&!&");
-            }
-        }
-        f.loadFinished=true;
+        this.movieList.get(index).setTrailers(trailerKeys);
     }
 
-    protected void onPostExecute(Integer i) {
-        // making those text views visible here to ensure that the API calling finished fetching.
-       f.loadFinished=true;
-        Log.v(LOG_TAG, "SET BOOLEAN TO TRUE!");
+    protected void onPostExecute(Void v) {
+
     }
 
 }
