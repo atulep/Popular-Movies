@@ -23,87 +23,86 @@ import java.util.ArrayList;
 /**
  * Service class to perform data fetching on back thread.
  */
-public class FetchReviewDataTask extends AsyncTask<Void, Integer, Integer> {
+public class FetchReviewDataTask extends AsyncTask<Void, Void, Void> {
     private String LOG_TAG = this.getClass().getSimpleName();
     private ArrayList<Movie> movieList;
-    private Movie movie;
-    private MainFragment f;
 
-    public FetchReviewDataTask(ArrayList<Movie> movieList, Movie movie, MainFragment f) {
+    public FetchReviewDataTask(ArrayList<Movie> movieList) {
         this.movieList = movieList; // will return movieList so the changes to movies will persist
-        this.movie=movie;
-        this.f=f;
     }
 
-    public Integer doInBackground(Void... params) {
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
-        String movieJsonStr;
-        Long movieId = movie.getId();
-        try {
-
-            final String MOVIE_BASE_URL =
-                    "http://api.themoviedb.org/3/movie/"+movieId+"/reviews?";
-            final String APPID_PARAM = "api_key";
-
-            Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
-                    .appendQueryParameter(APPID_PARAM, edu.boisestate.azamattulepbergenovu.popularmovies.BuildConfig.MOVIE_DB_API_KEY)
-                    .build();
-
-            URL url = new URL(builtUri.toString());
-
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-
-            // Read the input stream into a String
-            InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
-
-            if (inputStream == null) {
-                // Nothing to do.
-                return null;
-            }
-
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                buffer.append(line + "\n");
-            }
-
-            if (buffer.length() == 0) {
-                return null;
-            }
-            movieJsonStr = buffer.toString();
+    public Void doInBackground(Void... params) {
+        for (int i=0; i<movieList.size();i++) {
+            HttpURLConnection urlConnection = null;
+            BufferedReader reader = null;
+            String movieJsonStr;
+            Long movieId = movieList.get(i).getId();
 
             try {
-                getMovieDataFromJson(movieJsonStr);
-            } catch (org.json.JSONException e) {
-                Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
-                System.exit(1);
-            }
 
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Error ", e);
-            movieJsonStr = null;
-        } finally {
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-            if (reader != null) {
+                final String MOVIE_BASE_URL =
+                        "http://api.themoviedb.org/3/movie/" + movieId + "/reviews?";
+                final String APPID_PARAM = "api_key";
+
+                Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
+                        .appendQueryParameter(APPID_PARAM, edu.boisestate.azamattulepbergenovu.popularmovies.BuildConfig.MOVIE_DB_API_KEY)
+                        .build();
+
+                URL url = new URL(builtUri.toString());
+
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+
+                // Read the input stream into a String
+                InputStream inputStream = urlConnection.getInputStream();
+                StringBuffer buffer = new StringBuffer();
+
+                if (inputStream == null) {
+                    // Nothing to do.
+                    return null;
+                }
+
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line + "\n");
+                }
+
+                if (buffer.length() == 0) {
+                    return null;
+                }
+                movieJsonStr = buffer.toString();
+
                 try {
-                    reader.close();
-                } catch (final IOException e) {
-                    Log.e(LOG_TAG, "Error closing stream", e);
+                    getMovieDataFromJson(movieJsonStr, i);
+                } catch (org.json.JSONException e) {
+                    Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
+                    System.exit(1);
+                }
+
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Error ", e);
+                movieJsonStr = null;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (final IOException e) {
+                        Log.e(LOG_TAG, "Error closing stream", e);
+                    }
                 }
             }
         }
-        return 0;
+        return null;
     }
 
-    private void getMovieDataFromJson(String movieJsonStr)
+    private void getMovieDataFromJson(String movieJsonStr, int index)
             throws JSONException {
 
         // These are the names of the JSON objects that need to be extracted.
@@ -122,14 +121,7 @@ public class FetchReviewDataTask extends AsyncTask<Void, Integer, Integer> {
             // PLEASE, suggest me a more elegant way to do it.
             reviewKeys.add(review.getString(OMD_CONTENT));
         }
-
-        // Takes O(n). How can it be improved what do you think?
-        for (Movie movie:movieList) {
-            if (movie.equals(this.movie)) {
-                movie.setReviews(reviewKeys);
-            }
-        }
-
+        movieList.get(index).setReviews(reviewKeys);
     }
 
     protected void onPostExecute(Integer i) {
