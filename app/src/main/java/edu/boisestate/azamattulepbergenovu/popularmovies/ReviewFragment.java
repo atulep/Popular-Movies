@@ -21,7 +21,7 @@ public class ReviewFragment extends Fragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = (View) inflater.inflate(R.layout.trailer_fragment, container, false);
+        View rootView = (View) inflater.inflate(R.layout.review_fragment, container, false);
         Movie obj = (Movie) getActivity().getIntent().getParcelableExtra(getResources().getString(R.string.parcelable_movie_key));
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
@@ -30,7 +30,7 @@ public class ReviewFragment extends Fragment {
                 R.id.details_review,
                 new ArrayList<String>());
 
-        ListView listView = (ListView) rootView.findViewById(R.id.trailer_listview);
+        ListView listView = (ListView) rootView.findViewById(R.id.review_listview);
         listView.setAdapter(adapter);
 
         ArrayList<String>reviewList=obj.reviews;

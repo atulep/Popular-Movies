@@ -9,10 +9,10 @@
 
     <!-- "main" fragment of the detail view.-->
     <fragment
+        android:name="edu.boisestate.azamattulepbergenovu.popularmovies.DetailFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/fragment_detail"/>
-
     <!-- trailers -->
     <fragment
         android:name="edu.boisestate.azamattulepbergenovu.popularmovies.TrailerFragment"
@@ -22,6 +22,7 @@
 
     <!-- reviews -->
     <fragment
+        android:name="edu.boisestate.azamattulepbergenovu.popularmovies.ReviewFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/fragment_review"/>
