@@ -11,10 +11,10 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 /**
- * Displays a
+ * Displays reviews for the movies. Part of the DetailActivity.
  * Created by atulep on 6/5/2016.
  */
-public class TrailerFragment extends Fragment {
+public class ReviewFragment extends Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,20 +26,16 @@ public class TrailerFragment extends Fragment {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getActivity(),
-                R.layout.trailer_item,
-                R.id.details_trailer_label,
+                R.layout.review_item,
+                R.id.details_review,
                 new ArrayList<String>());
 
         ListView listView = (ListView) rootView.findViewById(R.id.trailer_listview);
         listView.setAdapter(adapter);
 
-        ArrayList<String>trailerList=obj.trailers;
+        ArrayList<String>reviewList=obj.reviews;
 
-        for (int i=0;i<trailerList.size();i++){
-            adapter.add("Trailer " + (i+1));
-        }
-
+        adapter.addAll(reviewList);
         return rootView;
     }
-
 }
