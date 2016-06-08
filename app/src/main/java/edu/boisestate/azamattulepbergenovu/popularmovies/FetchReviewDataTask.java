@@ -121,6 +121,7 @@ public class FetchReviewDataTask extends AsyncTask<Void, Void, Void> {
             // PLEASE, suggest me a more elegant way to do it.
             reviewKeys.add(review.getString(OMD_CONTENT));
         }
+
         movieList.get(index).setReviews(reviewKeys);
     }
 

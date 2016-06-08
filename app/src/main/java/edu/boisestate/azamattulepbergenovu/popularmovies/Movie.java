@@ -30,8 +30,8 @@ public class Movie implements Parcelable {
         plot = in.readString();
         rating = in.readDouble();
         releaseDate = in.readString();
-        in.readStringList(trailers);
         in.readStringList(reviews);
+        in.readStringList(trailers);
     }
 
     public Movie(long id, String title, String posterImage, String plot, double rating, String releaseDate, ArrayList<String> trailers, ArrayList<String> reviews) {

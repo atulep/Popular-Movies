@@ -16,6 +16,8 @@ import java.util.ArrayList;
  */
 public class ReviewFragment extends Fragment {
 
+    private String LOG_TAG=this.getClass().getSimpleName();
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
