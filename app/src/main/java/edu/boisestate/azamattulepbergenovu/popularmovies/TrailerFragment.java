@@ -29,6 +29,16 @@ public class TrailerFragment extends Fragment {
             TextView textView=(TextView)trailerView.findViewById(R.id.details_trailer_label);
             textView.setText("Trailer " + i);
             // adding an item listener
+            LinearLayout itemContainer=(LinearLayout)trailerView.findViewById(R.id.trailer_item_container);
+            itemContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    
+
+
+                }
+            });
+
             insertionPoint.addView(trailerView, i, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
         return rootView;
