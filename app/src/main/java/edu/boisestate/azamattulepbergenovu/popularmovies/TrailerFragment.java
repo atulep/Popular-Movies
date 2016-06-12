@@ -1,6 +1,8 @@
 package edu.boisestate.azamattulepbergenovu.popularmovies;
 
 import android.app.Fragment;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,16 +32,15 @@ public class TrailerFragment extends Fragment {
             textView.setText("Trailer " + i);
             // adding an item listener
             LinearLayout itemContainer=(LinearLayout)trailerView.findViewById(R.id.trailer_item_container);
+            final String youtubeKey=obj.trailers.get(i);
+            insertionPoint.addView(trailerView, i, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             itemContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    
-
-
+                    String youtubeLink = "http://www.youtube.com/watch?v=";
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink + youtubeKey)));
                 }
             });
-
-            insertionPoint.addView(trailerView, i, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
         return rootView;
     }
