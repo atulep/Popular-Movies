@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
-import java.util.ArrayList;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * Displays reviews for the movies. Part of the DetailActivity.
@@ -26,18 +24,14 @@ public class ReviewFragment extends Fragment {
         View rootView = (View) inflater.inflate(R.layout.review_fragment, container, false);
         Movie obj = (Movie) getActivity().getIntent().getParcelableExtra(getResources().getString(R.string.parcelable_movie_key));
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                getActivity(),
-                R.layout.review_item,
-                R.id.details_review,
-                new ArrayList<String>());
+        LinearLayout insertionPoint=(LinearLayout)getActivity().findViewById(R.id.review_container);
 
-        ListView listView = (ListView) rootView.findViewById(R.id.review_listview);
-        listView.setAdapter(adapter);
-
-        ArrayList<String>reviewList=obj.reviews;
-
-        adapter.addAll(reviewList);
+        for (int i=0; i<obj.reviews.size(); i++) {
+            View reviewView=inflater.inflate(R.layout.review_item, null);
+            TextView textView=(TextView)reviewView.findViewById(R.id.details_review);
+            textView.setText(obj.reviews.get(i));
+            insertionPoint.addView(reviewView, i, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        }
         return rootView;
     }
 }
