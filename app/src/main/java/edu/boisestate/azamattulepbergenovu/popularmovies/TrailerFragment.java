@@ -15,6 +15,8 @@ import android.widget.TextView;
  * Created by atulep on 6/5/2016.
  */
 public class TrailerFragment extends Fragment {
+    private Movie obj;
+    private View[] trailerViewArray; // needed to make it global scope because I needed to access it inside of onActivityCreated()
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,18 +24,25 @@ public class TrailerFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = (View) inflater.inflate(R.layout.trailer_fragment, container, false);
-        Movie obj = (Movie) getActivity().getIntent().getParcelableExtra(getResources().getString(R.string.parcelable_movie_key));
+        obj = (Movie) getActivity().getIntent().getParcelableExtra(getResources().getString(R.string.parcelable_movie_key));
 
         LinearLayout insertionPoint=(LinearLayout) rootView.findViewById(R.id.trailer_container);
-
+        trailerViewArray=new View[obj.trailers.size()];
         for (int i=0; i<obj.trailers.size();i++) {
-            View trailerView=(View)inflater.inflate(R.layout.trailer_item, null);
-            TextView textView=(TextView)trailerView.findViewById(R.id.details_trailer_label);
+            trailerViewArray[i]=(View)inflater.inflate(R.layout.trailer_item, null);
+            TextView textView=(TextView)trailerViewArray[i].findViewById(R.id.details_trailer_label);
             textView.setText("Trailer " + i);
+            insertionPoint.addView(trailerViewArray[i], i, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        }
+        return rootView;
+    }
+
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        for (int i=0; i<obj.trailers.size();i++) {
             // adding an item listener
-            LinearLayout itemContainer=(LinearLayout)trailerView.findViewById(R.id.trailer_item_container);
+            LinearLayout itemContainer=(LinearLayout)trailerViewArray[i].findViewById(R.id.trailer_item_container);
             final String youtubeKey=obj.trailers.get(i);
-            insertionPoint.addView(trailerView, i, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             itemContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -42,7 +51,6 @@ public class TrailerFragment extends Fragment {
                 }
             });
         }
-        return rootView;
     }
 
 }
