@@ -22,10 +22,10 @@ public class TrailerFragment extends Fragment {
         View rootView = (View) inflater.inflate(R.layout.trailer_fragment, container, false);
         Movie obj = (Movie) getActivity().getIntent().getParcelableExtra(getResources().getString(R.string.parcelable_movie_key));
 
-        LinearLayout insertionPoint=(LinearLayout) rootView.findViewById(R.id.review_container);
+        LinearLayout insertionPoint=(LinearLayout) rootView.findViewById(R.id.trailer_container);
 
         for (int i=0; i<obj.trailers.size();i++) {
-            View trailerView=(View)inflater.inflate(R.layout.review_item, null);
+            View trailerView=(View)inflater.inflate(R.layout.trailer_item, null);
             TextView textView=(TextView)trailerView.findViewById(R.id.details_trailer_label);
             textView.setText("Trailer " + i);
             // adding an item listener
