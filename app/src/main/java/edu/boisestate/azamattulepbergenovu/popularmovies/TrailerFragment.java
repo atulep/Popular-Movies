@@ -31,7 +31,7 @@ public class TrailerFragment extends Fragment {
         for (int i=0; i<obj.trailers.size();i++) {
             trailerViewArray[i]=(View)inflater.inflate(R.layout.trailer_item, null);
             TextView textView=(TextView)trailerViewArray[i].findViewById(R.id.details_trailer_label);
-            textView.setText("Trailer " + i);
+            textView.setText("Trailer " + (i+1));
             insertionPoint.addView(trailerViewArray[i], i, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
         return rootView;
