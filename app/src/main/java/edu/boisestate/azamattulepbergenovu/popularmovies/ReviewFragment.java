@@ -24,7 +24,7 @@ public class ReviewFragment extends Fragment {
         View rootView = (View) inflater.inflate(R.layout.review_fragment, container, false);
         Movie obj = (Movie) getActivity().getIntent().getParcelableExtra(getResources().getString(R.string.parcelable_movie_key));
 
-        LinearLayout insertionPoint=(LinearLayout)getActivity().findViewById(R.id.review_container);
+        LinearLayout insertionPoint=(LinearLayout)rootView.findViewById(R.id.review_container);
 
         for (int i=0; i<obj.reviews.size(); i++) {
             View reviewView=inflater.inflate(R.layout.review_item, null);
