@@ -9,6 +9,7 @@ import net.simonvt.schematic.annotation.TableEndpoint;
 
 /**
  * Created by atulep on 7/10/2016.
+ * Defines Content Provider for 3 Database tables. 
  */
 @ContentProvider(authority = MoviesProvider.AUTHORITY, database = MoviesDatabase.class)
 public class MoviesProvider {
@@ -40,6 +41,41 @@ public class MoviesProvider {
         }
     }
 
-    
+    @TableEndpoint(table = MoviesDatabase.REVIEWS) public static class Reviews {
+        @ContentUri(
+                path = Path.REVIEWS,
+                type = "vnd.android.cursor.dir/review",
+                defaultSort = MoviesContract.ReviewColumns.MOVIE_ID + " ASC")
+        public static final Uri CONTENT_URI = Uri.parse(BASE_CONTENT_URI + "/details");
+
+        @InexactContentUri(
+                path = Path.REVIEWS + "/#",
+                name = "REVIEW_ID",
+                type = "vnd.android.cursor.item/review",
+                whereColumn = MoviesContract.ReviewColumns._ID,
+                pathSegment = 1)
+        public static Uri withId(long id) {
+            return Uri.parse("content://" + AUTHORITY + "/reviews/" + id);
+        }
+    }
+
+    @TableEndpoint(table = MoviesDatabase.TRAILERS) public static class Trailers {
+        @ContentUri(
+                path = Path.TRAILERS,
+                type = "vnd.android.cursor.dir/trailer",
+                defaultSort = MoviesContract.TrailerColumns.MOVIE_ID + " ASC")
+        public static final Uri CONTENT_URI = Uri.parse(BASE_CONTENT_URI + "/trailers");
+
+        @InexactContentUri(
+                path = Path.TRAILERS + "/#",
+                name = "TRAILER_ID",
+                type = "vnd.android.cursor.item/trailer",
+                whereColumn = MoviesContract.TrailerColumns._ID,
+                pathSegment = 1)
+        public static Uri withId(long id) {
+            return Uri.parse("content://" + AUTHORITY + "/trailers/" + id);
+        }
+    }
+
 
 }
