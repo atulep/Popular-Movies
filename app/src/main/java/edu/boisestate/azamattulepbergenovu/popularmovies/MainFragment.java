@@ -84,7 +84,7 @@ public class MainFragment extends Fragment {
      */
     public void updateMovies() {
         if (isConnected()) {
-            FetchMovieDataTask task = new FetchMovieDataTask(adapter, movieList);
+            FetchMovieDataTask task = new FetchMovieDataTask(adapter, movieList, getActivity());
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
             task.execute(prefs.getString(getString(R.string.settings_key), getString(R.string.settings_default_value)));
         } else {

@@ -18,22 +18,22 @@ public class MoviesContract {
         public static final String _ID = "_id";
 
         @DataType(DataType.Type.INTEGER) @NotNull
-        String MOVIE_ID = "movie_id";
+        public static final String MOVIE_ID = "movie_id";
 
         @DataType(DataType.Type.TEXT) @NotNull
-        String TITLE = "title";
+        public static final String TITLE = "title";
 
         @DataType(DataType.Type.TEXT) @NotNull
-        String POSTER_IMAGE = "poster_image";
+        public static final String POSTER_IMAGE = "poster_image";
 
         @DataType(DataType.Type.TEXT) @NotNull
-        String PLOT = "plot";
+        public static final String PLOT = "plot";
 
         @DataType(DataType.Type.REAL) @NotNull
-        String RATING = "rating";
+        public static final String RATING = "rating";
 
         @DataType(DataType.Type.TEXT) @NotNull
-        String RELEASE_DATE = "release_data";
+        public static final String RELEASE_DATE = "release_data";
     }
 
     /**

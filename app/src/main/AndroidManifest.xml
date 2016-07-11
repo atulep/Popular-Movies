@@ -19,6 +19,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".DetailActivity"></activity>
+        <provider
+            android:authorities="edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesProvider"
+            android:name="edu.boisestate.azamattulepbergenovu.popularmovies.data.generated.MoviesProvider"
+            android:exported="false"/>
     </application>
 
 </manifest>

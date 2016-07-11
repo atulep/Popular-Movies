@@ -4,6 +4,8 @@ package edu.boisestate.azamattulepbergenovu.popularmovies;
  * Created by atulep on 2/12/2016.
  */
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -21,6 +23,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
+
+import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesContract;
+import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesProvider;
 
 /**
  * Service class to perform data fetching on back thread.
@@ -30,9 +36,12 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
     private ArrayAdapter<Movie> adapter;
     private ArrayList<Movie> movieList;
 
-    public FetchMovieDataTask(ArrayAdapter adapter, ArrayList<Movie> movieList) {
+    private final Context mContext;
+
+    public FetchMovieDataTask(ArrayAdapter adapter, ArrayList<Movie> movieList, Context context) {
         this.adapter = adapter;
         this.movieList = movieList;
+        this.mContext = context;
     }
 
     public List<Movie> doInBackground(String... params) {
@@ -89,6 +98,7 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
                 System.exit(1);
             }
 
+
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error ", e);
             movieJsonStr = null;
@@ -122,8 +132,10 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
             movieList.clear();
         }
 
-        JSONObject forecastJson = new JSONObject(movieJsonStr);
-        JSONArray movieArray = forecastJson.getJSONArray(OMD_RESULTS);
+        JSONObject movieJson = new JSONObject(movieJsonStr);
+        JSONArray movieArray = movieJson.getJSONArray(OMD_RESULTS);
+
+        Vector<ContentValues> cVVector = new Vector<ContentValues>(movieArray.length());
 
         for (int i = 0; i < movieArray.length(); i++) {
             // Get the JSON object representing the day
@@ -131,9 +143,31 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
             // notice I am passing null values for the review and trailer. i will populate those later down the road inside
             // of FetchTrailerTask and FetchReviewTask classes.
             // PLEASE, suggest me a more elegant way to do it.
+
+            ContentValues cv = new ContentValues();
+
+            cv.put(MoviesContract.DetailsColumns.MOVIE_ID, movie.getLong(OMD_ID));
+            cv.put(MoviesContract.DetailsColumns.TITLE, movie.getString(OMD_TITLE));
+            cv.put(MoviesContract.DetailsColumns.POSTER_IMAGE, movie.getString(OMD_POSTER));
+            cv.put(MoviesContract.DetailsColumns.PLOT, movie.getString(OMD_PLOT));
+            cv.put(MoviesContract.DetailsColumns.RATING, movie.getDouble(OMD_RATING));
+            cv.put(MoviesContract.DetailsColumns.RELEASE_DATE, movie.getString(OMD_RELEASE));
+
+            cVVector.add(cv);
+
             movieList.add(new Movie(movie.getLong(OMD_ID), movie.getString(OMD_TITLE), movie.getString(OMD_POSTER), movie.getString(OMD_PLOT)
                     , movie.getDouble(OMD_RATING), movie.getString(OMD_RELEASE), null, null));
         }
+
+        int inserted = 0;
+        // add to database
+        if ( cVVector.size() > 0 ) {
+            ContentValues[] cvArray = new ContentValues[cVVector.size()];
+            cVVector.toArray(cvArray);
+            inserted = mContext.getContentResolver().bulkInsert(MoviesProvider.Details.CONTENT_URI, cvArray);
+        }
+
+        Log.d(LOG_TAG, "FetchWeatherTask Complete. " + inserted + " Inserted");
 
         return movieList;
     }

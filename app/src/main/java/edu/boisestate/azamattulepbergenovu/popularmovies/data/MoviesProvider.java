@@ -9,7 +9,7 @@ import net.simonvt.schematic.annotation.TableEndpoint;
 
 /**
  * Created by atulep on 7/10/2016.
- * Defines Content Provider for 3 Database tables. 
+ * Defines Content Provider for 3 Database tables.
  */
 @ContentProvider(authority = MoviesProvider.AUTHORITY, database = MoviesDatabase.class)
 public class MoviesProvider {
