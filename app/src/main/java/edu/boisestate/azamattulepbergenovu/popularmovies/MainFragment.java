@@ -33,7 +33,7 @@ public class MainFragment extends Fragment {
     MoviePosterAdapter adapter;
     ArrayList<Movie> movieList;
     private final String NO_INET_CONNECTION = "Oops... Looks like you are not connected to Internet.";
-
+    
     public MainFragment() {
     }
 
@@ -50,7 +50,7 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.gridfragment_main, container, false);
-        adapter = new MoviePosterAdapter(getActivity(), new ArrayList<Movie>());
+        adapter = new MoviePosterAdapter(getActivity(), null, 0); // context, cursor, flags
         GridView grid = (GridView) rootView.findViewById(R.id.gridView_main);
         grid.setAdapter(adapter);
 
