@@ -39,6 +39,7 @@ public class MoviesProvider {
         public static Uri withId(long id) {
             return Uri.parse("content://" + AUTHORITY + "/details/" + id);
         }
+
     }
 
     @TableEndpoint(table = MoviesDatabase.REVIEWS) public static class Reviews {

@@ -5,11 +5,16 @@ android.app.Fragment instead android.support.v4.fragment.
  */
 
 import android.app.Fragment;
+import android.app.LoaderManager;
 import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Gravity;
@@ -22,18 +27,28 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesContract;
+import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesProvider;
+
 /**
  * Fragment containing main UI when app is launched.
  *
  * Created by atulep on 1/23/2016.
  */
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
     String LOG_TAG = getClass().getSimpleName();
     MoviePosterAdapter adapter;
     ArrayList<Movie> movieList;
     private final String NO_INET_CONNECTION = "Oops... Looks like you are not connected to Internet.";
-    
+    private static final int MOVIES_LOADER = 0;
+
+    // For the movie grid view I'm showing only a small subset of the stored data.
+    // Specify the columns we need.
+    private static final String[] MOVIE_COLUMNS = {
+            MoviesContract.DetailsColumns.POSTER_IMAGE
+    };
+
     public MainFragment() {
     }
 
@@ -71,6 +86,29 @@ public class MainFragment extends Fragment {
     public void onStart() {
         updateMovies();
         super.onStart();
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        getLoaderManager().initLoader(MOVIES_LOADER, null, this);
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        // This is called when a new Loader needs to be created.  This
+        // fragment only uses one loader, so we don't care about checking the id.
+
+        // Sort order:  Ascending, by title
+        String sortOrder = MoviesContract.DetailsColumns.TITLE + " ASC";
+
+        Uri movieDetailsUri = MoviesProvider.Details.CONTENT_URI;
+
+        return new CursorLoader(getActivity(),
+                movieDetailsUri,
+                MOVIE_COLUMNS,
+                null,
+                null,
+                sortOrder);
     }
 
     @Override
