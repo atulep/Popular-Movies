@@ -9,7 +9,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,12 +32,12 @@ import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesProvider;
  */
 public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
     private String LOG_TAG = this.getClass().getSimpleName();
-    private ArrayAdapter<Movie> adapter;
+    private MoviePosterAdapter adapter;
     private ArrayList<Movie> movieList;
 
     private final Context mContext;
 
-    public FetchMovieDataTask(ArrayAdapter adapter, ArrayList<Movie> movieList, Context context) {
+    public FetchMovieDataTask(MoviePosterAdapter adapter, ArrayList<Movie> movieList, Context context) {
         this.adapter = adapter;
         this.movieList = movieList;
         this.mContext = context;
@@ -173,7 +172,7 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
     }
 
     protected void onPostExecute(List<Movie> list) {
-        adapter.clear();
+       // adapter.swapCursor(null); // clears data in the cursor
 
         // this makes sure that the general movie data, most notably the movie ID had already
         // been downloaded.
@@ -183,6 +182,5 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
         FetchReviewDataTask reviewTask = new FetchReviewDataTask(movieList);
         reviewTask.execute();
 
-        adapter.addAll(list);
     }
 }

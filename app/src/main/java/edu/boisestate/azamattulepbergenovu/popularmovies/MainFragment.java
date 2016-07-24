@@ -23,12 +23,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesContract;
+import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesDatabase;
 import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesProvider;
 
 /**
@@ -47,6 +47,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
     // For the movie grid view I'm showing only a small subset of the stored data.
     // Specify the columns we need.
     private static final String[] MOVIE_COLUMNS = {
+            MoviesDatabase.DETAILS + "." + MoviesContract.DetailsColumns._ID,
             MoviesContract.DetailsColumns.POSTER_IMAGE
     };
 

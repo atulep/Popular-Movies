@@ -2,6 +2,7 @@ package edu.boisestate.azamattulepbergenovu.popularmovies;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ public class MoviePosterAdapter extends CursorAdapter {
     private Context context;
 
     public static class ViewHolder {
-        ImageView posterView;
+        public final ImageView posterView;
 
         public ViewHolder(View v) {
             posterView = (ImageView) v.findViewById(R.id.movie_poster);
@@ -40,7 +41,7 @@ public class MoviePosterAdapter extends CursorAdapter {
     }
 
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View view = LayoutInflater.from(context).inflate(R.layout.gridfragment_main, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.movie_item, parent, false);
         ViewHolder holder = new ViewHolder(view);
         view.setTag(holder); //TODO: what does set tag do?
         return view;
@@ -50,6 +51,8 @@ public class MoviePosterAdapter extends CursorAdapter {
         ViewHolder holder = (ViewHolder) view.getTag();
         // XXX: Not sure here.
         String posterImage = cursor.getString(cursor.getColumnIndex(MoviesContract.DetailsColumns.POSTER_IMAGE));
+        Log.d(LOG_TAG, posterImage);
+        Log.d(LOG_TAG, "***");
         Picasso.with(this.context).load("http://image.tmdb.org/t/p/w185" + posterImage).into(holder.posterView);
     }
 
