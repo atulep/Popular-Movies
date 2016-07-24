@@ -1,9 +1,11 @@
 package edu.boisestate.azamattulepbergenovu.popularmovies.data;
 
 import net.simonvt.schematic.annotation.AutoIncrement;
+import net.simonvt.schematic.annotation.ConflictResolutionType;
 import net.simonvt.schematic.annotation.DataType;
 import net.simonvt.schematic.annotation.NotNull;
 import net.simonvt.schematic.annotation.PrimaryKey;
+import net.simonvt.schematic.annotation.Unique;
 
 /**
  * Created by atulep on 7/10/2016.
@@ -23,7 +25,7 @@ public class MoviesContract {
         @DataType(DataType.Type.TEXT) @NotNull
         public static final String TITLE = "title";
 
-        @DataType(DataType.Type.TEXT) @NotNull
+        @DataType(DataType.Type.TEXT) @NotNull @Unique(onConflict = ConflictResolutionType.REPLACE)
         public static final String POSTER_IMAGE = "poster_image";
 
         @DataType(DataType.Type.TEXT) @NotNull
