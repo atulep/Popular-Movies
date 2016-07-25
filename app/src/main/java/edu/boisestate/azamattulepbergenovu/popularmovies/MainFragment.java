@@ -105,11 +105,21 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
 
         Uri movieDetailsUri = MoviesProvider.Details.CONTENT_URI;
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        String selection;
+        if (prefs.getString(getString(R.string.settings_key),
+                getString(R.string.settings_default_value)).equals(R.string.settings_sort_option_popularity)) {
+            selection=MoviesContract.DetailsColumns.POPULAR + "=?";
+        } else {
+            selection=MoviesContract.DetailsColumns.TOP_RATED + "=?";
+        }
+
+        String[] selectionArgs={"1"};
         return new CursorLoader(getActivity(),
                 movieDetailsUri,
                 MOVIE_COLUMNS,
-                null,
-                null,
+                selection,
+                selectionArgs,
                 sortOrder);
     }
 
@@ -138,6 +148,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
      */
     public void updateMovies() {
         if (isConnected()) {
+            //this.getActivity().deleteDatabase(MoviesDatabase.DETAILS);
             FetchMovieDataTask task = new FetchMovieDataTask(adapter, movieList, getActivity());
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
             task.execute(prefs.getString(getString(R.string.settings_key), getString(R.string.settings_default_value)));

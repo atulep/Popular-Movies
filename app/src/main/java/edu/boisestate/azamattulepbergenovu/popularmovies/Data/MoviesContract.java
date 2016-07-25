@@ -19,23 +19,31 @@ public class MoviesContract {
         @DataType(DataType.Type.INTEGER) @PrimaryKey @AutoIncrement
         public static final String _ID = "_id";
 
-        @DataType(DataType.Type.INTEGER) @NotNull
+        @DataType(DataType.Type.INTEGER) @NotNull @Unique(onConflict = ConflictResolutionType.REPLACE)
         public static final String MOVIE_ID = "movie_id";
 
-        @DataType(DataType.Type.TEXT) @NotNull
+        @DataType(DataType.Type.TEXT) @NotNull @Unique(onConflict = ConflictResolutionType.REPLACE)
         public static final String TITLE = "title";
 
         @DataType(DataType.Type.TEXT) @NotNull @Unique(onConflict = ConflictResolutionType.REPLACE)
         public static final String POSTER_IMAGE = "poster_image";
 
-        @DataType(DataType.Type.TEXT) @NotNull
+        @DataType(DataType.Type.TEXT) @NotNull @Unique(onConflict = ConflictResolutionType.REPLACE)
         public static final String PLOT = "plot";
 
         @DataType(DataType.Type.REAL) @NotNull
         public static final String RATING = "rating";
 
         @DataType(DataType.Type.TEXT) @NotNull
-        public static final String RELEASE_DATE = "release_data";
+        public static final String RELEASE_DATE = "release_date";
+
+        // bit value
+        @DataType(DataType.Type.INTEGER)
+        public static final String POPULAR="popular";
+
+        // bit value
+        @DataType(DataType.Type.INTEGER)
+        public static final String TOP_RATED="top_rated";
     }
 
     /**

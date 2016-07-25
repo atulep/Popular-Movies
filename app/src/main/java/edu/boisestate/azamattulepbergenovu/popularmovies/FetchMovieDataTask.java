@@ -91,12 +91,11 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
             movieJsonStr = buffer.toString();
 
             try {
-                movieList = getMovieDataFromJson(movieJsonStr);
+                movieList = getMovieDataFromJson(movieJsonStr, typeOfSort);
             } catch (org.json.JSONException e) {
                 Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
                 System.exit(1);
             }
-
 
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error ", e);
@@ -116,7 +115,7 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
         return movieList;
     }
 
-    private List<Movie> getMovieDataFromJson(String movieJsonStr)
+    private List<Movie> getMovieDataFromJson(String movieJsonStr, String typeOfSort)
             throws JSONException {
 
         // These are the names of the JSON objects that need to be extracted.
@@ -152,6 +151,12 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
             cv.put(MoviesContract.DetailsColumns.RATING, movie.getDouble(OMD_RATING));
             cv.put(MoviesContract.DetailsColumns.RELEASE_DATE, movie.getString(OMD_RELEASE));
 
+            // 1 is true, 0 is false
+            if (typeOfSort.contains("popularity")) {
+                cv.put(MoviesContract.DetailsColumns.POPULAR, 1);
+            } else if (typeOfSort.contains("vote_average")){
+                cv.put(MoviesContract.DetailsColumns.TOP_RATED, 1);
+            }
             cVVector.add(cv);
 
             movieList.add(new Movie(movie.getLong(OMD_ID), movie.getString(OMD_TITLE), movie.getString(OMD_POSTER), movie.getString(OMD_PLOT)
