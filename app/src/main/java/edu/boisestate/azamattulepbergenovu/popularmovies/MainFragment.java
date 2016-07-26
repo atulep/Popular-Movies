@@ -51,6 +51,18 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
             MoviesContract.DetailsColumns.POSTER_IMAGE
     };
 
+    /**
+     * A callback interface that all activities containing this fragment must
+     * implement. This mechanism allows activities to be notified of item
+     * selections.
+     */
+    public interface Callback {
+        /**
+         * DetailFragmentCallback for when an item has been selected.
+         */
+        public void onItemSelected(Uri movieUri);
+    }
+
     public MainFragment() {
     }
 
@@ -157,7 +169,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         }
     }
     public void onResume() {
-        getLoaderManager().restartLoader(MOVIES_LOADER,null,this);
+        getLoaderManager().restartLoader(MOVIES_LOADER, null, this);
         super.onResume();
     }
     /**
