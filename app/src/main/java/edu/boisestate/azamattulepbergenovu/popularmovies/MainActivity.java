@@ -2,6 +2,7 @@ package edu.boisestate.azamattulepbergenovu.popularmovies;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,7 +13,7 @@ import android.view.MenuItem;
  * My understanding is that since my minimum SDK is IceCreamSandwich, I am safe to use
  * android.app.Fragment instead android.support.v4.fragment.
 */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainFragment.Callback {
     private String LOG_TAG = MainActivity.class.getSimpleName();
 
     @Override
@@ -60,5 +61,9 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onItemSelected(Uri movieUri) {
+        //TODO: implement this method.
     }
 }
