@@ -108,7 +108,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         String selection;
         if (prefs.getString(getString(R.string.settings_key),
-                getString(R.string.settings_default_value)).equals(R.string.settings_sort_option_popularity)) {
+                getString(R.string.settings_default_value)).equals(getString(R.string.settings_sort_option_popularity))) {
             selection=MoviesContract.DetailsColumns.POPULAR + "=?";
         } else {
             selection=MoviesContract.DetailsColumns.TOP_RATED + "=?";
@@ -156,7 +156,10 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
             displayMessage(NO_INET_CONNECTION);
         }
     }
-
+    public void onResume() {
+        getLoaderManager().restartLoader(MOVIES_LOADER,null,this);
+        super.onResume();
+    }
     /**
      * Checks network connection.
      *
