@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesContract;
-import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesProvider;
+import edu.boisestate.azamattulepbergenovu.popularmovies.Data.MoviesContract;
+import edu.boisestate.azamattulepbergenovu.popularmovies.Data.MoviesProvider;
 
 /**
  * Service class to perform data fetching on back thread.

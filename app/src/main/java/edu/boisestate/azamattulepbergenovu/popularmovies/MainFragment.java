@@ -17,6 +17,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.telecom.Call;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,12 +87,13 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent newActivityIntent = new Intent(getActivity(), DetailActivity.class);
-                // the API calls should be completed here
-                newActivityIntent.putExtra(getResources().getString(R.string.parcelable_movie_key), (Movie) parent.getItemAtPosition(position));
-                startActivity(newActivityIntent);
+                // CursorAdapter returns a cursor at the correct position for getItem(), or null
+                // if it cannot seek to that position.
+                Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+                ((Callback) getActivity())
+                        .onItemSelected(MoviesProvider.Details.withId
+                                (cursor.getInt(cursor.getColumnIndex(MoviesContract.DetailsColumns._ID))));
             }
-
         });
         return rootView;
     }
