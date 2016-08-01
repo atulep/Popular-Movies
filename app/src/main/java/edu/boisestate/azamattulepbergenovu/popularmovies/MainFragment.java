@@ -27,9 +27,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesContract;
-import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesDatabase;
-import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesProvider;
+import edu.boisestate.azamattulepbergenovu.popularmovies.Data.MoviesContract;
+import edu.boisestate.azamattulepbergenovu.popularmovies.Data.MoviesDatabase;
+import edu.boisestate.azamattulepbergenovu.popularmovies.Data.MoviesProvider;
 
 /**
  * Fragment containing main UI when app is launched.

@@ -2,6 +2,7 @@ package edu.boisestate.azamattulepbergenovu.popularmovies;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -63,7 +64,14 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Call back interface to detect when the item in the list was clicked.
+     * @param movieUri the uri for the movie
+     */
     public void onItemSelected(Uri movieUri) {
-        //TODO: implement this method.
+        // handling the phone case for now
+        Intent intent = new Intent(this, DetailActivity.class)
+                .setData(movieUri);
+        startActivity(intent);
     }
 }

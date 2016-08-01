@@ -1,4 +1,4 @@
-package edu.boisestate.azamattulepbergenovu.popularmovies.data;
+package edu.boisestate.azamattulepbergenovu.popularmovies.Data;
 
 import net.simonvt.schematic.annotation.AutoIncrement;
 import net.simonvt.schematic.annotation.ConflictResolutionType;
