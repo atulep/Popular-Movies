@@ -61,7 +61,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         /**
          * DetailFragmentCallback for when an item has been selected.
          */
-        public void onItemSelected(Uri movieUri);
+        void onItemSelected(Uri movieUri);
     }
 
     public MainFragment() {
