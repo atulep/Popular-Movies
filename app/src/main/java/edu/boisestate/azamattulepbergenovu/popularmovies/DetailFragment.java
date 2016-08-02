@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,8 @@ import butterknife.ButterKnife;
 public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private String LOG_TAG = getClass().getSimpleName();
     private static final int MOVIES_LOADER = 0;
+    static final String DETAIL_URI = "URI";
+    private Uri mUri;
 
     @Bind(R.id.details_imageView) ImageView poster;
     @Bind(R.id.details_title) TextView title;
@@ -54,6 +57,11 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            mUri = arguments.getParcelable(DetailFragment.DETAIL_URI);
+        }
+
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this, rootView);
 
