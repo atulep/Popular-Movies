@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
-import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesContract;
+import edu.boisestate.azamattulepbergenovu.popularmovies.Data.MoviesContract;
 
 /**
  * Custom CursorAdapter to display the movies UI on the main grid.
