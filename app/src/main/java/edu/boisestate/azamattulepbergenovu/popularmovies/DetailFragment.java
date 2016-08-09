@@ -95,18 +95,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this, rootView);
-
-        Movie obj = (Movie) getActivity().getIntent().getParcelableExtra(getResources().getString(R.string.parcelable_movie_key));
-        updateMovieDetails(rootView, obj);
-
         return rootView;
-    }
-
-    public void updateMovieDetails(View view, Movie movie){
-        Picasso.with(this.getActivity()).load("http://image.tmdb.org/t/p/w185" + movie.posterImage).into(poster);
-        title.setText(movie.title);
-        release.setText(movie.releaseDate);
-        rating.setText(Double.valueOf(movie.rating).toString());
-        plot.setText(movie.plot);
     }
 }
