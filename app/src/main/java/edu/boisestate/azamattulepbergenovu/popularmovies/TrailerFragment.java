@@ -17,6 +17,7 @@ import android.widget.TextView;
 public class TrailerFragment extends Fragment {
     private Movie obj;
     private View[] trailerViewArray; // needed to make it global scope because I needed to access it inside of onActivityCreated()
+    public static String MOVIE_ID = "MOVIE_ID";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

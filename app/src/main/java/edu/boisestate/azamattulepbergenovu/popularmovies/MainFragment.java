@@ -91,7 +91,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         return rootView;
     }
 
-
     public void onStart() {
         updateMovies();
         super.onStart();

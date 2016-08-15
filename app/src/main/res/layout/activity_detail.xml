@@ -3,6 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:nestedScrollingEnabled="true"
-    android:id="@+id/details_container"
     android:fillViewport="true">
+
+    <!-- Dynamically adding the fragments at the runtime. -->
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id = "@+id/detail_container"
+        tools:context="edu.boisestate.azamattulepbergenovu.popularmovies.DetailActivity">
+    </LinearLayout>
 </ScrollView>

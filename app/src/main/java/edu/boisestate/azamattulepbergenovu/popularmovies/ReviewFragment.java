@@ -15,6 +15,7 @@ import android.widget.TextView;
 public class ReviewFragment extends Fragment {
 
     private String LOG_TAG=this.getClass().getSimpleName();
+    public static String MOVIE_ID = "MOVIE_ID";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
