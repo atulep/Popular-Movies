@@ -138,8 +138,8 @@ public class FetchTrailerDataTask extends AsyncTask<Void, Void, Void> {
             JSONObject trailer = trailerArray.getJSONObject(i);
 
             ContentValues cv = new ContentValues();
-            cv.put(MoviesContract.ReviewColumns.MOVIE_ID, movieId);
-            cv.put(MoviesContract.ReviewColumns.REVIEW, trailer.getString(OMD_KEY));
+            cv.put(MoviesContract.TrailerColumns.MOVIE_ID, movieId);
+            cv.put(MoviesContract.TrailerColumns.TRAILER_PATH, trailer.getString(OMD_KEY));
             cVVector.add(cv);
         }
 
@@ -148,7 +148,7 @@ public class FetchTrailerDataTask extends AsyncTask<Void, Void, Void> {
         if ( cVVector.size() > 0 ) {
             ContentValues[] cvArray = new ContentValues[cVVector.size()];
             cVVector.toArray(cvArray);
-            inserted = mContext.getContentResolver().bulkInsert(MoviesProvider.Reviews.CONTENT_URI, cvArray);
+            inserted = mContext.getContentResolver().bulkInsert(MoviesProvider.Trailers.CONTENT_URI, cvArray);
         }
         Log.d(LOG_TAG, "FetchReviewTask Complete. " + inserted + " Inserted");
     }

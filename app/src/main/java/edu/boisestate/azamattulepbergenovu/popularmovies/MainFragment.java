@@ -150,7 +150,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
     public void updateMovies() {
         if (isConnected()) {
             //this.getActivity().deleteDatabase(MoviesDatabase.DETAILS);
-            FetchMovieDataTask task = new FetchMovieDataTask(adapter, getActivity());
+            FetchMovieDataTask task = new FetchMovieDataTask(getActivity());
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
             task.execute(prefs.getString(getString(R.string.settings_key), getString(R.string.settings_default_value)));
         } else {

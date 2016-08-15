@@ -47,7 +47,7 @@ public class MoviesProvider {
                 path = Path.REVIEWS,
                 type = "vnd.android.cursor.dir/review",
                 defaultSort = MoviesContract.ReviewColumns.MOVIE_ID + " ASC")
-        public static final Uri CONTENT_URI = Uri.parse(BASE_CONTENT_URI + "/details");
+        public static final Uri CONTENT_URI = Uri.parse(BASE_CONTENT_URI + "/reviews");
 
         @InexactContentUri(
                 path = Path.REVIEWS + "/#",
