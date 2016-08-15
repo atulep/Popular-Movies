@@ -5,6 +5,7 @@ import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -35,8 +36,18 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             MoviesContract.DetailsColumns.PLOT,
             MoviesContract.DetailsColumns.TITLE,
             MoviesContract.DetailsColumns.RELEASE_DATE,
-            MoviesContract.DetailsColumns.TITLE
+            MoviesContract.DetailsColumns.RATING
     };
+
+    // those indices map to the indices of columns defined above (in the DETAIL_COLUMNS).
+    // they are created for ease of access. I tried using cursor.getColumnIndex(NAME), but this
+    // didn't work. Apparently, this is a way to go.
+    public static final int COL_DETAILS_ID = 0;
+    public static final int COL_DETAILS_POSTER = 1;
+    public static final int COL_DETAILS_PLOT = 2;
+    public static final int COL_DETAILS_TITLE = 3;
+    public static final int COL_DETAILS_RELEASE_DATE = 4;
+    public static final int COL_DETAILS_RATING = 5;
 
     @Bind(R.id.details_imageView) ImageView poster;
     @Bind(R.id.details_title) TextView title;
@@ -72,17 +83,20 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         // Called when a previously created loader has finished its load.
-        String posterImage = cursor.getString(cursor.getColumnIndex(MoviesContract.DetailsColumns.POSTER_IMAGE));
-        String releaseDate = cursor.getString(cursor.getColumnIndex(MoviesContract.DetailsColumns.RELEASE_DATE));
-        double ratingNum = cursor.getDouble(cursor.getColumnIndex(MoviesContract.DetailsColumns.RATING));
-        String plotDesc = cursor.getString(cursor.getColumnIndex(MoviesContract.DetailsColumns.PLOT));
-        String movieTitle = cursor.getString(cursor.getColumnIndex(MoviesContract.DetailsColumns.TITLE));
+        if (cursor != null && cursor.moveToFirst()) {
+            DatabaseUtils.dumpCursor(cursor);
+            String posterImage = cursor.getString(COL_DETAILS_POSTER);
+            String releaseDate = cursor.getString(COL_DETAILS_RELEASE_DATE);
+            double ratingNum = cursor.getDouble(COL_DETAILS_RATING);
+            String plotDesc = cursor.getString(COL_DETAILS_PLOT);
+            String movieTitle = cursor.getString(COL_DETAILS_TITLE);
 
-        Picasso.with(this.getActivity()).load("http://image.tmdb.org/t/p/w185" + posterImage).into(poster);
-        title.setText(movieTitle);
-        release.setText(releaseDate);
-        rating.setText(Double.valueOf(ratingNum).toString());
-        plot.setText(plotDesc);
+            Picasso.with(this.getActivity()).load("http://image.tmdb.org/t/p/w185" + posterImage).into(poster);
+            title.setText(movieTitle);
+            release.setText(releaseDate);
+            rating.setText(Double.valueOf(ratingNum).toString());
+            plot.setText(plotDesc);
+        }
     }
 
     public void onLoaderReset(Loader<Cursor> loader) { /* nop */ }
