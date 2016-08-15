@@ -40,7 +40,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
 
     String LOG_TAG = getClass().getSimpleName();
     MoviePosterAdapter adapter;
-    ArrayList<Movie> movieList;
     private final String NO_INET_CONNECTION = "Oops... Looks like you are not connected to Internet.";
     private static final int MOVIES_LOADER = 0;
 
@@ -68,11 +67,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState == null || !savedInstanceState.containsKey(getResources().getString(R.string.parcelable_movieList_key))) {
-            movieList = new ArrayList<Movie>();
-        } else {
-            movieList = savedInstanceState.getParcelableArrayList(getResources().getString(R.string.parcelable_movieList_key));
-        }
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -150,19 +144,13 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         adapter.swapCursor(null);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArrayList(getResources().getString(R.string.parcelable_movieList_key), movieList);
-        super.onSaveInstanceState(outState);
-    }
-
     /**
      * Spins of back thread to fetch data from network.
      */
     public void updateMovies() {
         if (isConnected()) {
             //this.getActivity().deleteDatabase(MoviesDatabase.DETAILS);
-            FetchMovieDataTask task = new FetchMovieDataTask(adapter, movieList, getActivity());
+            FetchMovieDataTask task = new FetchMovieDataTask(adapter, getActivity());
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
             task.execute(prefs.getString(getString(R.string.settings_key), getString(R.string.settings_default_value)));
         } else {

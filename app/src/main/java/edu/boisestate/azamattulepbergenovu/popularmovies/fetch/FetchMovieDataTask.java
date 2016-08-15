@@ -20,7 +20,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -32,20 +31,18 @@ import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesProvider;
 /**
  * Service class to perform data fetching on back thread.
  */
-public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
+public class FetchMovieDataTask extends AsyncTask<String, Void, Void> {
     private String LOG_TAG = this.getClass().getSimpleName();
     private MoviePosterAdapter adapter;
-    private ArrayList<Movie> movieList;
 
     private final Context mContext;
 
-    public FetchMovieDataTask(MoviePosterAdapter adapter, ArrayList<Movie> movieList, Context context) {
+    public FetchMovieDataTask(MoviePosterAdapter adapter, Context context) {
         this.adapter = adapter;
-        this.movieList = movieList;
         this.mContext = context;
     }
 
-    public List<Movie> doInBackground(String... params) {
+    public Void doInBackground(String... params) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         String typeOfSort = params[0];// which sort to perform
@@ -93,7 +90,7 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
             movieJsonStr = buffer.toString();
 
             try {
-                movieList = getMovieDataFromJson(movieJsonStr, typeOfSort);
+                getMovieDataFromJson(movieJsonStr, typeOfSort);
             } catch (org.json.JSONException e) {
                 Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
                 System.exit(1);
@@ -114,10 +111,10 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
                 }
             }
         }
-        return movieList;
+        return null;
     }
 
-    private List<Movie> getMovieDataFromJson(String movieJsonStr, String typeOfSort)
+    private void getMovieDataFromJson(String movieJsonStr, String typeOfSort)
             throws JSONException {
 
         // These are the names of the JSON objects that need to be extracted.
@@ -128,9 +125,6 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
         final String OMD_RELEASE = "release_date";
         final String OMD_RESULTS = "results";
         final String OMD_ID = "id";
-        if (!movieList.isEmpty()) {
-            movieList.clear();
-        }
 
         JSONObject movieJson = new JSONObject(movieJsonStr);
         JSONArray movieArray = movieJson.getJSONArray(OMD_RESULTS);
@@ -161,8 +155,6 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
             }
             cVVector.add(cv);
 
-            movieList.add(new Movie(movie.getLong(OMD_ID), movie.getString(OMD_TITLE), movie.getString(OMD_POSTER), movie.getString(OMD_PLOT)
-                    , movie.getDouble(OMD_RATING), movie.getString(OMD_RELEASE), null, null));
         }
 
         int inserted = 0;
@@ -175,7 +167,6 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
 
         Log.d(LOG_TAG, "FetchWeatherTask Complete. " + inserted + " Inserted");
 
-        return movieList;
     }
 
     protected void onPostExecute(List<Movie> list) {
@@ -183,11 +174,11 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
 
         // this makes sure that the general movie data, most notably the movie ID had already
         // been downloaded.
-        FetchTrailerDataTask trailerTask = new FetchTrailerDataTask(movieList);
-        trailerTask.execute();
+        //FetchTrailerDataTask trailerTask = new FetchTrailerDataTask(movieList);
+        //trailerTask.execute();
 
-        FetchReviewDataTask reviewTask = new FetchReviewDataTask(movieList);
-        reviewTask.execute();
+        //FetchReviewDataTask reviewTask = new FetchReviewDataTask(movieList);
+        //reviewTask.execute();
 
     }
 }
