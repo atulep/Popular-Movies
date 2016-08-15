@@ -20,11 +20,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 import java.util.Vector;
-
-import edu.boisestate.azamattulepbergenovu.popularmovies.Movie;
-import edu.boisestate.azamattulepbergenovu.popularmovies.MoviePosterAdapter;
 import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesContract;
 import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesProvider;
 
@@ -33,12 +29,10 @@ import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesProvider;
  */
 public class FetchMovieDataTask extends AsyncTask<String, Void, Void> {
     private String LOG_TAG = this.getClass().getSimpleName();
-    private MoviePosterAdapter adapter;
 
     private final Context mContext;
 
-    public FetchMovieDataTask(MoviePosterAdapter adapter, Context context) {
-        this.adapter = adapter;
+    public FetchMovieDataTask(Context context) {
         this.mContext = context;
     }
 
@@ -47,7 +41,6 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, Void> {
         BufferedReader reader = null;
         String typeOfSort = params[0];// which sort to perform
         String movieJsonStr;
-        List<Movie> movieList = null;
 
         try {
 
@@ -132,14 +125,9 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, Void> {
         Vector<ContentValues> cVVector = new Vector<ContentValues>(movieArray.length());
 
         for (int i = 0; i < movieArray.length(); i++) {
-            // Get the JSON object representing the day
             JSONObject movie = movieArray.getJSONObject(i);
-            // notice I am passing null values for the review and trailer. i will populate those later down the road inside
-            // of FetchTrailerTask and FetchReviewTask classes.
-            // PLEASE, suggest me a more elegant way to do it.
 
             ContentValues cv = new ContentValues();
-
             cv.put(MoviesContract.DetailsColumns.MOVIE_ID, movie.getLong(OMD_ID));
             cv.put(MoviesContract.DetailsColumns.TITLE, movie.getString(OMD_TITLE));
             cv.put(MoviesContract.DetailsColumns.POSTER_IMAGE, movie.getString(OMD_POSTER));
@@ -172,10 +160,10 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, Void> {
         // been downloaded.
 
         // TODO: Should I pass a list of movie id's to both fetch task, or have each task query db.
-        FetchTrailerDataTask trailerTask = new FetchTrailerDataTask();
+        FetchTrailerDataTask trailerTask = new FetchTrailerDataTask(mContext);
         trailerTask.execute();
 
-        FetchReviewDataTask reviewTask = new FetchReviewDataTask();
+        FetchReviewDataTask reviewTask = new FetchReviewDataTask(mContext);
         reviewTask.execute();
     }
 }
