@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesContract;
 import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesDatabase;
 import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesProvider;
+import edu.boisestate.azamattulepbergenovu.popularmovies.fetch.FetchMovieDataTask;
 
 /**
  * Fragment containing main UI when app is launched.

@@ -1,4 +1,4 @@
-package edu.boisestate.azamattulepbergenovu.popularmovies;
+package edu.boisestate.azamattulepbergenovu.popularmovies.fetch;
 
 /**
  * Created by atulep on 2/12/2016.
@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import edu.boisestate.azamattulepbergenovu.popularmovies.Movie;
+import edu.boisestate.azamattulepbergenovu.popularmovies.MoviePosterAdapter;
 import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesContract;
 import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesProvider;
 
