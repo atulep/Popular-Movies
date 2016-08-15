@@ -1,4 +1,4 @@
-package edu.boisestate.azamattulepbergenovu.popularmovies.Data;
+package edu.boisestate.azamattulepbergenovu.popularmovies.data;
 
 import net.simonvt.schematic.annotation.Database;
 import net.simonvt.schematic.annotation.Table;

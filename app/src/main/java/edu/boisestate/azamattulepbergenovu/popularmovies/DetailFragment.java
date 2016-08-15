@@ -18,8 +18,8 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import edu.boisestate.azamattulepbergenovu.popularmovies.Data.MoviesContract;
-import edu.boisestate.azamattulepbergenovu.popularmovies.Data.MoviesDatabase;
+import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesContract;
+import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesDatabase;
 
 /**
  * Displays details of the movie.

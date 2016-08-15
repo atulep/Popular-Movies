@@ -2,7 +2,6 @@ package edu.boisestate.azamattulepbergenovu.popularmovies;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
-import edu.boisestate.azamattulepbergenovu.popularmovies.Data.MoviesContract;
+import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesContract;
 
 /**
  * Custom CursorAdapter to display the movies UI on the main grid.

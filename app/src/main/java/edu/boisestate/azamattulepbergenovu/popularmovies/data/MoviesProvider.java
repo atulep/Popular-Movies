@@ -1,4 +1,4 @@
-package edu.boisestate.azamattulepbergenovu.popularmovies.Data;
+package edu.boisestate.azamattulepbergenovu.popularmovies.data;
 
 import android.net.Uri;
 
@@ -13,7 +13,7 @@ import net.simonvt.schematic.annotation.TableEndpoint;
  */
 @ContentProvider(authority = MoviesProvider.AUTHORITY, database = MoviesDatabase.class)
 public class MoviesProvider {
-    public static final String AUTHORITY = "edu.boisestate.azamattulepbergenovu.popularmovies.Data.MoviesProvider";
+    public static final String AUTHORITY = "edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesProvider";
 
     static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 

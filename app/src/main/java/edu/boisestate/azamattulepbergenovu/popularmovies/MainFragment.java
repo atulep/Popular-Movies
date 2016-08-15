@@ -8,7 +8,6 @@ import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.CursorLoader;
-import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -17,7 +16,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.telecom.Call;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,9 +26,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import edu.boisestate.azamattulepbergenovu.popularmovies.Data.MoviesContract;
-import edu.boisestate.azamattulepbergenovu.popularmovies.Data.MoviesDatabase;
-import edu.boisestate.azamattulepbergenovu.popularmovies.Data.MoviesProvider;
+import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesContract;
+import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesDatabase;
+import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesProvider;
 
 /**
  * Fragment containing main UI when app is launched.
