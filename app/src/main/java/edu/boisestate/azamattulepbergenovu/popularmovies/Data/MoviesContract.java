@@ -53,11 +53,11 @@ public class MoviesContract {
         @DataType(DataType.Type.INTEGER) @PrimaryKey @AutoIncrement
         String _ID = "_id";
 
-        @DataType(DataType.Type.INTEGER) @NotNull
+        @DataType(DataType.Type.INTEGER) @NotNull @Unique(onConflict = ConflictResolutionType.REPLACE)
         String MOVIE_ID = "movie_id";
 
         // some movies may not have trailers
-        @DataType(DataType.Type.TEXT)
+        @DataType(DataType.Type.TEXT) @Unique(onConflict = ConflictResolutionType.REPLACE)
         String TRAILER_PATH = "trailer_path";
     }
 
@@ -65,11 +65,11 @@ public class MoviesContract {
         @DataType(DataType.Type.INTEGER) @PrimaryKey @AutoIncrement
         String _ID = "_id";
 
-        @DataType(DataType.Type.INTEGER) @NotNull
+        @DataType(DataType.Type.INTEGER) @NotNull @Unique(onConflict = ConflictResolutionType.REPLACE)
         String MOVIE_ID = "movie_id";
 
         // some movies may not have reviews
-        @DataType(DataType.Type.TEXT)
+        @DataType(DataType.Type.TEXT) @Unique(onConflict = ConflictResolutionType.REPLACE)
         String REVIEW = "review";
     }
 }

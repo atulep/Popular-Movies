@@ -164,21 +164,18 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, Void> {
             cVVector.toArray(cvArray);
             inserted = mContext.getContentResolver().bulkInsert(MoviesProvider.Details.CONTENT_URI, cvArray);
         }
-
-        Log.d(LOG_TAG, "FetchWeatherTask Complete. " + inserted + " Inserted");
-
+        Log.d(LOG_TAG, "FetchMovieTask Complete. " + inserted + " Inserted");
     }
 
-    protected void onPostExecute(List<Movie> list) {
-       // adapter.swapCursor(null); // clears data in the cursor
-
+    protected void onPostExecute(Void nothing) {
         // this makes sure that the general movie data, most notably the movie ID had already
         // been downloaded.
-        //FetchTrailerDataTask trailerTask = new FetchTrailerDataTask(movieList);
-        //trailerTask.execute();
 
-        //FetchReviewDataTask reviewTask = new FetchReviewDataTask(movieList);
-        //reviewTask.execute();
+        // TODO: Should I pass a list of movie id's to both fetch task, or have each task query db.
+        FetchTrailerDataTask trailerTask = new FetchTrailerDataTask();
+        trailerTask.execute();
 
+        FetchReviewDataTask reviewTask = new FetchReviewDataTask();
+        reviewTask.execute();
     }
 }

@@ -30,10 +30,6 @@ public class FetchTrailerDataTask extends AsyncTask<Void, Void, Void> {
     private String LOG_TAG = this.getClass().getSimpleName();
     private ArrayList<Movie> movieList;
 
-    public FetchTrailerDataTask(ArrayList<Movie> movieList) {
-        this.movieList = movieList; // will return movieList so the changes to movies will persist
-    }
-
     public Void doInBackground(Void... params) {
 
         // looping through all the movies and fetching trailer data for each of them

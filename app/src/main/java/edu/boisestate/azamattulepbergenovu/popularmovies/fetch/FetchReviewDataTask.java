@@ -27,11 +27,6 @@ import edu.boisestate.azamattulepbergenovu.popularmovies.Movie;
  */
 public class FetchReviewDataTask extends AsyncTask<Void, Void, Void> {
     private String LOG_TAG = this.getClass().getSimpleName();
-    private ArrayList<Movie> movieList;
-
-    public FetchReviewDataTask(ArrayList<Movie> movieList) {
-        this.movieList = movieList; // will return movieList so the changes to movies will persist
-    }
 
     public Void doInBackground(Void... params) {
         for (int i=0; i<movieList.size();i++) {
