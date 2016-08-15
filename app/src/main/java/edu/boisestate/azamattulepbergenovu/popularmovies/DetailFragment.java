@@ -83,6 +83,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         // Called when a previously created loader has finished its load.
+        // Apparently, I need to call moveToFirst(), otherwise, I mPost of cursor will be -1.
         if (cursor != null && cursor.moveToFirst()) {
             DatabaseUtils.dumpCursor(cursor);
             String posterImage = cursor.getString(COL_DETAILS_POSTER);

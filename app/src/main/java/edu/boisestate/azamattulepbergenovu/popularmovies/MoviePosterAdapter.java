@@ -49,10 +49,9 @@ public class MoviePosterAdapter extends CursorAdapter {
 
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder holder = (ViewHolder) view.getTag();
-        // XXX: Not sure here.
+        // How come this worked in this case, but not in the DetailFragment, where I had to manually
+        // define columns?
         String posterImage = cursor.getString(cursor.getColumnIndex(MoviesContract.DetailsColumns.POSTER_IMAGE));
-        Log.d(LOG_TAG, posterImage);
-        Log.d(LOG_TAG, "***");
         Picasso.with(this.context).load("http://image.tmdb.org/t/p/w185" + posterImage).into(holder.posterView);
     }
 
