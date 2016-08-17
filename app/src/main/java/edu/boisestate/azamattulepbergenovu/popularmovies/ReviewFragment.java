@@ -47,7 +47,7 @@ public class ReviewFragment extends Fragment implements LoaderManager.LoaderCall
 
         Bundle arguments = getArguments();
         if (arguments != null) {
-            movieId = arguments.getParcelable(MOVIE_ID);
+            movieId = arguments.getLong(MOVIE_ID);
         }
 
         insertionPoint=(LinearLayout)rootView.findViewById(R.id.review_container);
@@ -91,7 +91,6 @@ public class ReviewFragment extends Fragment implements LoaderManager.LoaderCall
         } else {
             Log.d(LOG_TAG, "Cursor was null");
         }
-
     }
 
     public void onLoaderReset(Loader<Cursor> loader) { /* nop */ }
