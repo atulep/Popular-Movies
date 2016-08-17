@@ -5,6 +5,7 @@ import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -77,6 +78,7 @@ public class ReviewFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data){
+        DatabaseUtils.dumpCursor(data);
         if (data != null) {
             while (data.moveToNext()) {
                 int pos = 0;
