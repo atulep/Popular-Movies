@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesContract;
 
@@ -13,6 +14,7 @@ import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesContract;
  */
 public class DetailActivity extends AppCompatActivity {
 
+    private final String LOG_TAG = getClass().getSimpleName();
     private String[] DETAIL_COLUMNS = {MoviesContract.DetailsColumns.MOVIE_ID};
 
     @Override
@@ -57,7 +59,11 @@ public class DetailActivity extends AppCompatActivity {
                 null,
                 null
         );
-        return movie.getLong(movie.getColumnIndex(MoviesContract.DetailsColumns.MOVIE_ID));
+        if (movie.moveToFirst()){
+            return movie.getLong(movie.getColumnIndex(MoviesContract.DetailsColumns.MOVIE_ID));
+        }
+        Log.d(LOG_TAG, "Cursor doesn't contain anything!");
+        return -1;
     }
 
     /**
