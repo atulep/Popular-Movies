@@ -4,11 +4,11 @@
     <!-- Settings -->
     <string name="settings_sort">Sort by</string>
     <string name="settings_key">sort</string>
-    <string name="settings_default_value">Popularity</string>
+    <string name="settings_default_value">popular</string>
 
     <!-- Available sorting labels to show on UI-->
-    <string name="settings_sort_label_popularity">Popularity</string>
-    <string name="settings_sort_label_rating">Rating</string>
+    <string name="settings_sort_label_popularity">popular</string>
+    <string name="settings_sort_label_rating">top_rated</string>
 
     <!-- Available sorting options to serve as query parameters-->
     <string name="settings_sort_option_popularity">popularity.desc</string>

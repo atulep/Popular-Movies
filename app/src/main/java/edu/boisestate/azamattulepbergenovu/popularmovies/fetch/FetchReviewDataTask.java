@@ -154,6 +154,5 @@ public class FetchReviewDataTask extends AsyncTask<Void, Void, Void> {
             inserted = mContext.getContentResolver().bulkInsert(MoviesProvider.Reviews.CONTENT_URI, cvArray);
         }
         Log.d(LOG_TAG, "FetchReviewTask Complete. " + inserted + " Inserted");
-
     }
 }

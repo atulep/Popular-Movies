@@ -42,12 +42,11 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, Void> {
         String typeOfSort = params[0];// which sort to perform
         Log.v(LOG_TAG, typeOfSort);
         String movieJsonStr;
-
+        assert typeOfSort.equals("top_rated") || typeOfSort.equals("popular");
         try {
 
             final String MOVIE_BASE_URL =
-                    "http://api.themoviedb.org/3/movie/popular?";
-            final String QUERY_PARAM = "sort_by";
+                    "http://api.themoviedb.org/3/movie/" + typeOfSort + "?";
             final String APPID_PARAM = "api_key";
 
             Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
@@ -138,9 +137,9 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, Void> {
             cv.put(MoviesContract.DetailsColumns.RELEASE_DATE, movie.getString(OMD_RELEASE));
 
             // 1 is true, 0 is false
-            if (typeOfSort.contains("popularity")) {
+            if (typeOfSort.contains("popular")) {
                 cv.put(MoviesContract.DetailsColumns.POPULAR, 1);
-            } else if (typeOfSort.contains("vote_average")){
+            } else if (typeOfSort.contains("top_rated")){
                 cv.put(MoviesContract.DetailsColumns.TOP_RATED, 1);
             }
             cVVector.add(cv);
