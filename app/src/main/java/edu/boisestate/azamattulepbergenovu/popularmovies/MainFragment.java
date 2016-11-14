@@ -16,6 +16,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,8 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
     MoviePosterAdapter adapter;
     private final String NO_INET_CONNECTION = "Oops... Looks like you are not connected to Internet.";
     private static final int MOVIES_LOADER = 0;
+
+    private static int DEBUG_CONT = 0;
 
     // For the movie grid view I'm showing only a small subset of the stored data.
     // Specify the columns we need.
@@ -88,6 +91,8 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
                                 (cursor.getInt(cursor.getColumnIndex(MoviesContract.DetailsColumns._ID))));
             }
         });
+        Log.v(LOG_TAG, "Inside of the onCreateView: " + DEBUG_CONT);
+        DEBUG_CONT ++;
         return rootView;
     }
 
@@ -133,7 +138,10 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         // Swap the new cursor in.  (The framework will take care of closing the
         // old cursor once we return.)
+
         adapter.swapCursor(data);
+        Log.v(LOG_TAG, "Inside of onLoadFinished: " + DEBUG_CONT);
+        DEBUG_CONT++;
     }
 
     public void onLoaderReset(Loader<Cursor> loader) {
@@ -184,6 +192,8 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
+
+
 
 }
 

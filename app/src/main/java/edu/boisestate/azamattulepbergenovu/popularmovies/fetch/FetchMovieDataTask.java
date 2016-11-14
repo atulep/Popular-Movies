@@ -40,21 +40,23 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, Void> {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         String typeOfSort = params[0];// which sort to perform
+        Log.v(LOG_TAG, typeOfSort);
         String movieJsonStr;
 
         try {
 
             final String MOVIE_BASE_URL =
-                    "http://api.themoviedb.org/3/discover/movie?";
+                    "http://api.themoviedb.org/3/movie/popular?";
             final String QUERY_PARAM = "sort_by";
             final String APPID_PARAM = "api_key";
 
             Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
-                    .appendQueryParameter(QUERY_PARAM, typeOfSort)
                     .appendQueryParameter(APPID_PARAM, edu.boisestate.azamattulepbergenovu.popularmovies.BuildConfig.MOVIE_DB_API_KEY)
                     .build();
 
             URL url = new URL(builtUri.toString());
+
+            Log.v(LOG_TAG, url.toString());
 
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");

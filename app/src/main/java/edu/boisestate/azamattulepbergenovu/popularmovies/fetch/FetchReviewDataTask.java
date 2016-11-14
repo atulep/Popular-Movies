@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -102,6 +103,8 @@ public class FetchReviewDataTask extends AsyncTask<Void, Void, Void> {
                         System.exit(1);
                     }
 
+                } catch (FileNotFoundException e){
+                    Log.e(LOG_TAG, "Error", e);
                 } catch (IOException e) {
                     Log.e(LOG_TAG, "Error ", e);
                     movieJsonStr = null;
@@ -127,7 +130,7 @@ public class FetchReviewDataTask extends AsyncTask<Void, Void, Void> {
         // These are the names of the JSON objects that need to be extracted.
         final String OMD_CONTENT="content";
         final String OMD_RESULTS = "results";
-
+        Log.v(LOG_TAG, movieJsonStr);
         JSONObject reviewsJson = new JSONObject(movieJsonStr);
         JSONArray reviewArray = reviewsJson.getJSONArray(OMD_RESULTS);
 

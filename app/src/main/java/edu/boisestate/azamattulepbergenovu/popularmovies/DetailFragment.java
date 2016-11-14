@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,6 +98,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             release.setText(releaseDate);
             rating.setText(Double.valueOf(ratingNum).toString());
             plot.setText(plotDesc);
+            Log.v(LOG_TAG, "DEBUGGING HERE");
         }
     }
 
