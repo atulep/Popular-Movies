@@ -1,53 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:nestedScrollingEnabled="true"
+    android:fillViewport="true">
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/details_outerLayout">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/details_imageView"
-        android:background="@color/colorImageView"
-        android:layout_weight="1"
-        android:scaleType="fitCenter"
-        android:layout_gravity="center_horizontal" />
-
+    <!-- weight in the layout determines proportions of layouts-->
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
-        android:textAlignment="center">
+        android:orientation="horizontal">
 
-        <TextView
-            android:paddingTop="@dimen/detailFragment_vertical_margin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:textSize="@dimen/detailFragment_movieTitle_fontSize"
-            android:id="@+id/details_title" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <ImageView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="New Text"
-            android:textSize="@dimen/detailFragment_mediumFontSize"
-            android:id="@+id/details_release" />
+            android:id="@+id/details_imageView"
+            android:background="@color/colorImageView"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:layout_marginLeft="16dp"
+            android:layout_gravity="center_horizontal" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="New Text"
-            android:textSize="@dimen/detailFragment_mediumFontSize"
-            android:id="@+id/details_rating" />
+            android:background="@color/colorPrimaryDark"
+            android:textAlignment="center">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:textSize="@dimen/detailFragment_smallFontSize"
-            android:id="@+id/details_plot" />
+            <TextView
+                android:paddingTop="@dimen/detailFragment_vertical_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:textSize="@dimen/detailFragment_movieTitle_fontSize"
+                android:id="@+id/details_title" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:textSize="@dimen/detailFragment_mediumFontSize"
+                android:id="@+id/details_release" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:textSize="@dimen/detailFragment_mediumFontSize"
+                android:id="@+id/details_rating" />
+
+        </LinearLayout>
     </LinearLayout>
 
+    <!--Plot synopsis -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/details_plot"/>
 </LinearLayout>
+</ScrollView>
