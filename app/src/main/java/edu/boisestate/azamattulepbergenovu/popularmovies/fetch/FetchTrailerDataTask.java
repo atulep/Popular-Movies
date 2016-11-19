@@ -150,7 +150,7 @@ public class FetchTrailerDataTask extends AsyncTask<Void, Void, Void> {
             cVVector.toArray(cvArray);
             inserted = mContext.getContentResolver().bulkInsert(MoviesProvider.Trailers.CONTENT_URI, cvArray);
         }
-        Log.d(LOG_TAG, "FetchReviewTask Complete. " + inserted + " Inserted");
+        Log.d(LOG_TAG, "FetchTrailerTask Complete. " + inserted + " Inserted");
     }
 
 }

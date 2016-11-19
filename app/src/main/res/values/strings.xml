@@ -11,8 +11,8 @@
     <string name="settings_sort_label_rating">top_rated</string>
 
     <!-- Available sorting options to serve as query parameters-->
-    <string name="settings_sort_option_popularity">popularity.desc</string>
-    <string name="settings_sort_option_rating">vote_average.desc</string>
+    <string name="settings_sort_option_popularity">popular</string>
+    <string name="settings_sort_option_rating">top_rated</string>
 
     <string name="parcelable_movieList_key">movieList</string>
     <string name="parcelable_movie_key">movie</string>

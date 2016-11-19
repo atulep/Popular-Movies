@@ -98,7 +98,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             release.setText(releaseDate);
             rating.setText(Double.valueOf(ratingNum).toString());
             plot.setText(plotDesc);
-            Log.v(LOG_TAG, "DEBUGGING HERE");
         }
     }
 
