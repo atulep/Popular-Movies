@@ -68,7 +68,9 @@ public class ReviewFragment extends Fragment implements LoaderManager.LoaderCall
         Uri reviewUri = MoviesProvider.Reviews.CONTENT_URI;
         String selection = MoviesContract.ReviewColumns.MOVIE_ID + "=?";
         String[] selectionArgs={String.valueOf(movieId)};
-
+        Log.v(LOG_TAG, "===============");
+        Log.v(LOG_TAG, "movieId="+movieId);
+        Log.v(LOG_TAG, "===============");
         return new CursorLoader(getActivity(),
                 reviewUri,
                 REVIEW_COLUMNS,
@@ -77,13 +79,11 @@ public class ReviewFragment extends Fragment implements LoaderManager.LoaderCall
                 null);
     }
 
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data){
-        DatabaseUtils.dumpCursor(data);
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (data != null) {
             while (data.moveToNext()) {
                 int pos = 0;
                 String review = data.getString(COL_REVIEW);
-
                 View reviewView = inflater.inflate(R.layout.review_item, null);
                 TextView textView = (TextView) reviewView.findViewById(R.id.details_review);
                 textView.setText(review);

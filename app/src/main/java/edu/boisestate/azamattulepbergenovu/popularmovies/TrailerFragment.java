@@ -46,7 +46,7 @@ public class TrailerFragment extends Fragment implements LoaderManager.LoaderCal
 
         Bundle arguments = getArguments();
         if (arguments != null) {
-            movieId = arguments.getLong(DetailFragment.DETAIL_URI);
+            movieId = arguments.getLong(MOVIE_ID);
         }
 
         this.inflater = inflater;

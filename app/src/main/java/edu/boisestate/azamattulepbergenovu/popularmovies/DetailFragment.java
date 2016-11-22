@@ -3,6 +3,7 @@ package edu.boisestate.azamattulepbergenovu.popularmovies;
 import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -66,6 +67,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        Intent intent = getActivity().getIntent();
+        mUri = intent.getData();
         if ( null != mUri ) {
             // Now create and return a CursorLoader that will take care of
             // creating a Cursor for the data being displayed.
