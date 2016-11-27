@@ -65,14 +65,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         super.onCreate(savedInstanceBundle);
     }
 
-    /**
-     * Will fetch the review and trailer data for the current movies only.
-     */
-    private void fetch(String movieId) {
-        new FetchReviewDataTask(getActivity()).execute(movieId);
-        new FetchTrailerDataTask(getActivity()).execute(movieId);
-    }
-
     public void onActivityCreated(Bundle savedInstanceState){
         getLoaderManager().initLoader(MOVIES_LOADER, null, this);
         super.onActivityCreated(savedInstanceState);
@@ -102,7 +94,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         // Apparently, I need to call moveToFirst(), otherwise, I mPost of cursor will be -1.
         if (cursor != null && cursor.moveToFirst()) {
             String movieID = cursor.getString(COL_MOVIE_ID);
-            fetch(movieID);
             String posterImage = cursor.getString(COL_DETAILS_POSTER);
             String releaseDate = cursor.getString(COL_DETAILS_RELEASE_DATE);
             double ratingNum = cursor.getDouble(COL_DETAILS_RATING);

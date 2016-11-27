@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesContract;
 import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesProvider;
+import edu.boisestate.azamattulepbergenovu.popularmovies.fetch.FetchReviewDataTask;
+import edu.boisestate.azamattulepbergenovu.popularmovies.fetch.FetchTrailerDataTask;
 
 /**
  * Displays reviews for the movies. Part of the DetailActivity.
@@ -40,17 +42,24 @@ public class ReviewFragment extends Fragment implements LoaderManager.LoaderCall
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            movieId = arguments.getLong(MOVIE_ID);
+        }
+        fetch();
+    }
+
+    /**
+     * Will fetch the review and trailer data for the current movies only.
+     */
+    private void fetch() {
+        new FetchReviewDataTask(getActivity()).execute(String.valueOf(movieId));
+        new FetchTrailerDataTask(getActivity()).execute(String.valueOf(movieId));
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = (View) inflater.inflate(R.layout.review_fragment, container, false);
         this.inflater = inflater;
-
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            movieId = arguments.getLong(MOVIE_ID);
-        }
-
         insertionPoint=(LinearLayout)rootView.findViewById(R.id.review_container);
         return rootView;
     }
@@ -68,9 +77,6 @@ public class ReviewFragment extends Fragment implements LoaderManager.LoaderCall
         Uri reviewUri = MoviesProvider.Reviews.CONTENT_URI;
         String selection = MoviesContract.ReviewColumns.MOVIE_ID + "=?";
         String[] selectionArgs={String.valueOf(movieId)};
-        Log.v(LOG_TAG, "===============");
-        Log.v(LOG_TAG, "movieId="+movieId);
-        Log.v(LOG_TAG, "===============");
         return new CursorLoader(getActivity(),
                 reviewUri,
                 REVIEW_COLUMNS,

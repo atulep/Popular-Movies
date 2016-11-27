@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesContract;
 import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesProvider;
+import edu.boisestate.azamattulepbergenovu.popularmovies.fetch.FetchReviewDataTask;
+import edu.boisestate.azamattulepbergenovu.popularmovies.fetch.FetchTrailerDataTask;
 
 /**
  * Displays a
@@ -36,19 +38,27 @@ public class TrailerFragment extends Fragment implements LoaderManager.LoaderCal
     private LayoutInflater inflater;
     private LinearLayout insertionPoint;
 
+    /**
+     * Will fetch the review and trailer data for the current movies only.
+     */
+    private void fetch() {
+        new FetchReviewDataTask(getActivity()).execute(String.valueOf(movieId));
+        new FetchTrailerDataTask(getActivity()).execute(String.valueOf(movieId));
+    }
+
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            movieId = arguments.getLong(MOVIE_ID);
+        }
+        fetch();
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = (View) inflater.inflate(R.layout.trailer_fragment, container, false);
         insertionPoint=(LinearLayout) rootView.findViewById(R.id.trailer_container);
-
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            movieId = arguments.getLong(MOVIE_ID);
-        }
-
         this.inflater = inflater;
         return rootView;
     }

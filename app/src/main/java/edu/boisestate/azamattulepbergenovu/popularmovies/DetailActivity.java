@@ -38,11 +38,12 @@ public class DetailActivity extends AppCompatActivity {
             arguments.clear();
             arguments.putLong(TrailerFragment.MOVIE_ID, movieId);
 
+            TrailerFragment trailerFragment = new TrailerFragment();
+            createFragmentWithArgs(trailerFragment, arguments);
+
             ReviewFragment reviewFragment = new ReviewFragment();
             createFragmentWithArgs(reviewFragment, arguments);
 
-            TrailerFragment trailerFragment = new TrailerFragment();
-            createFragmentWithArgs(trailerFragment, arguments);
         }
     }
 
