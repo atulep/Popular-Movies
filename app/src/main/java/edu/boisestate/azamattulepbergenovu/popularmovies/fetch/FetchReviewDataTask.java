@@ -100,11 +100,11 @@ public class FetchReviewDataTask extends AsyncTask<Void, Void, Void> {
                         getMovieDataFromJson(movieJsonStr, movieId);
                     } catch (org.json.JSONException e) {
                         Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
-                        System.exit(1);
                     }
 
                 } catch (FileNotFoundException e){
                     Log.e(LOG_TAG, "Error", e);
+
                 } catch (IOException e) {
                     Log.e(LOG_TAG, "Error ", e);
                     movieJsonStr = null;
@@ -130,7 +130,7 @@ public class FetchReviewDataTask extends AsyncTask<Void, Void, Void> {
         // These are the names of the JSON objects that need to be extracted.
         final String OMD_CONTENT="content";
         final String OMD_RESULTS = "results";
-        Log.v(LOG_TAG, movieJsonStr);
+
         JSONObject reviewsJson = new JSONObject(movieJsonStr);
         JSONArray reviewArray = reviewsJson.getJSONArray(OMD_RESULTS);
 

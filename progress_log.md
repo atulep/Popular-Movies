@@ -8,4 +8,6 @@ Issue: Detail URI is null. -- fixed
 # 11/21/2016
 1. Determined the source of error with the null cursor. Need to fix by catching an exception.
 2. Looks like Fetch tasks are being called many times every time I click on the icon.
-3. The trailers are not showing up, though they are present in the db. <-- fixed 
+3. The trailers are not showing up, though they are present in the db. <-- fixed
+* Hm, an alternative way to preserver the order of insertion/deletions is to use Callback interfaces,
+see [this](https://github.com/KeThieu/Android-Nanodegree-Project-Popular-Movies/blob/master/app/src/main/java/com/kennetht/annd/popularmovies/MovieDetailActivityFragment.java)
