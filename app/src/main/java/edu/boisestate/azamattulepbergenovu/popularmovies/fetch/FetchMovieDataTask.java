@@ -40,7 +40,6 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, Void> {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         String typeOfSort = params[0];// which sort to perform
-        Log.v(LOG_TAG, typeOfSort);
         String movieJsonStr;
         assert typeOfSort.equals("top_rated") || typeOfSort.equals("popular");
         try {
@@ -54,8 +53,6 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, Void> {
                     .build();
 
             URL url = new URL(builtUri.toString());
-
-            Log.v(LOG_TAG, url.toString());
 
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
@@ -156,15 +153,4 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, Void> {
         Log.d(LOG_TAG, "FetchMovieTask Complete. " + inserted + " Inserted");
     }
 
-    protected void onPostExecute(Void nothing) {
-        // this makes sure that the general movie data, most notably the movie ID had already
-        // been downloaded.
-
-        // TODO: Should I pass a list of movie id's to both fetch task, or have each task query db.
-        FetchTrailerDataTask trailerTask = new FetchTrailerDataTask(mContext);
-        trailerTask.execute();
-
-        FetchReviewDataTask reviewTask = new FetchReviewDataTask(mContext);
-        reviewTask.execute();
-    }
 }

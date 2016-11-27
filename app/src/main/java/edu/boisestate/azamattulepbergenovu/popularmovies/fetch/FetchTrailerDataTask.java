@@ -32,92 +32,76 @@ import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesProvider;
 /**
  * Service class to perform data fetching on back thread.
  */
-public class FetchTrailerDataTask extends AsyncTask<Void, Void, Void> {
+public class FetchTrailerDataTask extends AsyncTask<String, Void, Void> {
     private String LOG_TAG = this.getClass().getSimpleName();
     private Context mContext;
-    private String[] DETAIL_COLUMNS = {
-            MoviesContract.DetailsColumns.MOVIE_ID
-    };
 
-    public FetchTrailerDataTask(Context context){
-        mContext = context;
-    }
+    public FetchTrailerDataTask(Context context) { mContext = context; }
 
-    public Void doInBackground(Void... params) {
-        Cursor movieList = mContext.getContentResolver().query(
-                MoviesProvider.Details.CONTENT_URI,
-                DETAIL_COLUMNS,
-                null,
-                null,
-                null
-        );
+    public Void doInBackground(String... params) {
+        long movieId = Long.parseLong(params[0]);
+        HttpURLConnection urlConnection = null;
+        BufferedReader reader = null;
+        String movieJsonStr;
 
-        if (movieList != null)
-            while (movieList.moveToNext()) {
-                long movieId = movieList.getLong(movieList.getColumnIndex(MoviesContract.DetailsColumns.MOVIE_ID));
+        try {
+            final String MOVIE_BASE_URL =
+                    "http://api.themoviedb.org/3/movie/" + movieId + "/videos?";
+            final String APPID_PARAM = "api_key";
+            Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
+                    .appendQueryParameter(APPID_PARAM, edu.boisestate.azamattulepbergenovu.popularmovies.BuildConfig.MOVIE_DB_API_KEY)
+                    .build();
+            URL url = new URL(builtUri.toString());
 
-                HttpURLConnection urlConnection = null;
-                BufferedReader reader = null;
-                String movieJsonStr;
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            // Read the input stream into a String
+            InputStream inputStream = urlConnection.getInputStream();
+            StringBuffer buffer = new StringBuffer();
+
+            if (inputStream == null) {
+                // Nothing to do.
+                return null;
+            }
+
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                buffer.append(line + "\n");
+            }
+
+            if (buffer.length() == 0) {
+                return null;
+            }
+            movieJsonStr = buffer.toString();
+
+            try {
+                getMovieDataFromJson(movieJsonStr, movieId);
+
+            } catch (org.json.JSONException e) {
+                Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
+                System.exit(1);
+            }
+
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error ", e);
+            movieJsonStr = null;
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+            if (reader != null) {
                 try {
-                    final String MOVIE_BASE_URL =
-                            "http://api.themoviedb.org/3/movie/" + movieId + "/videos?";
-                    final String APPID_PARAM = "api_key";
-                    Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
-                            .appendQueryParameter(APPID_PARAM, edu.boisestate.azamattulepbergenovu.popularmovies.BuildConfig.MOVIE_DB_API_KEY)
-                            .build();
-                    URL url = new URL(builtUri.toString());
-
-                    urlConnection = (HttpURLConnection) url.openConnection();
-                    urlConnection.setRequestMethod("GET");
-                    urlConnection.connect();
-
-                    // Read the input stream into a String
-                    InputStream inputStream = urlConnection.getInputStream();
-                    StringBuffer buffer = new StringBuffer();
-
-                    if (inputStream == null) {
-                        // Nothing to do.
-                        return null;
-                    }
-
-                    reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                    String line;
-
-                    while ((line = reader.readLine()) != null) {
-                        buffer.append(line + "\n");
-                    }
-
-                    if (buffer.length() == 0) {
-                        return null;
-                    }
-                    movieJsonStr = buffer.toString();
-
-                    try {
-                        getMovieDataFromJson(movieJsonStr, movieId);
-
-                    } catch (org.json.JSONException e) {
-                        Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
-                        System.exit(1);
-                    }
-
-                } catch (IOException e) {
-                    Log.e(LOG_TAG, "Error ", e);
-                    movieJsonStr = null;
-                } finally {
-                    if (urlConnection != null) {
-                        urlConnection.disconnect();
-                    }
-                    if (reader != null) {
-                        try {
-                            reader.close();
-                        } catch (final IOException e) {
-                            Log.e(LOG_TAG, "Error closing stream", e);
-                        }
-                    }
+                    reader.close();
+                } catch (final IOException e) {
+                    Log.e(LOG_TAG, "Error closing stream", e);
                 }
             }
+        }
             return null;
     }
 

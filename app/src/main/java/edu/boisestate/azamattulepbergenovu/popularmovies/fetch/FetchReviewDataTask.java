@@ -26,101 +26,82 @@ import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesContract;
 import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesProvider;
 
 /**
- * Created by atulep on 2/12/2016.
- */
-
-/**
  * Service class to perform data fetching on back thread.
  */
-public class FetchReviewDataTask extends AsyncTask<Void, Void, Void> {
+public class FetchReviewDataTask extends AsyncTask<String, Void, Void> {
     private String LOG_TAG = this.getClass().getSimpleName();
     private Context mContext;
-    private String[] DETAIL_COLUMNS = {
-            MoviesContract.DetailsColumns.MOVIE_ID
-    };
 
-    public FetchReviewDataTask(Context context){
-        mContext = context;
-    }
-    public Void doInBackground(Void... params) {
-        Cursor movieList = mContext.getContentResolver().query(
-                MoviesProvider.Details.CONTENT_URI,
-                DETAIL_COLUMNS,
-                null,
-                null,
-                null
-        );
+    public FetchReviewDataTask(Context context) { mContext = context; }
 
-        if (movieList != null)
-            while (movieList.moveToNext()) {
-                HttpURLConnection urlConnection = null;
-                BufferedReader reader = null;
-                String movieJsonStr;
-                Long movieId = movieList.getLong(movieList.getColumnIndex(MoviesContract.DetailsColumns.MOVIE_ID));
+    public Void doInBackground(String... params) {
+        long movieId  = Long.parseLong(params[0]);
+        HttpURLConnection urlConnection = null;
+        BufferedReader reader = null;
+        String movieJsonStr;
 
+        try {
+
+            final String MOVIE_BASE_URL =
+                    "http://api.themoviedb.org/3/movie/" + movieId + "/reviews?";
+            final String APPID_PARAM = "api_key";
+
+            Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
+                    .appendQueryParameter(APPID_PARAM, edu.boisestate.azamattulepbergenovu.popularmovies.BuildConfig.MOVIE_DB_API_KEY)
+                    .build();
+
+            URL url = new URL(builtUri.toString());
+
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            // Read the input stream into a String
+            InputStream inputStream = urlConnection.getInputStream();
+            StringBuffer buffer = new StringBuffer();
+
+            if (inputStream == null) {
+                // Nothing to do.
+                return null;
+            }
+
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                buffer.append(line + "\n");
+            }
+
+            if (buffer.length() == 0) {
+                return null;
+            }
+            movieJsonStr = buffer.toString();
+
+            try {
+                getMovieDataFromJson(movieJsonStr, movieId);
+            } catch (org.json.JSONException e) {
+                Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
+            }
+
+        } catch (FileNotFoundException e){
+            Log.e(LOG_TAG, "Error", e);
+
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error ", e);
+            movieJsonStr = null;
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+            if (reader != null) {
                 try {
-
-                    final String MOVIE_BASE_URL =
-                            "http://api.themoviedb.org/3/movie/" + movieId + "/reviews?";
-                    final String APPID_PARAM = "api_key";
-
-                    Uri builtUri = Uri.parse(MOVIE_BASE_URL).buildUpon()
-                            .appendQueryParameter(APPID_PARAM, edu.boisestate.azamattulepbergenovu.popularmovies.BuildConfig.MOVIE_DB_API_KEY)
-                            .build();
-
-                    URL url = new URL(builtUri.toString());
-
-                    urlConnection = (HttpURLConnection) url.openConnection();
-                    urlConnection.setRequestMethod("GET");
-                    urlConnection.connect();
-
-                    // Read the input stream into a String
-                    InputStream inputStream = urlConnection.getInputStream();
-                    StringBuffer buffer = new StringBuffer();
-
-                    if (inputStream == null) {
-                        // Nothing to do.
-                        return null;
-                    }
-
-                    reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                    String line;
-
-                    while ((line = reader.readLine()) != null) {
-                        buffer.append(line + "\n");
-                    }
-
-                    if (buffer.length() == 0) {
-                        return null;
-                    }
-                    movieJsonStr = buffer.toString();
-
-                    try {
-                        getMovieDataFromJson(movieJsonStr, movieId);
-                    } catch (org.json.JSONException e) {
-                        Log.e(LOG_TAG, "ERROR with fetching the simpliged forecast.");
-                    }
-
-                } catch (FileNotFoundException e){
-                    Log.e(LOG_TAG, "Error", e);
-
-                } catch (IOException e) {
-                    Log.e(LOG_TAG, "Error ", e);
-                    movieJsonStr = null;
-                } finally {
-                    if (urlConnection != null) {
-                        urlConnection.disconnect();
-                    }
-                    if (reader != null) {
-                        try {
-                            reader.close();
-                        } catch (final IOException e) {
-                            Log.e(LOG_TAG, "Error closing stream", e);
-                        }
-                    }
+                    reader.close();
+                } catch (final IOException e) {
+                    Log.e(LOG_TAG, "Error closing stream", e);
                 }
             }
+        }
         return null;
     }
 
@@ -155,4 +136,5 @@ public class FetchReviewDataTask extends AsyncTask<Void, Void, Void> {
         }
         Log.d(LOG_TAG, "FetchReviewTask Complete. " + inserted + " Inserted");
     }
+
 }

@@ -22,6 +22,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesContract;
 import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesDatabase;
+import edu.boisestate.azamattulepbergenovu.popularmovies.fetch.FetchReviewDataTask;
+import edu.boisestate.azamattulepbergenovu.popularmovies.fetch.FetchTrailerDataTask;
 
 /**
  * Displays details of the movie.
@@ -38,7 +40,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             MoviesContract.DetailsColumns.PLOT,
             MoviesContract.DetailsColumns.TITLE,
             MoviesContract.DetailsColumns.RELEASE_DATE,
-            MoviesContract.DetailsColumns.RATING
+            MoviesContract.DetailsColumns.RATING,
+            MoviesContract.DetailsColumns.MOVIE_ID
     };
 
     // those indices map to the indices of columns defined above (in the DETAIL_COLUMNS).
@@ -50,6 +53,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public static final int COL_DETAILS_TITLE = 3;
     public static final int COL_DETAILS_RELEASE_DATE = 4;
     public static final int COL_DETAILS_RATING = 5;
+    public static final int COL_MOVIE_ID = 6;
 
     @Bind(R.id.details_imageView) ImageView poster;
     @Bind(R.id.details_title) TextView title;
@@ -59,6 +63,14 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     public void onCreate(Bundle savedInstanceBundle) {
         super.onCreate(savedInstanceBundle);
+    }
+
+    /**
+     * Will fetch the review and trailer data for the current movies only.
+     */
+    private void fetch(String movieId) {
+        new FetchReviewDataTask(getActivity()).execute(movieId);
+        new FetchTrailerDataTask(getActivity()).execute(movieId);
     }
 
     public void onActivityCreated(Bundle savedInstanceState){
@@ -89,7 +101,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         // Called when a previously created loader has finished its load.
         // Apparently, I need to call moveToFirst(), otherwise, I mPost of cursor will be -1.
         if (cursor != null && cursor.moveToFirst()) {
-            DatabaseUtils.dumpCursor(cursor);
+            String movieID = cursor.getString(COL_MOVIE_ID);
+            fetch(movieID);
             String posterImage = cursor.getString(COL_DETAILS_POSTER);
             String releaseDate = cursor.getString(COL_DETAILS_RELEASE_DATE);
             double ratingNum = cursor.getDouble(COL_DETAILS_RATING);
