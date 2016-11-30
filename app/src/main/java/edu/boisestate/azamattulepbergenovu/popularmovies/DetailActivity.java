@@ -39,8 +39,10 @@ public class DetailActivity extends AppCompatActivity {
             Uri detailUri = getIntent().getData();
             long movieId = getMovieId(detailUri);
 
-            fetch(movieId);
+            //fetch(movieId);
+            //for (int i = 0; i < 1e9; i ++) {
 
+            //}
             Bundle arguments = new Bundle();
             arguments.putParcelable(DetailFragment.DETAIL_URI, detailUri);
             DetailFragment fragment = new DetailFragment();
