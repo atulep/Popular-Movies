@@ -46,7 +46,7 @@ public class ReviewFragment extends Fragment implements LoaderManager.LoaderCall
         if (arguments != null) {
             movieId = arguments.getLong(MOVIE_ID);
         }
-        fetch();
+        //fetch();
     }
 
     /**
@@ -54,7 +54,6 @@ public class ReviewFragment extends Fragment implements LoaderManager.LoaderCall
      */
     private void fetch() {
         new FetchReviewDataTask(getActivity()).execute(String.valueOf(movieId));
-        new FetchTrailerDataTask(getActivity()).execute(String.valueOf(movieId));
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

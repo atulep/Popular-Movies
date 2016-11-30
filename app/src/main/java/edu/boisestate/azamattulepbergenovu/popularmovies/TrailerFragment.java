@@ -43,7 +43,6 @@ public class TrailerFragment extends Fragment implements LoaderManager.LoaderCal
      */
     private void fetch() {
         new FetchReviewDataTask(getActivity()).execute(String.valueOf(movieId));
-        new FetchTrailerDataTask(getActivity()).execute(String.valueOf(movieId));
     }
 
 
@@ -53,7 +52,7 @@ public class TrailerFragment extends Fragment implements LoaderManager.LoaderCal
         if (arguments != null) {
             movieId = arguments.getLong(MOVIE_ID);
         }
-        fetch();
+        //fetch();
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,7 +68,7 @@ public class TrailerFragment extends Fragment implements LoaderManager.LoaderCal
                 int pos = 0;
                 final String trailer = data.getString(COL_TRAILER);
                 View trailerView = (View) inflater.inflate(R.layout.trailer_item, null);
-                TextView textView=(TextView) trailerView.findViewById(R.id.details_trailer_label);
+                TextView textView = (TextView) trailerView.findViewById(R.id.details_trailer_label);
                 textView.setText("Trailer " + (pos+1));
 
                 trailerView.setOnClickListener(new View.OnClickListener(){

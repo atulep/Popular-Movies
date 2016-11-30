@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import edu.boisestate.azamattulepbergenovu.popularmovies.data.MoviesContract;
+import edu.boisestate.azamattulepbergenovu.popularmovies.fetch.FetchReviewDataTask;
+import edu.boisestate.azamattulepbergenovu.popularmovies.fetch.FetchTrailerDataTask;
 
 /**
  * Activity that displays details of the movie.
@@ -16,6 +18,14 @@ public class DetailActivity extends AppCompatActivity {
 
     private final String LOG_TAG = getClass().getSimpleName();
     private String[] DETAIL_COLUMNS = {MoviesContract.DetailsColumns.MOVIE_ID};
+
+    /**
+     * Will fetch the review and trailer data for the current movies only.
+     */
+    private void fetch(long movieId) {
+        new FetchReviewDataTask(this).execute(String.valueOf(movieId));
+        new FetchTrailerDataTask(this).execute(String.valueOf(movieId));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +38,8 @@ public class DetailActivity extends AppCompatActivity {
 
             Uri detailUri = getIntent().getData();
             long movieId = getMovieId(detailUri);
+
+            fetch(movieId);
 
             Bundle arguments = new Bundle();
             arguments.putParcelable(DetailFragment.DETAIL_URI, detailUri);

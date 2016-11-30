@@ -186,7 +186,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
-
 }
 
 
